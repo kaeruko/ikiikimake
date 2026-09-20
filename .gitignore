@@ -5,3 +5,6 @@ cheek01_candidates/
 
 __pycache__/
 .venv/
+
+models/*.task
+outputs/roi_debug/

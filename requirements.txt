@@ -1,0 +1,5 @@
+# Tested on Windows with Python 3.12.10. Only one OpenCV distribution is used.
+mediapipe==1.0.1
+opencv-contrib-python==5.0.0.93
+numpy==2.5.3
+matplotlib==3.11.2

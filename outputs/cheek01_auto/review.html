@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>頬・額 ROI 確認</title><style>
+body{font:16px/1.65 system-ui,sans-serif;margin:2rem auto;padding:0 1rem;max-width:1400px;background:#fafafa;color:#20252a}
+img{max-width:100%;height:auto;border:1px solid #bbb}code{overflow-wrap:anywhere}
+.status{padding:1rem;background:#fff0bb;border-radius:.4rem}li{margin:.4rem 0}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e9edf0;padding:1rem}
+table{border-collapse:collapse}td,th{border:1px solid #ccd1d5;padding:.5rem 1rem;text-align:left}
+</style><h1>頬・額 ROI 確認</h1><p class="status">生成時点：確認待ち（解析は未実行）</p>
+<p>生成日時（UTC）：2026-09-20T14:29:11.255696+00:00</p>
+<p>画面左頬＝緑、画面右頬＝青、額＝黄。左右は画像上の位置です。</p>
+<img src="review.png" alt="before と after に自動生成した ROI を重ねた画像"><p><a href="review.json">確認記録・最新の解析状態（JSON）</a><br><a href="before/roi_overlay.png">before：重ね合わせ画像・原寸</a><br><a href="before/roi_points.json">before：領域情報・診断 JSON</a><br><a href="before/roi_masks.npz">before：領域マスク NPZ</a><br><a href="after/roi_overlay.png">after：重ね合わせ画像・原寸</a><br><a href="after/roi_points.json">after：領域情報・診断 JSON</a><br><a href="after/roi_masks.npz">after：領域マスク NPZ</a></p><table><thead><tr><th>項目</th><th>before</th><th>after</th></tr></thead><tbody><tr><td>顔の左右向き yaw（°）</td><td>-6.32</td><td>-13.95</td></tr><tr><td>顔の上下向き pitch（°）</td><td>2.22</td><td>7.52</td></tr><tr><td>顔の傾き roll（°）</td><td>1.24</td><td>2.42</td></tr><tr><td>画面左頬の画素数</td><td>1136</td><td>879</td></tr><tr><td>画面右頬の画素数</td><td>1472</td><td>1641</td></tr><tr><td>額の画素数</td><td>897</td><td>1069</td></tr><tr><td>額 L* 中央値（参考値）</td><td>85.88</td><td>76.47</td></tr></tbody></table><p>額 L* の前後差（after − before）：-9.41。塗布・影・顔向き・照明が混ざる参考値で、露出差の測定値ではありません。</p>
+<ul><li>頬の領域が目・鼻・口・輪郭を避けて、肌の上にありますか。</li>
+<li>額の領域が髪や眉にかかっていませんか。</li>
+<li>手や手の影、強い反射、顔の変形が領域に入り込んでいませんか。</li>
+<li>前後で対応する位置が取れていて、比較できる見え方ですか。</li></ul>
+<p>自動チェックだけで遮蔽の有無は保証できません。額の L* 差は、塗布・影・顔向き・照明の影響が混ざる参考値です。</p>
+<ul><li>Human review required: hair, tools, text, reflections and undetected hands are not fully screened.</li><li>Human review required: hair, tools, text, reflections and undetected hands are not fully screened.</li></ul><p>確認 ID：<code>d0e1313026bae28ec10b58a264078a4d</code></p>
+<p>両方の画像を確認し、問題がなければ次のコマンドを PowerShell に貼り付けて実行してください。画像やマスクを変更すると承認は拒否されます。</p><pre><code>&amp; &#x27;C:\Users\mail\work\ikiikimake\.venv\Scripts\python.exe&#x27; &#x27;C:\Users\mail\work\ikiikimake\analysis\run_cheek01.py&#x27; &#x27;--output&#x27; &#x27;C:\Users\mail\work\ikiikimake\outputs\cheek01_auto&#x27; &#x27;--approve-review&#x27; &#x27;d0e1313026bae28ec10b58a264078a4d&#x27;</code></pre><p>問題があれば別の画像で生成し直してください。このページは生成時点の確認用スナップショットです。承認後の状態は上の「確認記録・最新の解析状態」で確認できます。</p>
+<p>承認後の出力は Lab 色差の実験結果であり、メイク効果の点数ではありません。</p></html>
