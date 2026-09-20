@@ -1,5 +1,8 @@
 *.mp4
-
+*.png
+*.jpg
+*.npz
+*.json
 cheek01_frames/
 cheek01_candidates/
 
