@@ -11,3 +11,12 @@ __pycache__/
 
 models/*.task
 outputs/roi_debug/
+*.png
+*.jpg
+*.npz
+*.json
+
+!review_exports/
+!review_exports/*.png
+!review_exports/*.jpg
+!review_exports/*.html
