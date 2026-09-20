@@ -10,6 +10,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+HEATMAP_WIDTH = 128
+HEATMAP_HEIGHT = 128
+A_THRESHOLDS = (20.0, 25.0, 30.0, 40.0, 50.0, 60.0)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Compare cheek color distributions in Lab color space."
@@ -106,9 +111,6 @@ def to_lab_channels(
 
     l_cv, a_cv, b_cv = cv2.split(lab)
 
-    # OpenCV:
-    # L: 0..255 -> CIE L*: 0..100
-    # a,b: 0..255, with 128 corresponding approximately to zero.
     l_star = l_cv.astype(np.float32) * (100.0 / 255.0)
     a_star = a_cv.astype(np.float32) - 128.0
     b_star = b_cv.astype(np.float32) - 128.0
@@ -123,7 +125,7 @@ def summarize(
 ) -> dict[str, float | int | str]:
     l_star, a_star, b_star = to_lab_channels(crop)
 
-    return {
+    row: dict[str, float | int | str] = {
         "phase": phase,
         "side": side,
         "pixels": int(a_star.size),
@@ -132,10 +134,20 @@ def summarize(
         "a_mean": float(np.mean(a_star)),
         "a_median": float(np.median(a_star)),
         "a_std": float(np.std(a_star)),
+        "a_p75": float(np.percentile(a_star, 75)),
+        "a_p90": float(np.percentile(a_star, 90)),
+        "a_p95": float(np.percentile(a_star, 95)),
+        "a_p99": float(np.percentile(a_star, 99)),
         "b_mean": float(np.mean(b_star)),
         "b_median": float(np.median(b_star)),
         "b_std": float(np.std(b_star)),
     }
+
+    for threshold in A_THRESHOLDS:
+        key = f"a_ratio_ge_{int(threshold)}"
+        row[key] = float(np.mean(a_star >= threshold))
+
+    return row
 
 
 def save_image(path: Path, image: np.ndarray) -> None:
@@ -190,6 +202,137 @@ def save_histogram(
     plt.tight_layout()
     plt.savefig(output_path, dpi=150)
     plt.close()
+
+
+def resize_for_heatmap(a_star: np.ndarray) -> np.ndarray:
+    if a_star.ndim != 2:
+        raise ValueError(f"Expected 2D array for heatmap, got {a_star.shape}")
+
+    resized = cv2.resize(
+        a_star,
+        (HEATMAP_WIDTH, HEATMAP_HEIGHT),
+        interpolation=cv2.INTER_LINEAR,
+    )
+
+    if resized.shape != (HEATMAP_HEIGHT, HEATMAP_WIDTH):
+        raise RuntimeError(
+            f"Unexpected resized shape: {resized.shape}"
+        )
+
+    return resized
+
+
+def save_a_heatmaps(
+    output_prefix: Path,
+    before_crop: np.ndarray,
+    after_crop: np.ndarray,
+    side_name: str,
+) -> None:
+    _, before_a, _ = to_lab_channels(before_crop)
+    _, after_a, _ = to_lab_channels(after_crop)
+
+    before_map = resize_for_heatmap(before_a)
+    after_map = resize_for_heatmap(after_a)
+    delta_map = after_map - before_map
+
+    shared_min = float(min(before_map.min(), after_map.min()))
+    shared_max = float(max(before_map.max(), after_map.max()))
+
+    if shared_min == shared_max:
+        raise ValueError(
+            f"Cannot render heatmap with constant values for {side_name}"
+        )
+
+    delta_abs_max = float(np.max(np.abs(delta_map)))
+    if delta_abs_max == 0.0:
+        delta_abs_max = 1.0
+
+    def save_single_heatmap(
+        path: Path,
+        data: np.ndarray,
+        title: str,
+        cmap: str,
+        vmin: float,
+        vmax: float,
+        colorbar_label: str,
+    ) -> None:
+        plt.figure(figsize=(5, 5))
+        plt.imshow(data, cmap=cmap, vmin=vmin, vmax=vmax)
+        plt.title(title)
+        plt.axis("off")
+        cbar = plt.colorbar()
+        cbar.set_label(colorbar_label)
+        plt.tight_layout()
+        plt.savefig(path, dpi=150)
+        plt.close()
+
+    save_single_heatmap(
+        output_prefix.with_name(output_prefix.name + "_before_a_heatmap.png"),
+        before_map,
+        f"{side_name} before: Lab a*",
+        "inferno",
+        shared_min,
+        shared_max,
+        "Lab a*",
+    )
+
+    save_single_heatmap(
+        output_prefix.with_name(output_prefix.name + "_after_a_heatmap.png"),
+        after_map,
+        f"{side_name} after: Lab a*",
+        "inferno",
+        shared_min,
+        shared_max,
+        "Lab a*",
+    )
+
+    save_single_heatmap(
+        output_prefix.with_name(output_prefix.name + "_delta_a_heatmap.png"),
+        delta_map,
+        f"{side_name} delta: after - before (Lab a*)",
+        "bwr",
+        -delta_abs_max,
+        delta_abs_max,
+        "Δ Lab a*",
+    )
+
+
+def get_row(
+    rows: list[dict[str, float | int | str]],
+    phase: str,
+    side: str,
+) -> dict[str, float | int | str]:
+    for row in rows:
+        if row["phase"] == phase and row["side"] == side:
+            return row
+    raise KeyError(f"Row not found: phase={phase}, side={side}")
+
+
+def print_summary(
+    rows: list[dict[str, float | int | str]],
+    side: str,
+) -> None:
+    before_row = get_row(rows, "before", side)
+    after_row = get_row(rows, "after", side)
+
+    print()
+    print(side.upper())
+
+    for key in ("L_median", "a_median", "a_p75", "a_p90", "a_p95", "a_p99", "b_median"):
+        before_value = float(before_row[key])
+        after_value = float(after_row[key])
+        delta = after_value - before_value
+        print(f"  Δ {key}: {delta:+.3f}   (before={before_value:.3f}, after={after_value:.3f})")
+
+    for threshold in A_THRESHOLDS:
+        key = f"a_ratio_ge_{int(threshold)}"
+        before_value = float(before_row[key])
+        after_value = float(after_row[key])
+        delta = after_value - before_value
+        print(
+            f"  Δ {key}: {delta:+.5f}   "
+            f"(before={before_value:.5f}, after={after_value:.5f})"
+        )
 
 
 def main() -> None:
@@ -270,33 +413,21 @@ def main() -> None:
         "Right cheek: Lab a*",
     )
 
-    for side in ("left", "right"):
-        before_row = next(
-            row
-            for row in rows
-            if row["phase"] == "before" and row["side"] == side
-        )
-        after_row = next(
-            row
-            for row in rows
-            if row["phase"] == "after" and row["side"] == side
-        )
+    save_a_heatmaps(
+        args.output / "left",
+        before_left,
+        after_left,
+        "Left cheek",
+    )
+    save_a_heatmaps(
+        args.output / "right",
+        before_right,
+        after_right,
+        "Right cheek",
+    )
 
-        delta_a = float(after_row["a_median"]) - float(
-            before_row["a_median"]
-        )
-        delta_l = float(after_row["L_median"]) - float(
-            before_row["L_median"]
-        )
-        delta_b = float(after_row["b_median"]) - float(
-            before_row["b_median"]
-        )
-
-        print()
-        print(side.upper())
-        print(f"  Δ median L*: {delta_l:+.3f}")
-        print(f"  Δ median a*: {delta_a:+.3f}")
-        print(f"  Δ median b*: {delta_b:+.3f}")
+    print_summary(rows, "left")
+    print_summary(rows, "right")
 
     print()
     print(f"Saved results to: {args.output}")
