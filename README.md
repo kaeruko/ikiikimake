@@ -99,6 +99,26 @@ MediaPipe Face Landmarkerで基準点を取り、その固定インデックス�
 
 元の手動スクリプトと `outputs/cheek01` はそのまま残しています。新しい自動経路では `selectROI` は呼びません。
 
+## 動画から比較候補を探す
+
+`analysis/run_video_roi_search.py` はMP4から元の解像度でPNGを書き出し、画像ごとにROIを生成します。不合格の画像は理由を記録して除外し、他の画像の処理は続けます。初期設定は5秒間隔、有力な5組の前後だけ1秒間隔で再探索します。実際に読み取ったフレームの時刻を記録します。
+
+```powershell
+.\.venv\Scripts\python.exe .\analysis\run_video_roi_search.py `
+  --video .\makeup2.mp4 `
+  --output .\outputs\makeup2_search_new `
+  --interval 5 --refine-interval 1 `
+  --before-range 68 196 --after-range 2022 2124
+```
+
+この時間範囲は `makeup2.mp4` の工程を目視確認して選んだものです。別の動画では変更してください。指定しない場合は前半・後半を探索しますが、その区分だけでは塗布前・完成後を保証できません。モデルや設定と動画が同じ場合、`--resume` で既存の抽出結果を再利用できます。`--no-refine` は追加の細かい探索を省略します。
+
+結果は `report.html`、`best_pair_faces.png`、`best_pair_roi_overlay.png`、`frames.csv`、`matching.json` に保存されます。全抽出画像とROIは `frames/` と `rois/` にあります。
+
+一致スコアは顔向き・顔サイズ・ROI形状・目と口の開きの差を集計した**幾何的な距離（小さいほど近い）**です。肌色や額の明るさを一致させる選び方はしません。全顔メイクでは額自体も変わるため、動画検索の前後選択には額のL*差による停止条件も使いません。
+
+この検索は比較する画像をそろえる段階です。メイクの良さや印象の向上は評価しません。候補は目視でピント・表情・手や影・実際の工程を確認してください。人の印象を検証するには、別途、前後ラベルを隠した人による評価が必要です。
+
 ## 別環境でのセットアップ
 
 Windows / Python 3.12.10で確認しています。別の環境ではパッケージやモデルの対応を確認してください。
