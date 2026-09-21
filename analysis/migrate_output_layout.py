@@ -9,8 +9,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import shutil
+import stat
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -102,7 +104,12 @@ def rewrite_paths(directory: Path, old_absolute: str, new_absolute: str) -> None
             raise
 
         if changed:
-            temp.replace(path)
+            try:
+                temp.replace(path)
+            except PermissionError:
+                # Windows can refuse replacing a read-only generated file.
+                os.chmod(path, stat.S_IREAD | stat.S_IWRITE)
+                temp.replace(path)
         else:
             temp.unlink()
 
