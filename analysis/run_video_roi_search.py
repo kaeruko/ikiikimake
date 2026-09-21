@@ -76,6 +76,24 @@ def validate_range(value, lower: float, upper: float, label: str) -> tuple[float
     return start, end
 
 
+def resolve_after_range(value, last_seconds: float | None, split: float,
+                        duration: float) -> tuple[float, float]:
+    if value is not None and last_seconds is not None:
+        raise ValueError('Specify only one of after range and after-last-seconds')
+    if last_seconds is None:
+        return validate_range(value, split, duration, 'After')
+    seconds = float(last_seconds)
+    if not math.isfinite(seconds) or seconds <= 0:
+        raise ValueError('after-last-seconds must be finite and positive')
+    start = duration - seconds
+    if start < split:
+        raise ValueError(
+            f'Last {seconds:g} seconds starts before split '
+            f'({start:.3f} < {split:.3f}); use an explicit after range'
+        )
+    return start, duration
+
+
 def filter_records(records: list[dict], before_range: tuple, after_range: tuple) -> list[dict]:
     return [record for record in records if any(start <= record['timestamp_seconds'] < end
                                                for start, end in (before_range, after_range))]
@@ -188,7 +206,7 @@ def run(args) -> dict:
     if not 0 < split < duration or not math.isfinite(split):
         raise ValueError('Split must lie inside the video')
     before_range = validate_range(args.before_range, 0, split, 'Before')
-    after_range = validate_range(args.after_range, split, duration, 'After')
+    after_range = resolve_after_range(args.after_range, args.after_last_seconds, split, duration)
     interval = args.interval
     coarse_times = coarse_sample_times(before_range, after_range, interval)
     if not math.isfinite(args.refine_interval) or not 0 < args.refine_interval <= interval:
@@ -255,7 +273,10 @@ def parse_args(argv=None):
     parser.add_argument('--resume', action='store_true')
     parser.add_argument('--split', type=float, help='Split timestamp in seconds; default midpoint')
     parser.add_argument('--before-range', type=float, nargs=2, metavar=('START', 'END'))
-    parser.add_argument('--after-range', type=float, nargs=2, metavar=('START', 'END'))
+    after_group = parser.add_mutually_exclusive_group()
+    after_group.add_argument('--after-range', type=float, nargs=2, metavar=('START', 'END'))
+    after_group.add_argument('--after-last-seconds', type=float,
+                             help='Use exactly the last N seconds as the after search window')
     parser.add_argument('--min-gap', type=float, help='Minimum time separation, default 25%% of duration')
     parser.add_argument('--top', type=int, default=10)
     parser.add_argument('--model-dir', type=Path, default=ROOT / 'models')
