@@ -93,6 +93,25 @@ class SamplingBoundariesTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ValueError):
                 sampling.validate_range(value, 0, 100, "before")
 
+    def test_after_last_seconds_resolves_exact_tail_window(self):
+        self.assertEqual(
+            sampling.resolve_after_range(None, 180, 600, 1200),
+            (1020, 1200),
+        )
+
+    def test_after_last_seconds_rejects_overlap_with_split(self):
+        with self.assertRaisesRegex(ValueError, "starts before split"):
+            sampling.resolve_after_range(None, 700, 600, 1200)
+
+    def test_after_range_and_tail_seconds_are_mutually_exclusive(self):
+        with self.assertRaisesRegex(ValueError, "only one"):
+            sampling.resolve_after_range((900, 1000), 180, 600, 1200)
+
+    def test_after_last_seconds_rejects_invalid_values(self):
+        for value in (0, -1, float("inf"), float("nan")):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                sampling.resolve_after_range(None, value, 600, 1200)
+
     def test_filter_uses_decoded_time_and_exclusive_end(self):
         times = (64.99, 65, 195.99, 196, 2021.99, 2022, 2123.99, 2124)
         records = [{"timestamp_seconds": time, "requested_timestamp_seconds": 0} for time in times]
