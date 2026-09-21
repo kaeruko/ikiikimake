@@ -10,6 +10,7 @@ exposure correction, a cosmetic-effect estimate, or a score.
 from __future__ import annotations
 
 import csv
+import html
 import json
 from pathlib import Path
 
@@ -169,6 +170,160 @@ def _save_samples(path: Path, images: dict, masks: dict) -> None:
     figure.clear()
 
 
+
+def write_summary_html(output_dir: Path, summary: dict) -> Path:
+    """Write a one-page human review summary from an analysis summary."""
+    output_dir = Path(output_dir)
+    required = {
+        "roi_samples.png",
+        "left_cheek_lab_hist.png",
+        "right_cheek_lab_hist.png",
+        "forehead_lab_hist.png",
+        "lab_stats.csv",
+        "lab_deltas.csv",
+        "analysis_summary.json",
+    }
+    missing = sorted(name for name in required if not (output_dir / name).is_file())
+    if missing:
+        raise FileNotFoundError(
+            "Cannot write summary.html; missing Lab artifacts: " + ", ".join(missing)
+        )
+
+    statistics = {
+        (row["phase"], row["side"]): row
+        for row in summary.get("statistics", [])
+    }
+    deltas = {
+        (row["side"], row["metric"]): row
+        for row in summary.get("deltas", [])
+    }
+    expected_stats = {
+        (phase, side)
+        for phase in ("before", "after")
+        for side in ROI_NAMES
+    }
+    missing_stats = expected_stats - set(statistics)
+    if missing_stats:
+        raise ValueError(f"summary is missing statistics rows: {sorted(missing_stats)}")
+
+    def number(value: float, digits: int = 2) -> str:
+        return f"{float(value):.{digits}f}"
+
+    labels = {
+        "left_cheek": "画面左の頬",
+        "right_cheek": "画面右の頬",
+    }
+    cheek_rows = []
+    for side in ROI_NAMES[:2]:
+        before = statistics["before", side]
+        after = statistics["after", side]
+        mean_delta = deltas[side, "a_mean"]
+        median_delta = deltas[side, "a_median"]
+        ratio_key = "a_ratio_ge_20"
+        cheek_rows.append(
+            "<tr>"
+            f"<th>{html.escape(labels[side])}</th>"
+            f"<td>{number(before['a_mean'])}</td>"
+            f"<td>{number(after['a_mean'])}</td>"
+            f"<td>{number(mean_delta['delta'])}</td>"
+            f"<td>{number(mean_delta['delta_minus_forehead'])}</td>"
+            f"<td>{number(before['a_median'])} → {number(after['a_median'])}"
+            f" ({number(median_delta['delta'], 1)})</td>"
+            f"<td>{number(before['a_p95'])} → {number(after['a_p95'])}</td>"
+            f"<td>{number(100 * before[ratio_key], 1)}% → "
+            f"{number(100 * after[ratio_key], 1)}%</td>"
+            "</tr>"
+        )
+
+    forehead_before = statistics["before", "forehead"]
+    forehead_after = statistics["after", "forehead"]
+    forehead_rows = []
+    for metric, label in (("L_mean", "L* 明るさ"), ("a_mean", "a* 赤み"), ("b_mean", "b* 黄み")):
+        before = float(forehead_before[metric])
+        after = float(forehead_after[metric])
+        forehead_rows.append(
+            "<tr>"
+            f"<th>{html.escape(label)}</th>"
+            f"<td>{number(before)}</td>"
+            f"<td>{number(after)}</td>"
+            f"<td>{number(after - before)}</td>"
+            "</tr>"
+        )
+
+    control_notice = summary.get("control_correction", {}).get("notice", CONTROL_NOTICE)
+    output = output_dir / "summary.html"
+    document = f"""<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab before / after summary</title>
+<style>
+body {{ font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 1180px;
+       margin: 32px auto; padding: 0 20px 60px; line-height: 1.6; color: #222; }}
+h1 {{ margin-bottom: 0.25rem; }}
+.note {{ background: #f5f5f5; border-left: 4px solid #777; padding: 12px 16px; }}
+.grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }}
+.card {{ border: 1px solid #ddd; border-radius: 10px; padding: 16px; }}
+img {{ max-width: 100%; height: auto; display: block; }}
+table {{ width: 100%; border-collapse: collapse; margin: 12px 0 24px; }}
+th, td {{ border-bottom: 1px solid #ddd; padding: 9px 10px; text-align: right; }}
+th:first-child {{ text-align: left; }}
+thead th {{ background: #f7f7f7; }}
+small {{ color: #666; }}
+a {{ color: inherit; }}
+</style>
+</head>
+<body>
+<h1>before / after Lab 解析</h1>
+<p>まず ROI が正しいか確認し、その後に a*（赤み）の変化を見ます。
+これは美しさの点数でも、化粧効果を証明する指標でもありません。</p>
+
+<h2>1. ROI確認</h2>
+<div class="card">
+<img src="roi_samples.png" alt="before/after ROI samples">
+</div>
+
+<h2>2. 頬の a*（赤み）</h2>
+<table>
+<thead><tr>
+<th>ROI</th><th>before平均</th><th>after平均</th><th>Δ平均</th>
+<th>Δ平均−額Δ</th><th>中央値 (Δ)</th><th>p95</th><th>a*≥20画素率</th>
+</tr></thead>
+<tbody>{''.join(cheek_rows)}</tbody>
+</table>
+<p><small>Δ = after − before。p95 と a*≥20画素率は、ROI全体の平均では見えにくい
+局所的な高a*画素の変化を見るための記述統計です。固定閾値20は妥当性を検証済みの判定基準ではありません。</small></p>
+
+<h2>3. 額の変化（control確認）</h2>
+<table>
+<thead><tr><th>指標</th><th>before</th><th>after</th><th>Δ</th></tr></thead>
+<tbody>{''.join(forehead_rows)}</tbody>
+</table>
+<p class="note">{html.escape(control_notice)}</p>
+
+<h2>4. 分布を見る</h2>
+<div class="grid">
+<div class="card"><h3>画面左の頬</h3><img src="left_cheek_lab_hist.png" alt="left cheek Lab histogram"></div>
+<div class="card"><h3>画面右の頬</h3><img src="right_cheek_lab_hist.png" alt="right cheek Lab histogram"></div>
+<div class="card"><h3>額</h3><img src="forehead_lab_hist.png" alt="forehead Lab histogram"></div>
+</div>
+
+<h2>5. 元データ</h2>
+<p>
+<a href="lab_deltas.csv">lab_deltas.csv</a> /
+<a href="lab_stats.csv">lab_stats.csv</a> /
+<a href="analysis_summary.json">analysis_summary.json</a>
+</p>
+<p><small>左右は解剖学的左右ではなく、画像・画面上の左右です。
+ROI間のピクセル対応付けは行っていません。</small></p>
+</body>
+</html>
+"""
+    output.write_text(document, encoding="utf-8")
+    return output
+
+
 def analyze_pair(
     before_path: Path,
     after_path: Path,
@@ -236,6 +391,7 @@ def analyze_pair(
             "statistics": "lab_stats.csv",
             "deltas": "lab_deltas.csv",
             "samples": "roi_samples.png",
+            "summary_html": "summary.html",
             "histograms": [f"{name}_lab_hist.png" for name in ROI_NAMES],
         },
     }
@@ -252,4 +408,5 @@ def analyze_pair(
     with (output_dir / "analysis_summary.json").open("w", encoding="utf-8") as handle:
         json.dump(summary, handle, ensure_ascii=False, indent=2, allow_nan=False)
         handle.write("\n")
+    write_summary_html(output_dir, summary)
     return summary
