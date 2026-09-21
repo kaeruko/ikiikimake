@@ -101,6 +101,15 @@ class SamplingBoundariesTests(unittest.TestCase):
         self.assertEqual([r["timestamp_seconds"] for r in result], [65, 195.99, 2022, 2123.99])
         self.assertEqual(records, original)
 
+    def test_coarse_sampling_uses_only_selected_before_and_after_ranges(self):
+        times = sampling.coarse_sample_times((65, 76), (2022, 2034), 5)
+        self.assertEqual(times, [65, 70, 75, 2022, 2027, 2032])
+        self.assertFalse(any(76 <= value < 2022 for value in times))
+
+    def test_coarse_sampling_rejects_invalid_interval(self):
+        with self.assertRaises(ValueError):
+            sampling.coarse_sample_times((65, 76), (2022, 2034), 0)
+
 
 class ExtractionSamplingTests(unittest.TestCase):
     def setUp(self):
