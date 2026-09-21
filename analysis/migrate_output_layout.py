@@ -78,15 +78,33 @@ def rewrite_paths(directory: Path, old_absolute: str, new_absolute: str) -> None
     for path in directory.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
             continue
+
+        temp = path.with_name(path.name + ".rewrite_tmp")
+        changed = False
         try:
-            text = path.read_text(encoding="utf-8")
+            with path.open("r", encoding="utf-8", newline="") as source, temp.open(
+                "w", encoding="utf-8", newline=""
+            ) as destination:
+                for chunk in source:
+                    updated = chunk
+                    for old, new in replacements:
+                        updated = updated.replace(old, new)
+                    if updated != chunk:
+                        changed = True
+                    destination.write(updated)
         except UnicodeDecodeError:
+            if temp.exists():
+                temp.unlink()
             continue
-        updated = text
-        for old, new in replacements:
-            updated = updated.replace(old, new)
-        if updated != text:
-            path.write_text(updated, encoding="utf-8")
+        except Exception:
+            if temp.exists():
+                temp.unlink()
+            raise
+
+        if changed:
+            temp.replace(path)
+        else:
+            temp.unlink()
 
 
 def refresh_selected_pair(directory: Path) -> None:
