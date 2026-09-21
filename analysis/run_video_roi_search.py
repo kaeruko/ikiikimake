@@ -81,6 +81,14 @@ def filter_records(records: list[dict], before_range: tuple, after_range: tuple)
                                                for start, end in (before_range, after_range))]
 
 
+def coarse_sample_times(before_range: tuple[float, float], after_range: tuple[float, float],
+                        interval: float) -> list[float]:
+    """Sample only the semantic before/after windows, never the unused middle of the video."""
+    before = sample_times(before_range[0], before_range[1], interval)
+    after = sample_times(after_range[0], after_range[1], interval)
+    return before + after
+
+
 def extract_samples(video: dict, output: Path, timestamps: list[float], records: list[dict],
                     extractor: RoiExtractor, stage: str) -> None:
     known = {item['frame_id'] for item in records}
@@ -182,7 +190,7 @@ def run(args) -> dict:
     before_range = validate_range(args.before_range, 0, split, 'Before')
     after_range = validate_range(args.after_range, split, duration, 'After')
     interval = args.interval
-    sample_times(0, duration, interval)  # Validate before creating output.
+    coarse_times = coarse_sample_times(before_range, after_range, interval)
     if not math.isfinite(args.refine_interval) or not 0 < args.refine_interval <= interval:
         raise ValueError('Refinement interval must be >0 and <= coarse interval')
     gap = duration * 0.25 if args.min_gap is None else args.min_gap
@@ -208,7 +216,7 @@ def run(args) -> dict:
     (output / 'frames.jsonl').touch(exist_ok=True)
     write_json(output / 'scan_config.json', dict(video=video, sample_interval_seconds=interval, extraction_signature=signature))
     with RoiExtractor(args.model_dir, RoiConfig()) as extractor:
-        extract_samples(video, output, sample_times(0, duration, interval), records, extractor, 'coarse')
+        extract_samples(video, output, coarse_times, records, extractor, 'coarse')
         considered = filter_records(records, before_range, after_range)
         matching = rank_pairs(considered, split, gap, top_k=args.top)
         if not args.no_refine and matching['ranked_pairs']:
