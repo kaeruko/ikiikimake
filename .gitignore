@@ -26,3 +26,5 @@ outputs/makeup_transfer*/
 models/makeup_transfer*/
 *.pt
 *.pth
+
+datasets/
