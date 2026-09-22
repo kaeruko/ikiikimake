@@ -1,0 +1,5 @@
+# Optional: needed only for benchmark --perceptual.
+-r requirements-makeup.txt
+torchvision==0.26.0
+lpips==0.1.4
+pytorch-fid==0.3.0

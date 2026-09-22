@@ -20,3 +20,9 @@ outputs/roi_debug/
 !review_exports/*.png
 !review_exports/*.jpg
 !review_exports/*.html
+
+# Generated makeup-transfer data, training weights and local verification runs.
+outputs/makeup_transfer*/
+models/makeup_transfer*/
+*.pt
+*.pth
