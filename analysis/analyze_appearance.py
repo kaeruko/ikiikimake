@@ -21,7 +21,7 @@ from analysis.analyze_cheek_lab import load_image, load_masks
 from analysis.appearance_features import build_feature_masks, measure_features
 
 
-APPEARANCE_VERSION = 'selected-appearance-v1'
+APPEARANCE_VERSION = 'selected-appearance-v2-eye-texture'
 PHASES = ('before', 'after')
 ARTIFACTS = ('feature_summary.json', 'feature_deltas.csv', 'appearance_rois.png',
              'region_samples.png', 'feature_changes.png', 'report.html',
@@ -30,12 +30,13 @@ REGION_LABELS = {
     'screen_left_brow': '画面左の眉', 'screen_right_brow': '画面右の眉',
     'screen_left_upper_lid': '画面左の上まぶた',
     'screen_right_upper_lid': '画面右の上まぶた',
-    'lips': '唇', 'left_cheek': '画面左の頬',
-    'right_cheek': '画面右の頬', 'forehead': '額',
+    'lips': '唇', 'screen_left_lower_eye_skin': '画面左の目の下',
+    'screen_right_lower_eye_skin': '画面右の目の下',
+    'left_cheek': '画面左の頬', 'right_cheek': '画面右の頬', 'forehead': '額',
 }
 COLORS = {
     'brow': (205, 120, 255), 'upper_lid': (0, 205, 240),
-    'lips': (255, 90, 155), 'left_cheek': (50, 215, 80),
+    'lower_eye': (80, 220, 220), 'lips': (255, 90, 155), 'left_cheek': (50, 215, 80),
     'right_cheek': (65, 150, 255), 'forehead': (240, 190, 30),
 }
 
@@ -126,6 +127,7 @@ def _quality(frames: dict) -> dict:
         '目・眉・唇のROIは新規の自動生成領域です。重ね合わせ画像で位置と遮蔽物を確認してください。',
         '視線、表情、照明、ピント、動画圧縮は自動的に補正していません。前後の工程も画像で確認してください。',
         '同じ人の2枚の記述比較です。総合的な好印象、化粧の効果、統計的な有意差は判定しません。',
+        '目の下の高周波指標は細かな線・凹凸・粒状感の見え方を拾いますが、乾燥・シワの診断ではありません。ピント、照明、圧縮、メイク境界も混入します。',
     ]
     for phase, frame in frames.items():
         dimensions[phase] = list(frame['image'].shape[1::-1])
@@ -257,13 +259,13 @@ def summary_html(summary: dict, *, include_images=False) -> str:
     timing = ' → '.join(time_label(inputs[p]['timestamp_seconds']) for p in PHASES)
     return f'''<section class="appearance"><h2>部位別の見た目の変化</h2>
 <p>比較時刻：{timing} ／ 左右は画面上の位置です。</p>
-<p>目元・眉・唇のコントラスト、頬の色づき・色むら・明部率を同じルールで比較します。
+<p>目元・眉・唇のコントラスト、目の下の細かな質感コントラスト、頬の色づき・色むら・明部率を同じルールで比較します。
 <b>「好印象になったか」の総合点は付けません。</b>自動値の増減を、人の印象評価の理由と照合するための試作です。</p>
 <p>総合印象・いきいき感・自然さは人が評価する項目です。ノートブック末尾で任意の目視記録を保存できます。</p>
 <ul>{warning_list}</ul>{pictures}
 <table><thead><tr><th>指標</th><th>単位</th><th>before</th><th>after</th><th>差</th><th>状態</th></tr></thead><tbody>{''.join(rows)}</tbody></table>
-<p>差は after − before。赤み・明暗差が増えても、それだけで好ましいとは判定しません。
-明部率は光沢の候補であり、照明や皮膚色の影響を含みます。シワの評価は含めていません。</p>
+<p>差は after − before。赤み・明暗差や高周波コントラストが増えても、それだけで好ましい・悪いとは判定しません。
+明部率は光沢の候補であり、照明や皮膚色の影響を含みます。目の下の高周波指標は乾燥やシワの診断ではありません。</p>
 <details><summary>測定ルールと画素数</summary><ul>{definitions}</ul></details></section>'''
 
 
