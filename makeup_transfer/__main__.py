@@ -18,7 +18,11 @@ def parser():
     prepare.add_argument("--variants", type=int, default=3)
     prepare.add_argument("--seed", type=int, default=42)
     prepare.add_argument("--landmark-model", type=Path, default=Path("models/face_landmarker.task"))
-    prepare.add_argument("--real-makeup", type=Path, help="Optional real makeup images for eye pseudo labels")
+    prepare.add_argument("--real-makeup", type=Path, help="Optional real makeup images for paper-style eye pseudo labels")
+    prepare.add_argument("--max-real-makeup", type=int,
+                         help="Bound real-makeup images independently; defaults to --max-images when set")
+    prepare.add_argument("--real-preview-count", type=int, default=8,
+                         help="Save this many real-eye pseudo-label review montages")
     prepare.add_argument("--sources", nargs="+", choices=("ffhq", "fairface"))
     prepare.add_argument("--canvas-size", type=int, default=512)
     train = commands.add_parser("train", help="Pretrain lip regressor then train regional GANs")
@@ -57,6 +61,14 @@ def parser():
     benchmark.add_argument("--device", default="auto")
     benchmark.add_argument("--landmark-model", type=Path, default=Path("models/face_landmarker.task"))
     benchmark.add_argument("--perceptual", action="store_true", help="Compute LPIPS/FID using optional packages and their pretrained weights")
+    extract = commands.add_parser("extract", help="Extract canonical RGBA makeup patches from one reference image")
+    extract.add_argument("--reference", type=Path, required=True)
+    extract.add_argument("--output", type=Path, required=True, help="Output .npz file for extracted RGBA patches")
+    extract.add_argument("--checkpoints", type=Path, required=True)
+    extract.add_argument("--geometry", type=Path)
+    extract.add_argument("--landmark-model", type=Path, default=Path("models/face_landmarker.task"))
+    extract.add_argument("--device", default="auto")
+    extract.add_argument("--regions", nargs="+", choices=("eye", "lip", "cheek"), default=["eye", "lip", "cheek"])
     for name in ("transfer", "video"):
         command = commands.add_parser(name, help="Apply one extracted style to an image" if name == "transfer" else "Reuse one style throughout a video")
         command.add_argument("--reference", type=Path, required=True)
@@ -85,7 +97,9 @@ def main(argv=None):
         from .prepare import prepare_dataset
         result = prepare_dataset(args.datasets, args.output, max_images=args.max_images,
                                  variants=args.variants, seed=args.seed, model_path=args.landmark_model,
-                                 real_makeup_dir=args.real_makeup, sources=args.sources, canvas_size=args.canvas_size)
+                                 real_makeup_dir=args.real_makeup, max_real_makeup=args.max_real_makeup,
+                                 real_preview_count=args.real_preview_count,
+                                 sources=args.sources, canvas_size=args.canvas_size)
         result = {"manifest": str(args.output / "manifest.json"),
                   "records": len(result.get("records", [])), "summary": result.get("summary", {})}
     elif args.command == "train":
@@ -102,6 +116,11 @@ def main(argv=None):
         result = benchmark(args.data, args.checkpoints, args.output, split=args.split,
                            max_pairs=args.max_pairs, seed=args.seed, device=args.device,
                            landmark_model=args.landmark_model, perceptual=args.perceptual)
+    elif args.command == "extract":
+        from .inference import run_extract
+        result = run_extract(args.reference, args.output, args.checkpoints,
+                             geometry_path=args.geometry, landmark_model=args.landmark_model,
+                             device=args.device, regions=args.regions)
     else:
         from .inference import run_image, run_video
         kwargs = {key: getattr(args, key) for key in ("reference", "target", "output", "checkpoints",

@@ -79,7 +79,38 @@ CPU環境ではPyTorch公式のCPU版を使い、各コマンドに `--device cp
 
 最後の設定は論文の基本値に対応しますが、付録のstride=1を使う `paper` の識別器・色回帰器は大量のGPUメモリを使います。16GB環境でこのバッチサイズが収まることは保証していません。ローカル向けには `--architecture strided --batch-size 2 --color-batch-size 4 --amp`、必要に応じて `--base-channels 32` を指定します。この変更は論文と異なる構成として保存されます。
 
-`--sources ffhq` / `--sources fairface` で片方だけを選べます。実際のメイク参照画像がある場合は、prepareに `--real-makeup パス` を追加すると目のk-means擬似ラベルも生成・混合します。入力を本当のメイク画像として扱う指定なので、すっぴんデータをこの引数に指定しないでください。
+`--sources ffhq` / `--sources fairface` で片方だけを選べます。
+
+### 実メイク参照を混ぜる
+
+論文では、graphics-based擬似正解に加えて、**実メイク画像から作ったk-means擬似ラベルを目モデルだけに混ぜます**。唇・頬へ同じk-means教師を広げる記述は論文にはないため、この実装も eye のみです。入力は本当にメイク済みの画像にしてください。すっぴん画像を `--real-makeup` に指定すると教師信号の意味が変わるため、自動判定やフォールバックは行いません。
+
+たとえば、ローカルに実メイク画像を `datasets\real_makeup\` として置いた場合:
+
+```powershell
+.\.venv\Scripts\python.exe -m makeup_transfer prepare `
+  --datasets datasets --sources fairface `
+  --real-makeup datasets\real_makeup `
+  --max-real-makeup 2719 --real-preview-count 16 `
+  --output outputs\makeup_transfer_real_eye\data --variants 3
+```
+
+`--max-real-makeup` は実メイク画像だけを独立に制限します。省略時は、スモークテストとの互換性のため `--max-images` が指定されていれば同じ上限を使い、`--max-images` も無ければ実メイク画像を全件使います。
+
+prepare後は `data\real_eye_previews\` を先に目視してください。各画像は **canonical RGB / 推定alpha / alpha領域のマゼンタ重畳** の3面で、k=6・s=2のLAB k-meansから得た擬似ラベルが本当にアイメイクへ反応しているか確認できます。顔検出失敗や空の実メイクフォルダはエラーまたはmanifestのskipとして明示され、別方式へ自動で切り替えません。
+
+manifestの `summary` には、検出できたsynthetic/real makeup画像数、kind別・region別record数、保存したreal-eye preview数を記録します。
+
+実メイクを混ぜたモデルで、まずRGBA抽出だけを確認するには:
+
+```powershell
+.\.venv\Scripts\python.exe -m makeup_transfer extract `
+  --reference path\to\real_makeup_reference.jpg `
+  --checkpoints outputs\makeup_transfer_real_eye\checkpoints `
+  --output outputs\makeup_transfer_real_eye\reference_style.npz
+```
+
+`reference_style.eye.png` / `lip.png` / `cheek.png` は、抽出したstraight-alpha RGBAをチェッカーボード上に合成した確認画像です。ここで**顔のシワや肌そのものではなく、メイク層として妥当な色とalphaだけが出ているか**を確認してから転写へ進みます。NPZには各部位のRGBAをそのまま保存します。
 
 中断後は同じtrainコマンドに `--resume` を追加します。重み、最適化器、AMP状態、処理ステップを復元します。保存は各epoch終了時または `--max-steps` 到達時です。epoch途中のcheckpointを再開する場合、そのepochを最初から繰り返します。乱数状態まで一致する厳密な再開ではありません。`--epochs` と `--max-steps` は再開後の追加数ではなく全体の上限です。再開時に指定した学習率が最適化器にも適用されます。
 

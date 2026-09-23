@@ -189,6 +189,19 @@ class MakeupDataTests(unittest.TestCase):
         self.assertEqual(source_split(ids, seed=8), source_split(ids[::-1], seed=8))
         self.assertEqual(set(source_split(ids, seed=8).values()), {"train", "val", "test"})
 
+    def test_prepare_rejects_same_bytes_in_synthetic_and_real_roles(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, real = root / "source", root / "real"
+            source.mkdir()
+            real.mkdir()
+            encoded = cv2.imencode(".png", np.full((64, 64, 3), 128, np.uint8))[1].tobytes()
+            (source / "face.png").write_bytes(encoded)
+            (real / "same_face.png").write_bytes(encoded)
+            with self.assertRaisesRegex(ValueError, "both synthetic and real_eye"):
+                prepare_dataset(source, root / "prepared", variants=1, image_size=32, canvas_size=64,
+                                model_path=root / "missing.task", real_makeup_dir=real)
+
     def test_prepare_has_no_source_or_prior_leakage(self):
         class Detector:
             def __init__(self, *_):
@@ -221,15 +234,27 @@ class MakeupDataTests(unittest.TestCase):
             (source / "duplicate.png").write_bytes((source / "face0.png").read_bytes())
             real_image = np.full((64, 64, 3), (180, 120, 70), np.uint8)
             cv2.imencode(".png", real_image)[1].tofile(real / "real_makeup.png")
+            real_image_two = np.full((64, 64, 3), (90, 180, 120), np.uint8)
+            cv2.imencode(".png", real_image_two)[1].tofile(real / "real_makeup_two.png")
             with patch("makeup_transfer.prepare.FaceDetector", Detector):
-                manifest = prepare_dataset(source, output, variants=2, image_size=32, canvas_size=64, real_makeup_dir=real)
+                manifest = prepare_dataset(source, output, variants=2, image_size=32, canvas_size=64,
+                                           real_makeup_dir=real, max_real_makeup=1, real_preview_count=2)
             self.assertEqual(len(manifest["sources"]), 6)
             self.assertEqual(len(manifest["duplicates"]), 1)
             self.assertEqual(len(manifest["records"]), 5 * 2 * 3 + 1)
-            real_record = next(r for r in manifest["records"] if r["kind"] == "real_eye")
+            real_records = [r for r in manifest["records"] if r["kind"] == "real_eye"]
+            self.assertEqual(len(real_records), 1)
+            real_record = real_records[0]
             self.assertEqual(real_record["region"], "eye")
             with np.load(output / real_record["path"]) as real_sample:
                 self.assertEqual(float(real_sample["has_alpha"]), 0)
+            self.assertEqual(manifest["summary"]["detected_real_makeup_sources"], 1)
+            self.assertEqual(manifest["summary"]["records_by_kind"]["real_eye"], 1)
+            self.assertEqual(manifest["summary"]["real_eye_previews"], 1)
+            previews = list((output / "real_eye_previews").glob("*.png"))
+            self.assertEqual(len(previews), 1)
+            preview = cv2.imdecode(np.fromfile(previews[0], dtype=np.uint8), cv2.IMREAD_COLOR)
+            self.assertEqual(preview.shape[:2], (64, 192))
             for identity in expected_points:
                 splits = {r["split"] for r in manifest["records"] if r["source_id"] == identity}
                 self.assertEqual(len(splits), 1)
@@ -247,7 +272,9 @@ class MakeupDataTests(unittest.TestCase):
                         self.assertEqual(float(sample["has_alpha"]), 1)
                         alphas.append(sample["target"][..., 3:4].astype(np.float32))
                 np.testing.assert_allclose(np.load(output / manifest["average_alpha"][region]), np.mean(alphas, axis=0), atol=0.0003)
-            self.assertEqual(json.loads((output / "manifest.json").read_text())["schema_version"], 1)
+            saved_manifest = json.loads((output / "manifest.json").read_text())
+            self.assertEqual(saved_manifest["schema_version"], 1)
+            self.assertEqual(saved_manifest["summary"]["records"], len(manifest["records"]))
             try:
                 from makeup_transfer.data import MakeupDataset
             except ImportError:
