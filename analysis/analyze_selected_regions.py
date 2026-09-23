@@ -23,7 +23,7 @@ from analysis.analyze_cheek_lab import load_image, load_masks
 from analysis.appearance_features import build_feature_masks, measure_features, measure_gvr_inspired_features
 
 
-ANALYSIS_VERSION = "selected-region-appearance-v8"
+ANALYSIS_VERSION = "selected-region-appearance-v9"
 
 REGION_METRIC_IDS = {
     "eye_texture": (

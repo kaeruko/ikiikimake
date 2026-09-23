@@ -349,14 +349,18 @@ def build_feature_masks(
         outward_unit = outward_hint / outward_length
         control_point = line_midpoint + outward_unit * (0.040 * face_width)
 
+        # The previous review showed that the outer cyan band, not the inner
+        # yellow band, followed the visible nasolabial crease. Promote that
+        # reviewed geometry to the candidate and move the control farther cheekward.
         candidate = _quadratic_bezier_band_mask(
             nose_point,
             control_point,
             end_point,
-            0.022 * face_width,
+            0.014 * face_width,
             shape,
             f"{side} nasolabial candidate",
             outward_hint=outward_hint,
+            normal_offset=0.052 * face_width,
         )
         candidate &= face_mask & ~mouth_guard
 
@@ -368,7 +372,7 @@ def build_feature_masks(
             shape,
             f"{side} nasolabial outer control",
             outward_hint=outward_hint,
-            normal_offset=0.052 * face_width,
+            normal_offset=0.090 * face_width,
         )
         outer_control &= face_mask & ~mouth_guard & ~candidate
 
