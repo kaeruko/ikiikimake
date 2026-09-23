@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>動画の before / after ROI 候補</title><style>
+:root{color-scheme:light}body{font:16px/1.65 system-ui,sans-serif;margin:0;background:#f3f5f4;color:#20302a}
+main{max-width:1440px;margin:auto;padding:24px}h1{font-size:1.8rem}h2{font-size:1.35rem}h3{font-size:1.05rem}
+a{color:#11624e}.notice{background:#fff0c6;border-left:5px solid #d49e27;padding:16px}
+.metrics{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}.metric{flex:1;min-width:150px;background:white;padding:16px;border-radius:8px}
+.metric strong{display:block;font-size:1.9rem}.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+article{background:white;border:1px solid #d8e1dc;border-radius:10px;padding:20px;margin:20px 0}
+img{max-width:100%;height:auto;border-radius:4px}.hero{display:block;max-height:640px;margin:auto}.pair img{width:100%;object-fit:contain;background:#202522}
+.small{font-size:.9rem;color:#50655b}.distance{font-size:.85rem;font-weight:normal;margin-left:12px}
+table{border-collapse:collapse;width:100%;background:white}th,td{text-align:left;padding:10px;border:1px solid #d8e1dc;vertical-align:top}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e9efeb;padding:12px;font-size:.85rem}details{margin:16px 0}summary{cursor:pointer;font-weight:600}
+.scroll{overflow:auto}@media(max-width:760px){main{padding:14px}.pair{grid-template-columns:1fr}}
+</style></head><body><main><h1>動画から抽出した before / after ROI 候補</h1>
+<p class="notice">ここに示すのは、時間帯と顔の幾何条件から選んだ比較候補です。before / after は仮の時系列ラベルで、
+メイク開始前・完成後や同一人物であることを保証しません。自動チェック通過後も、手・髪・道具・影・表情・領域の位置を目視してください。
+この処理では ROI の承認・Lab 解析・メイクの採点は行っていません。</p>
+<div class="metrics"><div class="metric">抽出画像<strong>196</strong></div>
+<div class="metric">自動チェック通過・要目視<strong>90</strong></div>
+<div class="metric">自動チェックで停止<strong>106</strong></div>
+<div class="metric">表示中の候補ペア<strong>9</strong></div></div>
+<p>候補順位は顔向き・サイズなどの幾何条件を使い、肌色の改善量では選んでいません。額にもメイクが加わる可能性があるため、額の変化を露出補正とは扱いません。</p><p>今回の選択範囲（以下の範囲内で候補を比較）：</p><pre>{
+  &quot;before&quot;: [
+    207.0,
+    267.0
+  ],
+  &quot;after&quot;: [
+    1380.0,
+    1500.0
+  ]
+}</pre>
+<h2>今回の選択範囲内の先頭候補</h2><p>ROI の位置と時刻</p><a href="best_pair_roi_overlay.png"><img class="hero" src="best_pair_roi_overlay.png" alt="先頭候補の ROI 重ね合わせと時刻"></a><p>元画像の全景</p><a href="best_pair.png"><img class="hero" src="best_pair.png" alt="先頭候補の全景と時刻"></a><p>顔の拡大表示</p><a href="best_pair_faces.png"><img class="hero" src="best_pair_faces.png" alt="先頭候補の顔を拡大した画像"></a><p class="small">顔画像は見やすい寸法に拡大・縮小した表示用画像です。色補正は行っていません。今後の解析には、リンク先の元画像と元解像度のマスクを使用します。</p><h2>比較候補（上位 9 組）</h2>
+<p>ROI の色：画面左頬＝緑、画面右頬＝青、額＝黄。左右は画像上の位置です。</p><article><h2>候補 1 <span class="distance">幾何差 0.9303</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 04:00.99</h3><a href="rois/frame_0000240991ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000240991ms/roi_overlay.png" alt="before frame_0000240991ms の ROI 候補"></a><p class="small">フレーム frame_0000240991ms / yaw -7.78° · pitch -0.47° · roll 0.06°</p><p><a href="frames/frame_0000240991ms.png">元画像 PNG</a> · <a href="rois/frame_0000240991ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000240991ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 23:23.49</h3><a href="rois/frame_0001403485ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001403485ms/roi_overlay.png" alt="after frame_0001403485ms の ROI 候補"></a><p class="small">フレーム frame_0001403485ms / yaw -6.29° · pitch -0.10° · roll 2.12°</p><p><a href="frames/frame_0001403485ms.png">元画像 PNG</a> · <a href="rois/frame_0001403485ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001403485ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 1.493435683734054,
+    &quot;pitch_gap_degrees&quot;: 0.3700694108168621,
+    &quot;roll_gap_degrees&quot;: 2.0630766695420486,
+    &quot;face_scale_ratio&quot;: 1.0031382839082628,
+    &quot;log_face_scale_ratio&quot;: 0.0031333697739331467,
+    &quot;roi_procrustes_rms&quot;: 0.017656496275262883,
+    &quot;eye_aperture_gap&quot;: 0.004869448190593609,
+    &quot;mouth_opening_gap&quot;: 0.007155613558655448,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.1493435683734054,
+      &quot;pitch&quot;: 0.037006941081686215,
+      &quot;roll&quot;: 0.17192305579517073,
+      &quot;face_scale&quot;: 0.007727840722356977,
+      &quot;roi_shape&quot;: 0.3531299255052576,
+      &quot;eye_aperture&quot;: 0.12173620476484022,
+      &quot;mouth_opening&quot;: 0.0894451694831931
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1162.4946666666667,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.04037167419476505,
+        0.039368722256463075
+      ],
+      &quot;mouth_opening&quot;: 0.015302551971233386
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.039581808297442046,
+        0.034499274065869466
+      ],
+      &quot;mouth_opening&quot;: 0.008146938412577938
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.0007898658973230013,
+      0.004869448190593609
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 2 <span class="distance">幾何差 0.9495</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:43.01</h3><a href="rois/frame_0000223014ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000223014ms/roi_overlay.png" alt="before frame_0000223014ms の ROI 候補"></a><p class="small">フレーム frame_0000223014ms / yaw -7.76° · pitch 0.16° · roll 0.49°</p><p><a href="frames/frame_0000223014ms.png">元画像 PNG</a> · <a href="rois/frame_0000223014ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000223014ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 23:23.49</h3><a href="rois/frame_0001403485ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001403485ms/roi_overlay.png" alt="after frame_0001403485ms の ROI 候補"></a><p class="small">フレーム frame_0001403485ms / yaw -6.29° · pitch -0.10° · roll 2.12°</p><p><a href="frames/frame_0001403485ms.png">元画像 PNG</a> · <a href="rois/frame_0001403485ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001403485ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 1.4704092714251473,
+    &quot;pitch_gap_degrees&quot;: 0.26283190163493647,
+    &quot;roll_gap_degrees&quot;: 1.6296732598064354,
+    &quot;face_scale_ratio&quot;: 1.000307652328504,
+    &quot;log_face_scale_ratio&quot;: 0.0003076050132305082,
+    &quot;roi_procrustes_rms&quot;: 0.016248735815751328,
+    &quot;eye_aperture_gap&quot;: 0.009491977457116968,
+    &quot;mouth_opening_gap&quot;: 0.006184084799716792,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.14704092714251474,
+      &quot;pitch&quot;: 0.026283190163493647,
+      &quot;roll&quot;: 0.1358061049838696,
+      &quot;face_scale&quot;: 0.0007586473091747504,
+      &quot;roi_shape&quot;: 0.32497471631502656,
+      &quot;eye_aperture&quot;: 0.2372994364279242,
+      &quot;mouth_opening&quot;: 0.0773010599964599
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1180.4709583333333,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.03008983084032508,
+        0.03206417504912478
+      ],
+      &quot;mouth_opening&quot;: 0.0019628536128611465
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.039581808297442046,
+        0.034499274065869466
+      ],
+      &quot;mouth_opening&quot;: 0.008146938412577938
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.009491977457116968,
+      0.002435099016744685
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 3 <span class="distance">幾何差 1.0896</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:36.01</h3><a href="rois/frame_0000216007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000216007ms/roi_overlay.png" alt="before frame_0000216007ms の ROI 候補"></a><p class="small">フレーム frame_0000216007ms / yaw -7.73° · pitch 2.59° · roll -0.33°</p><p><a href="frames/frame_0000216007ms.png">元画像 PNG</a> · <a href="rois/frame_0000216007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000216007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 24:03.98</h3><a href="rois/frame_0001443984ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001443984ms/roi_overlay.png" alt="after frame_0001443984ms の ROI 候補"></a><p class="small">フレーム frame_0001443984ms / yaw -5.09° · pitch 1.92° · roll 0.53°</p><p><a href="frames/frame_0001443984ms.png">元画像 PNG</a> · <a href="rois/frame_0001443984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001443984ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 2.639642959346096,
+    &quot;pitch_gap_degrees&quot;: 0.674065337457427,
+    &quot;roll_gap_degrees&quot;: 0.8605961883595448,
+    &quot;face_scale_ratio&quot;: 1.1134169483456464,
+    &quot;log_face_scale_ratio&quot;: 0.10743361880486021,
+    &quot;roi_procrustes_rms&quot;: 0.00983360605712206,
+    &quot;eye_aperture_gap&quot;: 0.008474439188239404,
+    &quot;mouth_opening_gap&quot;: 0.0010393251735414735,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.2639642959346096,
+      &quot;pitch&quot;: 0.06740653374574271,
+      &quot;roll&quot;: 0.07171634902996206,
+      &quot;face_scale&quot;: 0.26496390603405645,
+      &quot;roi_shape&quot;: 0.1966721211424412,
+      &quot;eye_aperture&quot;: 0.21186097970598508,
+      &quot;mouth_opening&quot;: 0.012991564669268419
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1227.97675,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.047728404324886606,
+        0.04696779623764292
+      ],
+      &quot;mouth_opening&quot;: 0.033157949850663455
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.05620284351312601,
+        0.05469184929611184
+      ],
+      &quot;mouth_opening&quot;: 0.03211862467712198
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.008474439188239404,
+      0.007724053058468919
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 4 <span class="distance">幾何差 1.2061</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:57.99</h3><a href="rois/frame_0000237988ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000237988ms/roi_overlay.png" alt="before frame_0000237988ms の ROI 候補"></a><p class="small">フレーム frame_0000237988ms / yaw -5.56° · pitch 1.58° · roll -0.04°</p><p><a href="frames/frame_0000237988ms.png">元画像 PNG</a> · <a href="rois/frame_0000237988ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000237988ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 24:03.98</h3><a href="rois/frame_0001443984ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001443984ms/roi_overlay.png" alt="after frame_0001443984ms の ROI 候補"></a><p class="small">フレーム frame_0001443984ms / yaw -5.09° · pitch 1.92° · roll 0.53°</p><p><a href="frames/frame_0001443984ms.png">元画像 PNG</a> · <a href="rois/frame_0001443984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001443984ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 0.46468318614012816,
+    &quot;pitch_gap_degrees&quot;: 0.33498119462744835,
+    &quot;roll_gap_degrees&quot;: 0.5736945238085461,
+    &quot;face_scale_ratio&quot;: 1.1379251145089353,
+    &quot;log_face_scale_ratio&quot;: 0.129206529065235,
+    &quot;roi_procrustes_rms&quot;: 0.01833566670136704,
+    &quot;eye_aperture_gap&quot;: 0.002533554903103259,
+    &quot;mouth_opening_gap&quot;: 0.026364909307496902,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.046468318614012814,
+      &quot;pitch&quot;: 0.033498119462744835,
+      &quot;roll&quot;: 0.04780787698404551,
+      &quot;face_scale&quot;: 0.3186625099952301,
+      &quot;roi_shape&quot;: 0.3667133340273408,
+      &quot;eye_aperture&quot;: 0.06333887257758147,
+      &quot;mouth_opening&quot;: 0.32956136634371125
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1205.9964583333333,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.057353303183719784,
+        0.05215829439300858
+      ],
+      &quot;mouth_opening&quot;: 0.005753715369625082
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.05620284351312601,
+        0.05469184929611184
+      ],
+      &quot;mouth_opening&quot;: 0.03211862467712198
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.0011504596705937745,
+      0.002533554903103259
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 5 <span class="distance">幾何差 1.2912</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:33.00</h3><a href="rois/frame_0000213004ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000213004ms/roi_overlay.png" alt="before frame_0000213004ms の ROI 候補"></a><p class="small">フレーム frame_0000213004ms / yaw -8.06° · pitch 3.58° · roll 1.32°</p><p><a href="frames/frame_0000213004ms.png">元画像 PNG</a> · <a href="rois/frame_0000213004ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000213004ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 24:38.02</h3><a href="rois/frame_0001478018ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001478018ms/roi_overlay.png" alt="after frame_0001478018ms の ROI 候補"></a><p class="small">フレーム frame_0001478018ms / yaw -5.62° · pitch 3.99° · roll 3.21°</p><p><a href="frames/frame_0001478018ms.png">元画像 PNG</a> · <a href="rois/frame_0001478018ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001478018ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 2.446839420693488,
+    &quot;pitch_gap_degrees&quot;: 0.40709052461779915,
+    &quot;roll_gap_degrees&quot;: 1.8832756826003145,
+    &quot;face_scale_ratio&quot;: 1.1635191453290774,
+    &quot;log_face_scale_ratio&quot;: 0.15144915857031807,
+    &quot;roi_procrustes_rms&quot;: 0.015319923726478965,
+    &quot;eye_aperture_gap&quot;: 0.006470888790904336,
+    &quot;mouth_opening_gap&quot;: 0.0005779910487009952,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.2446839420693488,
+      &quot;pitch&quot;: 0.040709052461779915,
+      &quot;roll&quot;: 0.15693964021669288,
+      &quot;face_scale&quot;: 0.3735195841559727,
+      &quot;roi_shape&quot;: 0.3063984745295793,
+      &quot;eye_aperture&quot;: 0.1617722197726084,
+      &quot;mouth_opening&quot;: 0.00722488810876244
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1265.0137499999998,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.050829960541549354,
+        0.051211533047107224
+      ],
+      &quot;mouth_opening&quot;: 0.0010114379627755112
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.05730084933245369,
+        0.0562960679666711
+      ],
+      &quot;mouth_opening&quot;: 0.0015894290114765064
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.006470888790904336,
+      0.005084534919563878
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 6 <span class="distance">幾何差 1.3631</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:49.98</h3><a href="rois/frame_0000229980ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000229980ms/roi_overlay.png" alt="before frame_0000229980ms の ROI 候補"></a><p class="small">フレーム frame_0000229980ms / yaw -5.95° · pitch 2.00° · roll 0.28°</p><p><a href="frames/frame_0000229980ms.png">元画像 PNG</a> · <a href="rois/frame_0000229980ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000229980ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 24:38.02</h3><a href="rois/frame_0001478018ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001478018ms/roi_overlay.png" alt="after frame_0001478018ms の ROI 候補"></a><p class="small">フレーム frame_0001478018ms / yaw -5.62° · pitch 3.99° · roll 3.21°</p><p><a href="frames/frame_0001478018ms.png">元画像 PNG</a> · <a href="rois/frame_0001478018ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001478018ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 0.33505954948453365,
+    &quot;pitch_gap_degrees&quot;: 1.9861548088847218,
+    &quot;roll_gap_degrees&quot;: 2.929931785525139,
+    &quot;face_scale_ratio&quot;: 1.1686443127033685,
+    &quot;log_face_scale_ratio&quot;: 0.1558443698984533,
+    &quot;roi_procrustes_rms&quot;: 0.012004638907273707,
+    &quot;eye_aperture_gap&quot;: 0.009212575600320634,
+    &quot;mouth_opening_gap&quot;: 0.0025676059163638534,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.03350595494845336,
+      &quot;pitch&quot;: 0.1986154808884722,
+      &quot;roll&quot;: 0.24416098212709492,
+      &quot;face_scale&quot;: 0.3843595090724287,
+      &quot;roi_shape&quot;: 0.24009277814547414,
+      &quot;eye_aperture&quot;: 0.23031439000801585,
+      &quot;mouth_opening&quot;: 0.032095073954548164
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1248.0384583333332,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.06650041979255615,
+        0.06550864356699174
+      ],
+      &quot;mouth_opening&quot;: 0.00415703492784036
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.05730084933245369,
+        0.0562960679666711
+      ],
+      &quot;mouth_opening&quot;: 0.0015894290114765064
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.00919957046010246,
+      0.009212575600320634
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 7 <span class="distance">幾何差 2.8392</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:58.99</h3><a href="rois/frame_0000238989ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000238989ms/roi_overlay.png" alt="before frame_0000238989ms の ROI 候補"></a><p class="small">フレーム frame_0000238989ms / yaw -7.68° · pitch 3.63° · roll -0.98°</p><p><a href="frames/frame_0000238989ms.png">元画像 PNG</a> · <a href="rois/frame_0000238989ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000238989ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 23:41.00</h3><a href="rois/frame_0001421003ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001421003ms/roi_overlay.png" alt="after frame_0001421003ms の ROI 候補"></a><p class="small">フレーム frame_0001421003ms / yaw -11.82° · pitch 12.13° · roll 3.22°</p><p><a href="frames/frame_0001421003ms.png">元画像 PNG</a> · <a href="rois/frame_0001421003ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001421003ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 4.142381210063033,
+    &quot;pitch_gap_degrees&quot;: 8.495254826792921,
+    &quot;roll_gap_degrees&quot;: 4.192766981347965,
+    &quot;face_scale_ratio&quot;: 1.010219941512371,
+    &quot;log_face_scale_ratio&quot;: 0.01016807101969198,
+    &quot;roi_procrustes_rms&quot;: 0.04593327646803135,
+    &quot;eye_aperture_gap&quot;: 0.009951804418525988,
+    &quot;mouth_opening_gap&quot;: 0.0026823960983317022,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.4142381210063033,
+      &quot;pitch&quot;: 0.8495254826792922,
+      &quot;roll&quot;: 0.3493972484456638,
+      &quot;face_scale&quot;: 0.025077548761555785,
+      &quot;roi_shape&quot;: 0.918665529360627,
+      &quot;eye_aperture&quot;: 0.2487951104631497,
+      &quot;mouth_opening&quot;: 0.03352995122914628
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1182.0141666666666,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0016856679143794405,
+        0.005951704701389386
+      ],
+      &quot;mouth_opening&quot;: 0.00434424564825019
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.011637472332905428,
+        0.010183702602200275
+      ],
+      &quot;mouth_opening&quot;: 0.0016618495499184874
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.009951804418525988,
+      0.004231997900810889
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 8 <span class="distance">幾何差 3.0812</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 04:12.00</h3><a href="rois/frame_0000252002ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000252002ms/roi_overlay.png" alt="before frame_0000252002ms の ROI 候補"></a><p class="small">フレーム frame_0000252002ms / yaw -24.83° · pitch 4.05° · roll -5.34°</p><p><a href="frames/frame_0000252002ms.png">元画像 PNG</a> · <a href="rois/frame_0000252002ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000252002ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 24:37.02</h3><a href="rois/frame_0001477017ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001477017ms/roi_overlay.png" alt="after frame_0001477017ms の ROI 候補"></a><p class="small">フレーム frame_0001477017ms / yaw -23.48° · pitch 1.90° · roll -0.36°</p><p><a href="frames/frame_0001477017ms.png">元画像 PNG</a> · <a href="rois/frame_0001477017ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001477017ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 1.3475920322514945,
+    &quot;pitch_gap_degrees&quot;: 2.1524242134646876,
+    &quot;roll_gap_degrees&quot;: 4.982811048088833,
+    &quot;face_scale_ratio&quot;: 1.3476168023066337,
+    &quot;log_face_scale_ratio&quot;: 0.2983377007914943,
+    &quot;roi_procrustes_rms&quot;: 0.015567846068629697,
+    &quot;eye_aperture_gap&quot;: 0.010808471499546717,
+    &quot;mouth_opening_gap&quot;: 0.07988660734918766,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.13475920322514945,
+      &quot;pitch&quot;: 0.21524242134646876,
+      &quot;roll&quot;: 0.41523425400740277,
+      &quot;face_scale&quot;: 0.7357913044194863,
+      &quot;roi_shape&quot;: 0.3113569213725939,
+      &quot;eye_aperture&quot;: 0.2702117874886679,
+      &quot;mouth_opening&quot;: 0.9985825918648458
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1225.0154583333333,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0559812899964006,
+        0.06092911841111315
+      ],
+      &quot;mouth_opening&quot;: 0.08040507250943853
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.06678976149594731,
+        0.07123813299387675
+      ],
+      &quot;mouth_opening&quot;: 0.000518465160250859
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.010808471499546717,
+      0.010309014582763606
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 9 <span class="distance">幾何差 3.1053</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 03:41.01</h3><a href="rois/frame_0000221012ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000221012ms/roi_overlay.png" alt="before frame_0000221012ms の ROI 候補"></a><p class="small">フレーム frame_0000221012ms / yaw -7.88° · pitch 6.12° · roll 1.54°</p><p><a href="frames/frame_0000221012ms.png">元画像 PNG</a> · <a href="rois/frame_0000221012ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000221012ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 23:41.00</h3><a href="rois/frame_0001421003ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001421003ms/roi_overlay.png" alt="after frame_0001421003ms の ROI 候補"></a><p class="small">フレーム frame_0001421003ms / yaw -11.82° · pitch 12.13° · roll 3.22°</p><p><a href="frames/frame_0001421003ms.png">元画像 PNG</a> · <a href="rois/frame_0001421003ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001421003ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 3.9403108018199537,
+    &quot;pitch_gap_degrees&quot;: 6.0128324082910085,
+    &quot;roll_gap_degrees&quot;: 1.6740978683263685,
+    &quot;face_scale_ratio&quot;: 1.008247020952214,
+    &quot;log_face_scale_ratio&quot;: 0.00821320009523139,
+    &quot;roi_procrustes_rms&quot;: 0.047040786214931185,
+    &quot;eye_aperture_gap&quot;: 0.039855045926839,
+    &quot;mouth_opening_gap&quot;: 0.0010448930443717093,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.3940310801819954,
+      &quot;pitch&quot;: 0.6012832408291009,
+      &quot;roll&quot;: 0.13950815569386404,
+      &quot;face_scale&quot;: 0.020256243832059616,
+      &quot;roi_shape&quot;: 0.9408157242986237,
+      &quot;eye_aperture&quot;: 0.996376148170975,
+      &quot;mouth_opening&quot;: 0.013061163054646366
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1199.9904583333332,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.049323075251081136,
+        0.05003874852903927
+      ],
+      &quot;mouth_opening&quot;: 0.0027067425942901967
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.011637472332905428,
+        0.010183702602200275
+      ],
+      &quot;mouth_opening&quot;: 0.0016618495499184874
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.03768560291817571,
+      0.039855045926839
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article>
+<h2>抽出結果と停止理由</h2><table><thead><tr><th>自動チェックで停止した理由</th><th>画像数</th></tr></thead><tbody><tr><td>顔が1人に確定しない</td><td>60</td></tr><tr><td>顔向き・傾きが制限外</td><td>35</td></tr><tr><td>手が領域に重なる疑い</td><td>12</td></tr><tr><td>顔が小さい</td><td>1</td></tr></tbody></table><p class="small">1枚に複数の理由があるため、理由別の合計は停止画像数と一致しない場合があります。</p><h2>今回の条件</h2><table><tr><th>動画</th><td>makeup0923.mp4</td></tr><tr><th>長さ</th><td>28:48.35</td></tr><tr><th>元動画の寸法・フレームレート</th><td>1920 × 1080 / 23.98 fps</td></tr><tr><th>抽出間隔</th><td>1.00 秒</td></tr><tr><th>仮の before / after 境界</th><td>14:24.18</td></tr><tr><th>ペアの最小時間間隔</th><td>432.09 秒</td></tr><tr><th>before 抽出範囲（秒）</th><td>[207.0, 267.0]</td></tr><tr><th>after 抽出範囲（秒）</th><td>[1380.0, 1500.0]</td></tr></table><p><a href="scan_manifest.json">全フレーム記録 JSON</a> · <a href="matching.json">ペア比較記録 JSON</a> · <a href="frames.csv">全フレーム CSV</a></p>
+<details><summary>ペア選択の集計</summary><pre>{
+  &quot;total_frames&quot;: 195,
+  &quot;accepted_frames&quot;: 89,
+  &quot;rejected_frames&quot;: [
+    {
+      &quot;record_index&quot;: 0,
+      &quot;frame_id&quot;: &quot;frame_0000207999ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 1,
+      &quot;frame_id&quot;: &quot;frame_0000209000ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 9,
+      &quot;frame_id&quot;: &quot;frame_0000217008ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 10,
+      &quot;frame_id&quot;: &quot;frame_0000218009ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 11,
+      &quot;frame_id&quot;: &quot;frame_0000219010ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 12,
+      &quot;frame_id&quot;: &quot;frame_0000220011ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 37,
+      &quot;frame_id&quot;: &quot;frame_0000244995ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 38,
+      &quot;frame_id&quot;: &quot;frame_0000245996ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 39,
+      &quot;frame_id&quot;: &quot;frame_0000246997ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 40,
+      &quot;frame_id&quot;: &quot;frame_0000247998ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 41,
+      &quot;frame_id&quot;: &quot;frame_0000248999ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 42,
+      &quot;frame_id&quot;: &quot;frame_0000250000ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 43,
+      &quot;frame_id&quot;: &quot;frame_0000251001ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 45,
+      &quot;frame_id&quot;: &quot;frame_0000253003ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 46,
+      &quot;frame_id&quot;: &quot;frame_0000254004ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 48,
+      &quot;frame_id&quot;: &quot;frame_0000256006ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 49,
+      &quot;frame_id&quot;: &quot;frame_0000257007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 50,
+      &quot;frame_id&quot;: &quot;frame_0000258008ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 51,
+      &quot;frame_id&quot;: &quot;frame_0000259009ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 52,
+      &quot;frame_id&quot;: &quot;frame_0000260010ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 53,
+      &quot;frame_id&quot;: &quot;frame_0000261011ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 54,
+      &quot;frame_id&quot;: &quot;frame_0000262012ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 55,
+      &quot;frame_id&quot;: &quot;frame_0000263013ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 56,
+      &quot;frame_id&quot;: &quot;frame_0000264014ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 57,
+      &quot;frame_id&quot;: &quot;frame_0000265015ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 58,
+      &quot;frame_id&quot;: &quot;frame_0000266016ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 59,
+      &quot;frame_id&quot;: &quot;frame_0001380004ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 60,
+      &quot;frame_id&quot;: &quot;frame_0001381005ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 61,
+      &quot;frame_id&quot;: &quot;frame_0001382006ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 62,
+      &quot;frame_id&quot;: &quot;frame_0001383007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 63,
+      &quot;frame_id&quot;: &quot;frame_0001384008ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 64,
+      &quot;frame_id&quot;: &quot;frame_0001385009ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 65,
+      &quot;frame_id&quot;: &quot;frame_0001386010ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 66,
+      &quot;frame_id&quot;: &quot;frame_0001387011ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 67,
+      &quot;frame_id&quot;: &quot;frame_0001388012ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 68,
+      &quot;frame_id&quot;: &quot;frame_0001389013ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 69,
+      &quot;frame_id&quot;: &quot;frame_0001390014ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 70,
+      &quot;frame_id&quot;: &quot;frame_0001391015ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 72,
+      &quot;frame_id&quot;: &quot;frame_0001393017ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 73,
+      &quot;frame_id&quot;: &quot;frame_0001394018ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 74,
+      &quot;frame_id&quot;: &quot;frame_0001395019ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 75,
+      &quot;frame_id&quot;: &quot;frame_0001396020ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 76,
+      &quot;frame_id&quot;: &quot;frame_0001397021ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 77,
+      &quot;frame_id&quot;: &quot;frame_0001397980ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 78,
+      &quot;frame_id&quot;: &quot;frame_0001398981ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 79,
+      &quot;frame_id&quot;: &quot;frame_0001399982ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 96,
+      &quot;frame_id&quot;: &quot;frame_0001416999ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 99,
+      &quot;frame_id&quot;: &quot;frame_0001420002ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 102,
+      &quot;frame_id&quot;: &quot;frame_0001423005ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 103,
+      &quot;frame_id&quot;: &quot;frame_0001424006ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 104,
+      &quot;frame_id&quot;: &quot;frame_0001425007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 105,
+      &quot;frame_id&quot;: &quot;frame_0001426008ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 106,
+      &quot;frame_id&quot;: &quot;frame_0001427009ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 107,
+      &quot;frame_id&quot;: &quot;frame_0001428010ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 108,
+      &quot;frame_id&quot;: &quot;frame_0001429011ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 109,
+      &quot;frame_id&quot;: &quot;frame_0001430012ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 110,
+      &quot;frame_id&quot;: &quot;frame_0001431013ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 111,
+      &quot;frame_id&quot;: &quot;frame_0001432014ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 112,
+      &quot;frame_id&quot;: &quot;frame_0001433015ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 113,
+      &quot;frame_id&quot;: &quot;frame_0001434016ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 114,
+      &quot;frame_id&quot;: &quot;frame_0001435017ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 115,
+      &quot;frame_id&quot;: &quot;frame_0001436018ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 116,
+      &quot;frame_id&quot;: &quot;frame_0001437019ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 117,
+      &quot;frame_id&quot;: &quot;frame_0001438020ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 118,
+      &quot;frame_id&quot;: &quot;frame_0001438979ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 119,
+      &quot;frame_id&quot;: &quot;frame_0001439980ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 133,
+      &quot;frame_id&quot;: &quot;frame_0001453994ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 134,
+      &quot;frame_id&quot;: &quot;frame_0001454995ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 135,
+      &quot;frame_id&quot;: &quot;frame_0001455996ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 136,
+      &quot;frame_id&quot;: &quot;frame_0001456997ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 137,
+      &quot;frame_id&quot;: &quot;frame_0001457998ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 138,
+      &quot;frame_id&quot;: &quot;frame_0001458999ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 139,
+      &quot;frame_id&quot;: &quot;frame_0001460000ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 141,
+      &quot;frame_id&quot;: &quot;frame_0001462002ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 142,
+      &quot;frame_id&quot;: &quot;frame_0001463003ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 143,
+      &quot;frame_id&quot;: &quot;frame_0001464004ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 144,
+      &quot;frame_id&quot;: &quot;frame_0001465005ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 146,
+      &quot;frame_id&quot;: &quot;frame_0001467007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 147,
+      &quot;frame_id&quot;: &quot;frame_0001468008ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 148,
+      &quot;frame_id&quot;: &quot;frame_0001469009ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 149,
+      &quot;frame_id&quot;: &quot;frame_0001470010ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 150,
+      &quot;frame_id&quot;: &quot;frame_0001471011ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 151,
+      &quot;frame_id&quot;: &quot;frame_0001472012ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 152,
+      &quot;frame_id&quot;: &quot;frame_0001473013ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 153,
+      &quot;frame_id&quot;: &quot;frame_0001474014ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 154,
+      &quot;frame_id&quot;: &quot;frame_0001475015ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 155,
+      &quot;frame_id&quot;: &quot;frame_0001476016ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 161,
+      &quot;frame_id&quot;: &quot;frame_0001481980ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 162,
+      &quot;frame_id&quot;: &quot;frame_0001482981ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 164,
+      &quot;frame_id&quot;: &quot;frame_0001484984ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 166,
+      &quot;frame_id&quot;: &quot;frame_0001486986ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 167,
+      &quot;frame_id&quot;: &quot;frame_0001487986ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 168,
+      &quot;frame_id&quot;: &quot;frame_0001488988ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 169,
+      &quot;frame_id&quot;: &quot;frame_0001489988ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 170,
+      &quot;frame_id&quot;: &quot;frame_0001490990ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 171,
+      &quot;frame_id&quot;: &quot;frame_0001491990ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 172,
+      &quot;frame_id&quot;: &quot;frame_0001492991ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 173,
+      &quot;frame_id&quot;: &quot;frame_0001493992ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 174,
+      &quot;frame_id&quot;: &quot;frame_0001494994ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 175,
+      &quot;frame_id&quot;: &quot;frame_0001495994ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 176,
+      &quot;frame_id&quot;: &quot;frame_0001496996ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 177,
+      &quot;frame_id&quot;: &quot;frame_0001497996ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 178,
+      &quot;frame_id&quot;: &quot;frame_0001498998ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 184,
+      &quot;frame_id&quot;: &quot;frame_0000223515ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 186,
+      &quot;frame_id&quot;: &quot;frame_0000238488ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 187,
+      &quot;frame_id&quot;: &quot;frame_0000240490ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    }
+  ],
+  &quot;rejected_frame_count&quot;: 106,
+  &quot;before_frames&quot;: 40,
+  &quot;after_frames&quot;: 49,
+  &quot;candidate_pairs&quot;: 1960,
+  &quot;rejected_pairs&quot;: 1310,
+  &quot;pair_rejection_counts&quot;: {
+    &quot;eye_aperture_gap&quot;: 600,
+    &quot;face_scale_ratio&quot;: 368,
+    &quot;mouth_opening_gap&quot;: 177,
+    &quot;pitch_gap&quot;: 104,
+    &quot;roll_gap&quot;: 1,
+    &quot;yaw_gap&quot;: 652
+  },
+  &quot;eligible_pairs&quot;: 650,
+  &quot;diversity_skipped_pairs&quot;: 641,
+  &quot;top_k_omitted_pairs&quot;: 0,
+  &quot;selected_pairs&quot;: 9
+}</pre></details>
+<details><summary>全 196 フレームの時刻・状態・ファイル</summary><div class="scroll"><table><thead>
+<tr><th>フレーム</th><th>時刻</th><th>状態</th><th>停止理由</th><th>ファイル</th></tr></thead><tbody><tr><td>frame_0000206998ms</td><td>03:27.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000206998ms.png">元画像 PNG</a> · <a href="rois/frame_0000206998ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000206998ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000207999ms</td><td>03:28.00</td><td>停止</td><td>left_cheek: suspected hand occlusion 33.6% (limit 2.0%)</td><td><a href="frames/frame_0000207999ms.png">元画像 PNG</a> · <a href="rois/frame_0000207999ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000207999ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000209000ms</td><td>03:29.00</td><td>停止</td><td>left_cheek: suspected hand occlusion 13.4% (limit 2.0%)</td><td><a href="frames/frame_0000209000ms.png">元画像 PNG</a> · <a href="rois/frame_0000209000ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000209000ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000210001ms</td><td>03:30.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000210001ms.png">元画像 PNG</a> · <a href="rois/frame_0000210001ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000210001ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000211002ms</td><td>03:31.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000211002ms.png">元画像 PNG</a> · <a href="rois/frame_0000211002ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000211002ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000212003ms</td><td>03:32.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000212003ms.png">元画像 PNG</a> · <a href="rois/frame_0000212003ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000212003ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000212504ms</td><td>03:32.50</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000212504ms.png">元画像 PNG</a> · <a href="rois/frame_0000212504ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000212504ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000213004ms</td><td>03:33.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000213004ms.png">元画像 PNG</a> · <a href="rois/frame_0000213004ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000213004ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000213505ms</td><td>03:33.50</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000213505ms.png">元画像 PNG</a> · <a href="rois/frame_0000213505ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000213505ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000214005ms</td><td>03:34.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000214005ms.png">元画像 PNG</a> · <a href="rois/frame_0000214005ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000214005ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000215006ms</td><td>03:35.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000215006ms.png">元画像 PNG</a> · <a href="rois/frame_0000215006ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000215006ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000215507ms</td><td>03:35.51</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000215507ms.png">元画像 PNG</a> · <a href="rois/frame_0000215507ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000215507ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000216007ms</td><td>03:36.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000216007ms.png">元画像 PNG</a> · <a href="rois/frame_0000216007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000216007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000216508ms</td><td>03:36.51</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000216508ms.png">元画像 PNG</a> · <a href="rois/frame_0000216508ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000216508ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000217008ms</td><td>03:37.01</td><td>停止</td><td>left_cheek: suspected hand occlusion 100.0% (limit 2.0%)</td><td><a href="frames/frame_0000217008ms.png">元画像 PNG</a> · <a href="rois/frame_0000217008ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000217008ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000218009ms</td><td>03:38.01</td><td>停止</td><td>left_cheek: suspected hand occlusion 87.7% (limit 2.0%)</td><td><a href="frames/frame_0000218009ms.png">元画像 PNG</a> · <a href="rois/frame_0000218009ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000218009ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000219010ms</td><td>03:39.01</td><td>停止</td><td>left_cheek: suspected hand occlusion 26.9% (limit 2.0%)</td><td><a href="frames/frame_0000219010ms.png">元画像 PNG</a> · <a href="rois/frame_0000219010ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000219010ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000220011ms</td><td>03:40.01</td><td>停止</td><td>left_cheek: suspected hand occlusion 22.1% (limit 2.0%)</td><td><a href="frames/frame_0000220011ms.png">元画像 PNG</a> · <a href="rois/frame_0000220011ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000220011ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000221012ms</td><td>03:41.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000221012ms.png">元画像 PNG</a> · <a href="rois/frame_0000221012ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000221012ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000222013ms</td><td>03:42.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000222013ms.png">元画像 PNG</a> · <a href="rois/frame_0000222013ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000222013ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000222514ms</td><td>03:42.51</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000222514ms.png">元画像 PNG</a> · <a href="rois/frame_0000222514ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000222514ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000223014ms</td><td>03:43.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000223014ms.png">元画像 PNG</a> · <a href="rois/frame_0000223014ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000223014ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000223515ms</td><td>03:43.51</td><td>停止</td><td>left_cheek: suspected hand occlusion 26.7% (limit 2.0%)</td><td><a href="frames/frame_0000223515ms.png">元画像 PNG</a> · <a href="rois/frame_0000223515ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000223515ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000224015ms</td><td>03:44.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000224015ms.png">元画像 PNG</a> · <a href="rois/frame_0000224015ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000224015ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000225016ms</td><td>03:45.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000225016ms.png">元画像 PNG</a> · <a href="rois/frame_0000225016ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000225016ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000226017ms</td><td>03:46.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000226017ms.png">元画像 PNG</a> · <a href="rois/frame_0000226017ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000226017ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000227018ms</td><td>03:47.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000227018ms.png">元画像 PNG</a> · <a href="rois/frame_0000227018ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000227018ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000228019ms</td><td>03:48.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000228019ms.png">元画像 PNG</a> · <a href="rois/frame_0000228019ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000228019ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000229020ms</td><td>03:49.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000229020ms.png">元画像 PNG</a> · <a href="rois/frame_0000229020ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000229020ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000229980ms</td><td>03:49.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000229980ms.png">元画像 PNG</a> · <a href="rois/frame_0000229980ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000229980ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000230981ms</td><td>03:50.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000230981ms.png">元画像 PNG</a> · <a href="rois/frame_0000230981ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000230981ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000231982ms</td><td>03:51.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000231982ms.png">元画像 PNG</a> · <a href="rois/frame_0000231982ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000231982ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000232983ms</td><td>03:52.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000232983ms.png">元画像 PNG</a> · <a href="rois/frame_0000232983ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000232983ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000233984ms</td><td>03:53.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000233984ms.png">元画像 PNG</a> · <a href="rois/frame_0000233984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000233984ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000234985ms</td><td>03:54.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000234985ms.png">元画像 PNG</a> · <a href="rois/frame_0000234985ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000234985ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000235986ms</td><td>03:55.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000235986ms.png">元画像 PNG</a> · <a href="rois/frame_0000235986ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000235986ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000236987ms</td><td>03:56.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000236987ms.png">元画像 PNG</a> · <a href="rois/frame_0000236987ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000236987ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000237487ms</td><td>03:57.49</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000237487ms.png">元画像 PNG</a> · <a href="rois/frame_0000237487ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000237487ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000237988ms</td><td>03:57.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000237988ms.png">元画像 PNG</a> · <a href="rois/frame_0000237988ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000237988ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000238488ms</td><td>03:58.49</td><td>停止</td><td>right_cheek: suspected hand occlusion 100.0% (limit 2.0%)</td><td><a href="frames/frame_0000238488ms.png">元画像 PNG</a> · <a href="rois/frame_0000238488ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000238488ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000238989ms</td><td>03:58.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000238989ms.png">元画像 PNG</a> · <a href="rois/frame_0000238989ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000238989ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000239990ms</td><td>03:59.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000239990ms.png">元画像 PNG</a> · <a href="rois/frame_0000239990ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000239990ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000240490ms</td><td>04:00.49</td><td>停止</td><td>right_cheek: suspected hand occlusion 38.6% (limit 2.0%)</td><td><a href="frames/frame_0000240490ms.png">元画像 PNG</a> · <a href="rois/frame_0000240490ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000240490ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000240991ms</td><td>04:00.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000240991ms.png">元画像 PNG</a> · <a href="rois/frame_0000240991ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000240991ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000241491ms</td><td>04:01.49</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000241491ms.png">元画像 PNG</a> · <a href="rois/frame_0000241491ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000241491ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000241992ms</td><td>04:01.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000241992ms.png">元画像 PNG</a> · <a href="rois/frame_0000241992ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000241992ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000242993ms</td><td>04:02.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000242993ms.png">元画像 PNG</a> · <a href="rois/frame_0000242993ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000242993ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000243994ms</td><td>04:03.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000243994ms.png">元画像 PNG</a> · <a href="rois/frame_0000243994ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000243994ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000244995ms</td><td>04:04.99</td><td>停止</td><td>face yaw too large: -41.8 deg (limit 25)</td><td><a href="frames/frame_0000244995ms.png">元画像 PNG</a> · <a href="rois/frame_0000244995ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000244995ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000245996ms</td><td>04:06.00</td><td>停止</td><td>face yaw too large: -27.1 deg (limit 25)</td><td><a href="frames/frame_0000245996ms.png">元画像 PNG</a> · <a href="rois/frame_0000245996ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000245996ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000246997ms</td><td>04:07.00</td><td>停止</td><td>face yaw too large: -30.0 deg (limit 25)</td><td><a href="frames/frame_0000246997ms.png">元画像 PNG</a> · <a href="rois/frame_0000246997ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000246997ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000247998ms</td><td>04:08.00</td><td>停止</td><td>face yaw too large: -42.7 deg (limit 25)</td><td><a href="frames/frame_0000247998ms.png">元画像 PNG</a> · <a href="rois/frame_0000247998ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000247998ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000248999ms</td><td>04:09.00</td><td>停止</td><td>face yaw too large: -55.8 deg (limit 25)</td><td><a href="frames/frame_0000248999ms.png">元画像 PNG</a> · <a href="rois/frame_0000248999ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000248999ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000250000ms</td><td>04:10.00</td><td>停止</td><td>face yaw too large: -33.0 deg (limit 25) / left_cheek: suspected hand occlusion 100.0% (limit 2.0%)</td><td><a href="frames/frame_0000250000ms.png">元画像 PNG</a> · <a href="rois/frame_0000250000ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000250000ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000251001ms</td><td>04:11.00</td><td>停止</td><td>face yaw too large: -26.9 deg (limit 25)</td><td><a href="frames/frame_0000251001ms.png">元画像 PNG</a> · <a href="rois/frame_0000251001ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000251001ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000252002ms</td><td>04:12.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000252002ms.png">元画像 PNG</a> · <a href="rois/frame_0000252002ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000252002ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000253003ms</td><td>04:13.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 2</td><td><a href="frames/frame_0000253003ms.png">元画像 PNG</a> · <a href="rois/frame_0000253003ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000253003ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000254004ms</td><td>04:14.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0000254004ms.png">元画像 PNG</a> · <a href="rois/frame_0000254004ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000254004ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000255005ms</td><td>04:15.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000255005ms.png">元画像 PNG</a> · <a href="rois/frame_0000255005ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000255005ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000256006ms</td><td>04:16.01</td><td>停止</td><td>face yaw too large: 30.6 deg (limit 25)</td><td><a href="frames/frame_0000256006ms.png">元画像 PNG</a> · <a href="rois/frame_0000256006ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000256006ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000257007ms</td><td>04:17.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0000257007ms.png">元画像 PNG</a> · <a href="rois/frame_0000257007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000257007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000258008ms</td><td>04:18.01</td><td>停止</td><td>face yaw too large: -38.1 deg (limit 25)</td><td><a href="frames/frame_0000258008ms.png">元画像 PNG</a> · <a href="rois/frame_0000258008ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000258008ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000259009ms</td><td>04:19.01</td><td>停止</td><td>face yaw too large: -33.0 deg (limit 25)</td><td><a href="frames/frame_0000259009ms.png">元画像 PNG</a> · <a href="rois/frame_0000259009ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000259009ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000260010ms</td><td>04:20.01</td><td>停止</td><td>face yaw too large: -29.8 deg (limit 25)</td><td><a href="frames/frame_0000260010ms.png">元画像 PNG</a> · <a href="rois/frame_0000260010ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000260010ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000261011ms</td><td>04:21.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0000261011ms.png">元画像 PNG</a> · <a href="rois/frame_0000261011ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000261011ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000262012ms</td><td>04:22.01</td><td>停止</td><td>face yaw too large: 42.6 deg (limit 25)</td><td><a href="frames/frame_0000262012ms.png">元画像 PNG</a> · <a href="rois/frame_0000262012ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000262012ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000263013ms</td><td>04:23.01</td><td>停止</td><td>right_cheek: suspected hand occlusion 96.2% (limit 2.0%)</td><td><a href="frames/frame_0000263013ms.png">元画像 PNG</a> · <a href="rois/frame_0000263013ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000263013ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000264014ms</td><td>04:24.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0000264014ms.png">元画像 PNG</a> · <a href="rois/frame_0000264014ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000264014ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000265015ms</td><td>04:25.01</td><td>停止</td><td>left_cheek: suspected hand occlusion 76.4% (limit 2.0%)</td><td><a href="frames/frame_0000265015ms.png">元画像 PNG</a> · <a href="rois/frame_0000265015ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000265015ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000266016ms</td><td>04:26.02</td><td>停止</td><td>face yaw too large: -40.3 deg (limit 25)</td><td><a href="frames/frame_0000266016ms.png">元画像 PNG</a> · <a href="rois/frame_0000266016ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000266016ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001380004ms</td><td>23:00.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001380004ms.png">元画像 PNG</a> · <a href="rois/frame_0001380004ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001380004ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001381005ms</td><td>23:01.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001381005ms.png">元画像 PNG</a> · <a href="rois/frame_0001381005ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001381005ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001382006ms</td><td>23:02.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001382006ms.png">元画像 PNG</a> · <a href="rois/frame_0001382006ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001382006ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001383007ms</td><td>23:03.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001383007ms.png">元画像 PNG</a> · <a href="rois/frame_0001383007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001383007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001384008ms</td><td>23:04.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001384008ms.png">元画像 PNG</a> · <a href="rois/frame_0001384008ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001384008ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001385009ms</td><td>23:05.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001385009ms.png">元画像 PNG</a> · <a href="rois/frame_0001385009ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001385009ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001386010ms</td><td>23:06.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001386010ms.png">元画像 PNG</a> · <a href="rois/frame_0001386010ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001386010ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001387011ms</td><td>23:07.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001387011ms.png">元画像 PNG</a> · <a href="rois/frame_0001387011ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001387011ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001388012ms</td><td>23:08.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001388012ms.png">元画像 PNG</a> · <a href="rois/frame_0001388012ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001388012ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001389013ms</td><td>23:09.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001389013ms.png">元画像 PNG</a> · <a href="rois/frame_0001389013ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001389013ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001390014ms</td><td>23:10.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001390014ms.png">元画像 PNG</a> · <a href="rois/frame_0001390014ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001390014ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001391015ms</td><td>23:11.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001391015ms.png">元画像 PNG</a> · <a href="rois/frame_0001391015ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001391015ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001392016ms</td><td>23:12.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001392016ms.png">元画像 PNG</a> · <a href="rois/frame_0001392016ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001392016ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001393017ms</td><td>23:13.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 2</td><td><a href="frames/frame_0001393017ms.png">元画像 PNG</a> · <a href="rois/frame_0001393017ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001393017ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001394018ms</td><td>23:14.02</td><td>停止</td><td>face yaw too large: 45.1 deg (limit 25)</td><td><a href="frames/frame_0001394018ms.png">元画像 PNG</a> · <a href="rois/frame_0001394018ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001394018ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001395019ms</td><td>23:15.02</td><td>停止</td><td>face yaw too large: 61.7 deg (limit 25)</td><td><a href="frames/frame_0001395019ms.png">元画像 PNG</a> · <a href="rois/frame_0001395019ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001395019ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001396020ms</td><td>23:16.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001396020ms.png">元画像 PNG</a> · <a href="rois/frame_0001396020ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001396020ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001397021ms</td><td>23:17.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001397021ms.png">元画像 PNG</a> · <a href="rois/frame_0001397021ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001397021ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001397980ms</td><td>23:17.98</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001397980ms.png">元画像 PNG</a> · <a href="rois/frame_0001397980ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001397980ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001398981ms</td><td>23:18.98</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001398981ms.png">元画像 PNG</a> · <a href="rois/frame_0001398981ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001398981ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001399982ms</td><td>23:19.98</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001399982ms.png">元画像 PNG</a> · <a href="rois/frame_0001399982ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001399982ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001400983ms</td><td>23:20.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001400983ms.png">元画像 PNG</a> · <a href="rois/frame_0001400983ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001400983ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001401984ms</td><td>23:21.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001401984ms.png">元画像 PNG</a> · <a href="rois/frame_0001401984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001401984ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001402484ms</td><td>23:22.48</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001402484ms.png">元画像 PNG</a> · <a href="rois/frame_0001402484ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001402484ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001402985ms</td><td>23:22.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001402985ms.png">元画像 PNG</a> · <a href="rois/frame_0001402985ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001402985ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001403485ms</td><td>23:23.49</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001403485ms.png">元画像 PNG</a> · <a href="rois/frame_0001403485ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001403485ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001403986ms</td><td>23:23.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001403986ms.png">元画像 PNG</a> · <a href="rois/frame_0001403986ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001403986ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001404987ms</td><td>23:24.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001404987ms.png">元画像 PNG</a> · <a href="rois/frame_0001404987ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001404987ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001405988ms</td><td>23:25.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001405988ms.png">元画像 PNG</a> · <a href="rois/frame_0001405988ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001405988ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001406989ms</td><td>23:26.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001406989ms.png">元画像 PNG</a> · <a href="rois/frame_0001406989ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001406989ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001407990ms</td><td>23:27.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001407990ms.png">元画像 PNG</a> · <a href="rois/frame_0001407990ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001407990ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001408991ms</td><td>23:28.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001408991ms.png">元画像 PNG</a> · <a href="rois/frame_0001408991ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001408991ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001409992ms</td><td>23:29.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001409992ms.png">元画像 PNG</a> · <a href="rois/frame_0001409992ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001409992ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001410993ms</td><td>23:30.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001410993ms.png">元画像 PNG</a> · <a href="rois/frame_0001410993ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001410993ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001411994ms</td><td>23:31.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001411994ms.png">元画像 PNG</a> · <a href="rois/frame_0001411994ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001411994ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001412995ms</td><td>23:32.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001412995ms.png">元画像 PNG</a> · <a href="rois/frame_0001412995ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001412995ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001413996ms</td><td>23:34.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001413996ms.png">元画像 PNG</a> · <a href="rois/frame_0001413996ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001413996ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001414997ms</td><td>23:35.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001414997ms.png">元画像 PNG</a> · <a href="rois/frame_0001414997ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001414997ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001415998ms</td><td>23:36.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001415998ms.png">元画像 PNG</a> · <a href="rois/frame_0001415998ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001415998ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001416999ms</td><td>23:37.00</td><td>停止</td><td>face yaw too large: -34.5 deg (limit 25)</td><td><a href="frames/frame_0001416999ms.png">元画像 PNG</a> · <a href="rois/frame_0001416999ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001416999ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001418000ms</td><td>23:38.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001418000ms.png">元画像 PNG</a> · <a href="rois/frame_0001418000ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001418000ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001419001ms</td><td>23:39.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001419001ms.png">元画像 PNG</a> · <a href="rois/frame_0001419001ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001419001ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001420002ms</td><td>23:40.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 2</td><td><a href="frames/frame_0001420002ms.png">元画像 PNG</a> · <a href="rois/frame_0001420002ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001420002ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001421003ms</td><td>23:41.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001421003ms.png">元画像 PNG</a> · <a href="rois/frame_0001421003ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001421003ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001422004ms</td><td>23:42.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001422004ms.png">元画像 PNG</a> · <a href="rois/frame_0001422004ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001422004ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001423005ms</td><td>23:43.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001423005ms.png">元画像 PNG</a> · <a href="rois/frame_0001423005ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001423005ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001424006ms</td><td>23:44.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001424006ms.png">元画像 PNG</a> · <a href="rois/frame_0001424006ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001424006ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001425007ms</td><td>23:45.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001425007ms.png">元画像 PNG</a> · <a href="rois/frame_0001425007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001425007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001426008ms</td><td>23:46.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001426008ms.png">元画像 PNG</a> · <a href="rois/frame_0001426008ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001426008ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001427009ms</td><td>23:47.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001427009ms.png">元画像 PNG</a> · <a href="rois/frame_0001427009ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001427009ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001428010ms</td><td>23:48.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001428010ms.png">元画像 PNG</a> · <a href="rois/frame_0001428010ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001428010ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001429011ms</td><td>23:49.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001429011ms.png">元画像 PNG</a> · <a href="rois/frame_0001429011ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001429011ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001430012ms</td><td>23:50.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001430012ms.png">元画像 PNG</a> · <a href="rois/frame_0001430012ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001430012ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001431013ms</td><td>23:51.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001431013ms.png">元画像 PNG</a> · <a href="rois/frame_0001431013ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001431013ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001432014ms</td><td>23:52.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001432014ms.png">元画像 PNG</a> · <a href="rois/frame_0001432014ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001432014ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001433015ms</td><td>23:53.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001433015ms.png">元画像 PNG</a> · <a href="rois/frame_0001433015ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001433015ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001434016ms</td><td>23:54.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001434016ms.png">元画像 PNG</a> · <a href="rois/frame_0001434016ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001434016ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001435017ms</td><td>23:55.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001435017ms.png">元画像 PNG</a> · <a href="rois/frame_0001435017ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001435017ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001436018ms</td><td>23:56.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001436018ms.png">元画像 PNG</a> · <a href="rois/frame_0001436018ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001436018ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001437019ms</td><td>23:57.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001437019ms.png">元画像 PNG</a> · <a href="rois/frame_0001437019ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001437019ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001438020ms</td><td>23:58.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001438020ms.png">元画像 PNG</a> · <a href="rois/frame_0001438020ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001438020ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001438979ms</td><td>23:58.98</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001438979ms.png">元画像 PNG</a> · <a href="rois/frame_0001438979ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001438979ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001439980ms</td><td>23:59.98</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001439980ms.png">元画像 PNG</a> · <a href="rois/frame_0001439980ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001439980ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001440981ms</td><td>24:00.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001440981ms.png">元画像 PNG</a> · <a href="rois/frame_0001440981ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001440981ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001441982ms</td><td>24:01.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001441982ms.png">元画像 PNG</a> · <a href="rois/frame_0001441982ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001441982ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001442983ms</td><td>24:02.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001442983ms.png">元画像 PNG</a> · <a href="rois/frame_0001442983ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001442983ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001443484ms</td><td>24:03.48</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001443484ms.png">元画像 PNG</a> · <a href="rois/frame_0001443484ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001443484ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001443984ms</td><td>24:03.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001443984ms.png">元画像 PNG</a> · <a href="rois/frame_0001443984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001443984ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001444485ms</td><td>24:04.48</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001444485ms.png">元画像 PNG</a> · <a href="rois/frame_0001444485ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001444485ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001444985ms</td><td>24:04.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001444985ms.png">元画像 PNG</a> · <a href="rois/frame_0001444985ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001444985ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001445986ms</td><td>24:05.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001445986ms.png">元画像 PNG</a> · <a href="rois/frame_0001445986ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001445986ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001446987ms</td><td>24:06.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001446987ms.png">元画像 PNG</a> · <a href="rois/frame_0001446987ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001446987ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001447988ms</td><td>24:07.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001447988ms.png">元画像 PNG</a> · <a href="rois/frame_0001447988ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001447988ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001448989ms</td><td>24:08.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001448989ms.png">元画像 PNG</a> · <a href="rois/frame_0001448989ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001448989ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001449990ms</td><td>24:09.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001449990ms.png">元画像 PNG</a> · <a href="rois/frame_0001449990ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001449990ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001450991ms</td><td>24:10.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001450991ms.png">元画像 PNG</a> · <a href="rois/frame_0001450991ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001450991ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001451992ms</td><td>24:11.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001451992ms.png">元画像 PNG</a> · <a href="rois/frame_0001451992ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001451992ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001452993ms</td><td>24:12.99</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001452993ms.png">元画像 PNG</a> · <a href="rois/frame_0001452993ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001452993ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001453994ms</td><td>24:13.99</td><td>停止</td><td>face yaw too large: -36.0 deg (limit 25)</td><td><a href="frames/frame_0001453994ms.png">元画像 PNG</a> · <a href="rois/frame_0001453994ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001453994ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001454995ms</td><td>24:15.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 2</td><td><a href="frames/frame_0001454995ms.png">元画像 PNG</a> · <a href="rois/frame_0001454995ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001454995ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001455996ms</td><td>24:16.00</td><td>停止</td><td>face yaw too large: 27.2 deg (limit 25)</td><td><a href="frames/frame_0001455996ms.png">元画像 PNG</a> · <a href="rois/frame_0001455996ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001455996ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001456997ms</td><td>24:17.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001456997ms.png">元画像 PNG</a> · <a href="rois/frame_0001456997ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001456997ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001457998ms</td><td>24:18.00</td><td>停止</td><td>face yaw too large: -38.3 deg (limit 25)</td><td><a href="frames/frame_0001457998ms.png">元画像 PNG</a> · <a href="rois/frame_0001457998ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001457998ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001458999ms</td><td>24:19.00</td><td>停止</td><td>face yaw too large: 85.5 deg (limit 25)</td><td><a href="frames/frame_0001458999ms.png">元画像 PNG</a> · <a href="rois/frame_0001458999ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001458999ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001460000ms</td><td>24:20.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001460000ms.png">元画像 PNG</a> · <a href="rois/frame_0001460000ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001460000ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001461001ms</td><td>24:21.00</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001461001ms.png">元画像 PNG</a> · <a href="rois/frame_0001461001ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001461001ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001462002ms</td><td>24:22.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001462002ms.png">元画像 PNG</a> · <a href="rois/frame_0001462002ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001462002ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001463003ms</td><td>24:23.00</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001463003ms.png">元画像 PNG</a> · <a href="rois/frame_0001463003ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001463003ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001464004ms</td><td>24:24.00</td><td>停止</td><td>face yaw too large: 28.6 deg (limit 25)</td><td><a href="frames/frame_0001464004ms.png">元画像 PNG</a> · <a href="rois/frame_0001464004ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001464004ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001465005ms</td><td>24:25.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 2</td><td><a href="frames/frame_0001465005ms.png">元画像 PNG</a> · <a href="rois/frame_0001465005ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001465005ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001466006ms</td><td>24:26.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001466006ms.png">元画像 PNG</a> · <a href="rois/frame_0001466006ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001466006ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001467007ms</td><td>24:27.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001467007ms.png">元画像 PNG</a> · <a href="rois/frame_0001467007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001467007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001468008ms</td><td>24:28.01</td><td>停止</td><td>face yaw too large: 67.8 deg (limit 25) / face roll too large: 22.8 deg (limit 20)</td><td><a href="frames/frame_0001468008ms.png">元画像 PNG</a> · <a href="rois/frame_0001468008ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001468008ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001469009ms</td><td>24:29.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001469009ms.png">元画像 PNG</a> · <a href="rois/frame_0001469009ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001469009ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001470010ms</td><td>24:30.01</td><td>停止</td><td>face yaw too large: -37.8 deg (limit 25)</td><td><a href="frames/frame_0001470010ms.png">元画像 PNG</a> · <a href="rois/frame_0001470010ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001470010ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001471011ms</td><td>24:31.01</td><td>停止</td><td>face yaw too large: 31.1 deg (limit 25)</td><td><a href="frames/frame_0001471011ms.png">元画像 PNG</a> · <a href="rois/frame_0001471011ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001471011ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001472012ms</td><td>24:32.01</td><td>停止</td><td>face yaw too large: -32.8 deg (limit 25)</td><td><a href="frames/frame_0001472012ms.png">元画像 PNG</a> · <a href="rois/frame_0001472012ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001472012ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001473013ms</td><td>24:33.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001473013ms.png">元画像 PNG</a> · <a href="rois/frame_0001473013ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001473013ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001474014ms</td><td>24:34.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001474014ms.png">元画像 PNG</a> · <a href="rois/frame_0001474014ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001474014ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001475015ms</td><td>24:35.02</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001475015ms.png">元画像 PNG</a> · <a href="rois/frame_0001475015ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001475015ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001476016ms</td><td>24:36.02</td><td>停止</td><td>face yaw too large: -36.6 deg (limit 25)</td><td><a href="frames/frame_0001476016ms.png">元画像 PNG</a> · <a href="rois/frame_0001476016ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001476016ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001477017ms</td><td>24:37.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001477017ms.png">元画像 PNG</a> · <a href="rois/frame_0001477017ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001477017ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001477518ms</td><td>24:37.52</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001477518ms.png">元画像 PNG</a> · <a href="rois/frame_0001477518ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001477518ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001478018ms</td><td>24:38.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001478018ms.png">元画像 PNG</a> · <a href="rois/frame_0001478018ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001478018ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001478519ms</td><td>24:38.52</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001478519ms.png">元画像 PNG</a> · <a href="rois/frame_0001478519ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001478519ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001479019ms</td><td>24:39.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001479019ms.png">元画像 PNG</a> · <a href="rois/frame_0001479019ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001479019ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001480020ms</td><td>24:40.02</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001480020ms.png">元画像 PNG</a> · <a href="rois/frame_0001480020ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001480020ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001480980ms</td><td>24:40.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001480980ms.png">元画像 PNG</a> · <a href="rois/frame_0001480980ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001480980ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001481980ms</td><td>24:41.98</td><td>停止</td><td>face yaw too large: -25.8 deg (limit 25)</td><td><a href="frames/frame_0001481980ms.png">元画像 PNG</a> · <a href="rois/frame_0001481980ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001481980ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001482981ms</td><td>24:42.98</td><td>停止</td><td>face yaw too large: -33.7 deg (limit 25)</td><td><a href="frames/frame_0001482981ms.png">元画像 PNG</a> · <a href="rois/frame_0001482981ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001482981ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001483982ms</td><td>24:43.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001483982ms.png">元画像 PNG</a> · <a href="rois/frame_0001483982ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001483982ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001484984ms</td><td>24:44.98</td><td>停止</td><td>face yaw too large: 76.0 deg (limit 25) / face too small: 114.4 px (minimum 120)</td><td><a href="frames/frame_0001484984ms.png">元画像 PNG</a> · <a href="rois/frame_0001484984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001484984ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001485984ms</td><td>24:45.98</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001485984ms.png">元画像 PNG</a> · <a href="rois/frame_0001485984ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001485984ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001486986ms</td><td>24:46.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001486986ms.png">元画像 PNG</a> · <a href="rois/frame_0001486986ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001486986ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001487986ms</td><td>24:47.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001487986ms.png">元画像 PNG</a> · <a href="rois/frame_0001487986ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001487986ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001488988ms</td><td>24:48.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001488988ms.png">元画像 PNG</a> · <a href="rois/frame_0001488988ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001488988ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001489988ms</td><td>24:49.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001489988ms.png">元画像 PNG</a> · <a href="rois/frame_0001489988ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001489988ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001490990ms</td><td>24:50.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001490990ms.png">元画像 PNG</a> · <a href="rois/frame_0001490990ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001490990ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001491990ms</td><td>24:51.99</td><td>停止</td><td>face yaw too large: 56.6 deg (limit 25)</td><td><a href="frames/frame_0001491990ms.png">元画像 PNG</a> · <a href="rois/frame_0001491990ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001491990ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001492991ms</td><td>24:52.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001492991ms.png">元画像 PNG</a> · <a href="rois/frame_0001492991ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001492991ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001493992ms</td><td>24:53.99</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001493992ms.png">元画像 PNG</a> · <a href="rois/frame_0001493992ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001493992ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001494994ms</td><td>24:54.99</td><td>停止</td><td>face yaw too large: -47.5 deg (limit 25)</td><td><a href="frames/frame_0001494994ms.png">元画像 PNG</a> · <a href="rois/frame_0001494994ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001494994ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001495994ms</td><td>24:55.99</td><td>停止</td><td>face yaw too large: -47.9 deg (limit 25)</td><td><a href="frames/frame_0001495994ms.png">元画像 PNG</a> · <a href="rois/frame_0001495994ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001495994ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001496996ms</td><td>24:57.00</td><td>停止</td><td>face yaw too large: -46.9 deg (limit 25)</td><td><a href="frames/frame_0001496996ms.png">元画像 PNG</a> · <a href="rois/frame_0001496996ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001496996ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001497996ms</td><td>24:58.00</td><td>停止</td><td>face yaw too large: -50.0 deg (limit 25)</td><td><a href="frames/frame_0001497996ms.png">元画像 PNG</a> · <a href="rois/frame_0001497996ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001497996ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001498998ms</td><td>24:59.00</td><td>停止</td><td>face yaw too large: -49.7 deg (limit 25)</td><td><a href="frames/frame_0001498998ms.png">元画像 PNG</a> · <a href="rois/frame_0001498998ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001498998ms/roi_points.json">領域・診断 JSON</a></td></tr></tbody></table></div></details>
+</main></body></html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab before / after summary</title>
+<style>
+body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; max-width: 1180px;
+       margin: 32px auto; padding: 0 20px 60px; line-height: 1.6; color: #222; }
+h1 { margin-bottom: 0.25rem; }
+.note { background: #f5f5f5; border-left: 4px solid #777; padding: 12px 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+.card { border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+img { max-width: 100%; height: auto; display: block; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0 24px; }
+th, td { border-bottom: 1px solid #ddd; padding: 9px 10px; text-align: right; }
+th:first-child { text-align: left; }
+thead th { background: #f7f7f7; }
+small { color: #666; }
+a { color: inherit; }
+</style>
+</head>
+<body>
+<h1>before / after Lab 解析</h1>
+<p>まず ROI が正しいか確認し、その後に a*（赤み）の変化を見ます。
+これは美しさの点数でも、化粧効果を証明する指標でもありません。</p>
+
+<h2>1. ROI確認</h2>
+<div class="card">
+<img src="roi_samples.png" alt="before/after ROI samples">
+</div>
+
+<h2>2. 頬の a*（赤み）</h2>
+<table>
+<thead><tr>
+<th>ROI</th><th>before平均</th><th>after平均</th><th>Δ平均</th>
+<th>Δ平均−額Δ</th><th>中央値 (Δ)</th><th>p95</th><th>a*≥20画素率</th>
+</tr></thead>
+<tbody><tr><th>画面左の頬</th><td>12.96</td><td>16.10</td><td>3.13</td><td>3.37</td><td>14.00 → 16.00 (2.0)</td><td>16.00 → 18.00</td><td>0.0% → 0.7%</td></tr><tr><th>画面右の頬</th><td>10.77</td><td>11.74</td><td>0.97</td><td>1.20</td><td>11.00 → 12.00 (1.0)</td><td>13.00 → 13.00</td><td>0.0% → 0.0%</td></tr></tbody>
+</table>
+<p><small>Δ = after − before。p95 と a*≥20画素率は、ROI全体の平均では見えにくい
+局所的な高a*画素の変化を見るための記述統計です。固定閾値20は妥当性を検証済みの判定基準ではありません。</small></p>
+
+<h2>3. 額の変化（control確認）</h2>
+<table>
+<thead><tr><th>指標</th><th>before</th><th>after</th><th>Δ</th></tr></thead>
+<tbody><tr><th>L* 明るさ</th><td>83.18</td><td>82.17</td><td>-1.01</td></tr><tr><th>a* 赤み</th><td>9.58</td><td>9.34</td><td>-0.24</td></tr><tr><th>b* 黄み</th><td>16.48</td><td>13.98</td><td>-2.50</td></tr></tbody>
+</table>
+<p class="note">Forehead subtraction is unvalidated: (cheek after - cheek before) - (forehead after - forehead before). Forehead treatment, shadow, pose, and lighting changes can invalidate the control; these are descriptive color differences, not scores or evidence of cosmetic efficacy.</p>
+
+<h2>4. 分布を見る</h2>
+<div class="grid">
+<div class="card"><h3>画面左の頬</h3><img src="left_cheek_lab_hist.png" alt="left cheek Lab histogram"></div>
+<div class="card"><h3>画面右の頬</h3><img src="right_cheek_lab_hist.png" alt="right cheek Lab histogram"></div>
+<div class="card"><h3>額</h3><img src="forehead_lab_hist.png" alt="forehead Lab histogram"></div>
+</div>
+
+<h2>5. 元データ</h2>
+<p>
+<a href="lab_deltas.csv">lab_deltas.csv</a> /
+<a href="lab_stats.csv">lab_stats.csv</a> /
+<a href="analysis_summary.json">analysis_summary.json</a>
+</p>
+<p><small>左右は解剖学的左右ではなく、画像・画面上の左右です。
+ROI間のピクセル対応付けは行っていません。</small></p>
+</body>
+</html>
