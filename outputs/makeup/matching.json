@@ -1,0 +1,1492 @@
+{
+  "schema_version": 1,
+  "method": "geometry-only-v1",
+  "notice": "Geometry-only ranking; lower is more similar, not higher confidence. RGB, Lab, forehead brightness and cosmetic color changes are not used for ranking or pair gates. Frame status/errors retain extraction hand/clipping checks. Landmark shape cannot establish that two frames show the same person. Treatment timing, identity and unobstructed ROI placement require human review. Limits and score weights are experimental.",
+  "settings": {
+    "split_seconds": 612.025,
+    "before_rule": "timestamp < split_seconds",
+    "after_rule": "timestamp >= split_seconds",
+    "min_gap_seconds": 306.0125,
+    "top_k": 10,
+    "diversity_seconds": 15.0,
+    "pose_gap_limits_degrees": {
+      "yaw": 10.0,
+      "pitch": 10.0,
+      "roll": 12.0
+    },
+    "max_face_scale_ratio": 1.5,
+    "max_eye_aperture_gap_face_width": 0.04,
+    "max_mouth_opening_gap_face_width": 0.08,
+    "roi_shape_score_scale": 0.05,
+    "shape_rms_definition": "RMS distance after centering, unit RMS radius normalization, and proper rotation",
+    "expression_units": "pixel distances divided by face width in pixels",
+    "color_used_for_ranking": false,
+    "forehead_L_used_for_pair_gate": false,
+    "reflection_alignment_allowed": false,
+    "reject_mirrored_landmark_order_change": true,
+    "thresholds_validated": false
+  },
+  "ranked_pairs": [
+    {
+      "before_id": "frame_0000034500ms",
+      "after_id": "frame_0001067550ms",
+      "before_time": 34.5,
+      "after_time": 1067.55,
+      "score": 0.34207973710405815,
+      "terms": {
+        "yaw_gap_degrees": 0.6933361136927343,
+        "pitch_gap_degrees": 0.08238149812574047,
+        "roll_gap_degrees": 0.3143475999586882,
+        "face_scale_ratio": 1.0087001645823495,
+        "log_face_scale_ratio": 0.008662536241472157,
+        "roi_procrustes_rms": 0.006321081106371266,
+        "eye_aperture_gap": 0.0028757664511294134,
+        "mouth_opening_gap": 0.0014905692849084208,
+        "contributions": {
+          "yaw": 0.06933361136927343,
+          "pitch": 0.008238149812574046,
+          "roll": 0.026195633329890684,
+          "face_scale": 0.0213644431253041,
+          "roi_shape": 0.1264216221274253,
+          "eye_aperture": 0.07189416127823534,
+          "mouth_opening": 0.01863211606135526
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1033.05,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.042782141618294245,
+            0.04261617222961704
+          ],
+          "mouth_opening": 0.002002108564349762
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.04565790806942366,
+            0.0443654669812562
+          ],
+          "mouth_opening": 0.003492677849258183
+        },
+        "screen_eye_aperture_gaps": [
+          0.0028757664511294134,
+          0.001749294751639159
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000169500ms",
+      "after_id": "frame_0001067550ms",
+      "before_time": 169.5,
+      "after_time": 1067.55,
+      "score": 0.37635237715969305,
+      "terms": {
+        "yaw_gap_degrees": 1.2179769953705581,
+        "pitch_gap_degrees": 0.08779945167740166,
+        "roll_gap_degrees": 0.2793656553134847,
+        "face_scale_ratio": 1.0068239871559215,
+        "log_face_scale_ratio": 0.006800809140145404,
+        "roi_procrustes_rms": 0.007229165674144187,
+        "eye_aperture_gap": 0.0023560442805365817,
+        "mouth_opening_gap": 0.0001789585242538568,
+        "contributions": {
+          "yaw": 0.12179769953705581,
+          "pitch": 0.008779945167740166,
+          "roll": 0.02328047127612372,
+          "face_scale": 0.016772859129301893,
+          "roi_shape": 0.14458331348288372,
+          "eye_aperture": 0.05890110701341454,
+          "mouth_opening": 0.00223698155317321
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 898.05,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.044506127812410826,
+            0.04200942270071962
+          ],
+          "mouth_opening": 0.003313719325004326
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.04565790806942366,
+            0.0443654669812562
+          ],
+          "mouth_opening": 0.003492677849258183
+        },
+        "screen_eye_aperture_gaps": [
+          0.0011517802570128327,
+          0.0023560442805365817
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000137000ms",
+      "after_id": "frame_0001068550ms",
+      "before_time": 137.0,
+      "after_time": 1068.55,
+      "score": 0.3815470762292711,
+      "terms": {
+        "yaw_gap_degrees": 0.014681965793769791,
+        "pitch_gap_degrees": 0.2738860983994158,
+        "roll_gap_degrees": 1.116041766372981,
+        "face_scale_ratio": 1.0131769800211272,
+        "log_face_scale_ratio": 0.013090918813380977,
+        "roi_procrustes_rms": 0.006332351848903797,
+        "eye_aperture_gap": 0.0026973153226289275,
+        "mouth_opening_gap": 0.002665655267195308,
+        "contributions": {
+          "yaw": 0.001468196579376979,
+          "pitch": 0.02738860983994158,
+          "roll": 0.09300348053108175,
+          "face_scale": 0.032286178395130274,
+          "roi_shape": 0.12664703697807594,
+          "eye_aperture": 0.06743288306572319,
+          "mouth_opening": 0.033320690839941346
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 931.55,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.0040276822263863405,
+            0.004069981304967375
+          ],
+          "mouth_opening": 0.001855342585914639
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.006724997549015268,
+            0.004940447381109886
+          ],
+          "mouth_opening": 0.004520997853109947
+        },
+        "screen_eye_aperture_gaps": [
+          0.0026973153226289275,
+          0.000870466076142511
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000063000ms",
+      "after_id": "frame_0001080050ms",
+      "before_time": 63.0,
+      "after_time": 1080.05,
+      "score": 0.41412073628582063,
+      "terms": {
+        "yaw_gap_degrees": 0.9196439223769866,
+        "pitch_gap_degrees": 0.4747869277407961,
+        "roll_gap_degrees": 0.9147083492782458,
+        "face_scale_ratio": 1.0109262700221486,
+        "log_face_scale_ratio": 0.010867009606619621,
+        "roi_procrustes_rms": 0.006295471230357025,
+        "eye_aperture_gap": 0.0005822508935399776,
+        "mouth_opening_gap": 0.0024947932109385105,
+        "contributions": {
+          "yaw": 0.09196439223769866,
+          "pitch": 0.04747869277407961,
+          "roll": 0.07622569577318715,
+          "face_scale": 0.026801343418483916,
+          "roi_shape": 0.1259094246071405,
+          "eye_aperture": 0.014556272338499439,
+          "mouth_opening": 0.03118491513673138
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1017.05,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.041230987128755975,
+            0.04193450822751883
+          ],
+          "mouth_opening": 0.0015145693344223421
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.041032383771456994,
+            0.041352257333978855
+          ],
+          "mouth_opening": 0.004009362545360853
+        },
+        "screen_eye_aperture_gaps": [
+          0.00019860335729898065,
+          0.0005822508935399776
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000097000ms",
+      "after_id": "frame_0001068550ms",
+      "before_time": 97.0,
+      "after_time": 1068.55,
+      "score": 0.4750840314880936,
+      "terms": {
+        "yaw_gap_degrees": 0.13397589039266977,
+        "pitch_gap_degrees": 1.684118450793192,
+        "roll_gap_degrees": 0.42742454405151986,
+        "face_scale_ratio": 1.002415948139347,
+        "log_face_scale_ratio": 0.0024130344286134955,
+        "roi_procrustes_rms": 0.0071877330539741905,
+        "eye_aperture_gap": 0.0022750263654923103,
+        "mouth_opening_gap": 0.004085943198583961,
+        "contributions": {
+          "yaw": 0.013397589039266977,
+          "pitch": 0.1684118450793192,
+          "roll": 0.03561871200429332,
+          "face_scale": 0.005951275166122998,
+          "roi_shape": 0.14375466107948381,
+          "eye_aperture": 0.05687565913730776,
+          "mouth_opening": 0.05107428998229951
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 971.55,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.00801769825286517,
+            0.002665421015617576
+          ],
+          "mouth_opening": 0.0004350546545259865
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.006724997549015268,
+            0.004940447381109886
+          ],
+          "mouth_opening": 0.004520997853109947
+        },
+        "screen_eye_aperture_gaps": [
+          0.001292700703849902,
+          0.0022750263654923103
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000138000ms",
+      "after_id": "frame_0001084050ms",
+      "before_time": 138.0,
+      "after_time": 1084.05,
+      "score": 0.48507281920194695,
+      "terms": {
+        "yaw_gap_degrees": 0.060784230820431606,
+        "pitch_gap_degrees": 0.05813127285605546,
+        "roll_gap_degrees": 2.019720616514346,
+        "face_scale_ratio": 1.0007483999167854,
+        "log_face_scale_ratio": 0.0007481200052162041,
+        "roi_procrustes_rms": 0.006791970031554679,
+        "eye_aperture_gap": 0.002142201665100228,
+        "mouth_opening_gap": 0.009090534739229255,
+        "contributions": {
+          "yaw": 0.006078423082043161,
+          "pitch": 0.005813127285605546,
+          "roll": 0.1683100513761955,
+          "face_scale": 0.0018450909591377982,
+          "roi_shape": 0.13583940063109357,
+          "eye_aperture": 0.053555041627505705,
+          "mouth_opening": 0.11363168424036568
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 946.05,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.03823425977544344,
+            0.04128386117164745
+          ],
+          "mouth_opening": 0.0015375409438058952
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.03609205811034321,
+            0.03953943817044624
+          ],
+          "mouth_opening": 0.01062807568303515
+        },
+        "screen_eye_aperture_gaps": [
+          0.002142201665100228,
+          0.0017444230012012146
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000169500ms",
+      "after_id": "frame_0001100050ms",
+      "before_time": 169.5,
+      "after_time": 1100.05,
+      "score": 0.5130874997200987,
+      "terms": {
+        "yaw_gap_degrees": 0.15127727627647447,
+        "pitch_gap_degrees": 0.014745184373387232,
+        "roll_gap_degrees": 1.3529035789178099,
+        "face_scale_ratio": 1.0070368576517166,
+        "log_face_scale_ratio": 0.007012214508234023,
+        "roi_procrustes_rms": 0.009905231670573835,
+        "eye_aperture_gap": 0.0012558083241549847,
+        "mouth_opening_gap": 0.010955935864748793,
+        "contributions": {
+          "yaw": 0.015127727627647447,
+          "pitch": 0.0014745184373387231,
+          "roll": 0.11274196490981749,
+          "face_scale": 0.017294248920583816,
+          "roi_shape": 0.1981046334114767,
+          "eye_aperture": 0.03139520810387462,
+          "mouth_opening": 0.13694919830935992
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 930.55,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.044506127812410826,
+            0.04200942270071962
+          ],
+          "mouth_opening": 0.003313719325004326
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.045233477192735065,
+            0.043265231024874604
+          ],
+          "mouth_opening": 0.014269655189753119
+        },
+        "screen_eye_aperture_gaps": [
+          0.0007273493803242395,
+          0.0012558083241549847
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000088000ms",
+      "after_id": "frame_0001084050ms",
+      "before_time": 88.0,
+      "after_time": 1084.05,
+      "score": 0.5356436359085576,
+      "terms": {
+        "yaw_gap_degrees": 1.3349968462693234,
+        "pitch_gap_degrees": 0.06368755791515923,
+        "roll_gap_degrees": 0.09139972813230468,
+        "face_scale_ratio": 1.0104870869454863,
+        "log_face_scale_ratio": 0.010432478903575673,
+        "roi_procrustes_rms": 0.009803992745849017,
+        "eye_aperture_gap": 0.0026621542478584836,
+        "mouth_opening_gap": 0.007983614521966699,
+        "contributions": {
+          "yaw": 0.13349968462693235,
+          "pitch": 0.006368755791515923,
+          "roll": 0.00761664401102539,
+          "face_scale": 0.02572965884105776,
+          "roi_shape": 0.19607985491698032,
+          "eye_aperture": 0.06655385619646209,
+          "mouth_opening": 0.09979518152458373
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 996.05,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.0360525050272174,
+            0.03687728392258775
+          ],
+          "mouth_opening": 0.002644461161068452
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.03609205811034321,
+            0.03953943817044624
+          ],
+          "mouth_opening": 0.01062807568303515
+        },
+        "screen_eye_aperture_gaps": [
+          3.955308312580952e-05,
+          0.0026621542478584836
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000113000ms",
+      "after_id": "frame_0001083550ms",
+      "before_time": 113.0,
+      "after_time": 1083.55,
+      "score": 0.5395702974615679,
+      "terms": {
+        "yaw_gap_degrees": 0.12168636784161335,
+        "pitch_gap_degrees": 0.5738068195355099,
+        "roll_gap_degrees": 0.1354668692726002,
+        "face_scale_ratio": 1.0024051245787753,
+        "log_face_scale_ratio": 0.0024022368958868117,
+        "roi_procrustes_rms": 0.016084249505050982,
+        "eye_aperture_gap": 0.0015009000011354775,
+        "mouth_opening_gap": 0.007487995011836663,
+        "contributions": {
+          "yaw": 0.012168636784161335,
+          "pitch": 0.05738068195355099,
+          "roll": 0.011288905772716684,
+          "face_scale": 0.005924645173774055,
+          "roi_shape": 0.32168499010101964,
+          "eye_aperture": 0.03752250002838694,
+          "mouth_opening": 0.09359993764795828
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 970.55,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.013155935705861769,
+            0.007648192024776565
+          ],
+          "mouth_opening": 0.0033103372586419065
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.012234172941005407,
+            0.009149092025912043
+          ],
+          "mouth_opening": 0.010798332270478569
+        },
+        "screen_eye_aperture_gaps": [
+          0.0009217627648563619,
+          0.0015009000011354775
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000034500ms",
+      "after_id": "frame_0001100050ms",
+      "before_time": 34.5,
+      "after_time": 1100.05,
+      "score": 0.5704941961879771,
+      "terms": {
+        "yaw_gap_degrees": 0.3733636054013495,
+        "pitch_gap_degrees": 0.020163137925048424,
+        "roll_gap_degrees": 1.3179216342726063,
+        "face_scale_ratio": 1.008486942491706,
+        "log_face_scale_ratio": 0.00845113087338328,
+        "roi_procrustes_rms": 0.009292197174335142,
+        "eye_aperture_gap": 0.0024513355744408202,
+        "mouth_opening_gap": 0.012267546625403357,
+        "contributions": {
+          "yaw": 0.03733636054013495,
+          "pitch": 0.0020163137925048426,
+          "roll": 0.10982680285605052,
+          "face_scale": 0.02084305333402154,
+          "roi_shape": 0.18584394348670283,
+          "eye_aperture": 0.061283389361020506,
+          "mouth_opening": 0.15334433281754195
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1065.55,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.042782141618294245,
+            0.04261617222961704
+          ],
+          "mouth_opening": 0.002002108564349762
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.045233477192735065,
+            0.043265231024874604
+          ],
+          "mouth_opening": 0.014269655189753119
+        },
+        "screen_eye_aperture_gaps": [
+          0.0024513355744408202,
+          0.0006490587952575622
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    }
+  ],
+  "stats": {
+    "total_frames": 366,
+    "accepted_frames": 180,
+    "rejected_frames": [
+      {
+        "record_index": 1,
+        "frame_id": "frame_0000013000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 5,
+        "frame_id": "frame_0000017000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 6,
+        "frame_id": "frame_0000018000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 7,
+        "frame_id": "frame_0000019000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 8,
+        "frame_id": "frame_0000020000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 9,
+        "frame_id": "frame_0000021000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 10,
+        "frame_id": "frame_0000022000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 11,
+        "frame_id": "frame_0000023000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 12,
+        "frame_id": "frame_0000024000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 14,
+        "frame_id": "frame_0000026000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 16,
+        "frame_id": "frame_0000028000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 27,
+        "frame_id": "frame_0000039000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 28,
+        "frame_id": "frame_0000040000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 29,
+        "frame_id": "frame_0000041000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 30,
+        "frame_id": "frame_0000042000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 31,
+        "frame_id": "frame_0000043000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 32,
+        "frame_id": "frame_0000044000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 33,
+        "frame_id": "frame_0000045000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 34,
+        "frame_id": "frame_0000046000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 35,
+        "frame_id": "frame_0000047000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 36,
+        "frame_id": "frame_0000048000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 38,
+        "frame_id": "frame_0000050000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 39,
+        "frame_id": "frame_0000051000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 44,
+        "frame_id": "frame_0000056000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 45,
+        "frame_id": "frame_0000057000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 47,
+        "frame_id": "frame_0000059000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 56,
+        "frame_id": "frame_0000068000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 57,
+        "frame_id": "frame_0000069000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 58,
+        "frame_id": "frame_0000070000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 60,
+        "frame_id": "frame_0000072000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 61,
+        "frame_id": "frame_0000073000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 62,
+        "frame_id": "frame_0000074000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 63,
+        "frame_id": "frame_0000075000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 66,
+        "frame_id": "frame_0000078000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 67,
+        "frame_id": "frame_0000079000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 68,
+        "frame_id": "frame_0000080000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 70,
+        "frame_id": "frame_0000082000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 71,
+        "frame_id": "frame_0000083000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 72,
+        "frame_id": "frame_0000084000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 73,
+        "frame_id": "frame_0000085000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 74,
+        "frame_id": "frame_0000086000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 92,
+        "frame_id": "frame_0000104000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 95,
+        "frame_id": "frame_0000107000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 96,
+        "frame_id": "frame_0000108000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 97,
+        "frame_id": "frame_0000109000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 98,
+        "frame_id": "frame_0000110000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 99,
+        "frame_id": "frame_0000111000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 100,
+        "frame_id": "frame_0000112000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 104,
+        "frame_id": "frame_0000116000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 105,
+        "frame_id": "frame_0000117000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 106,
+        "frame_id": "frame_0000118000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 111,
+        "frame_id": "frame_0000123000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 113,
+        "frame_id": "frame_0000125000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 114,
+        "frame_id": "frame_0000126000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 116,
+        "frame_id": "frame_0000128000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 117,
+        "frame_id": "frame_0000129000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 118,
+        "frame_id": "frame_0000130000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 121,
+        "frame_id": "frame_0000133000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 123,
+        "frame_id": "frame_0000135000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 124,
+        "frame_id": "frame_0000136000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 129,
+        "frame_id": "frame_0000141000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 134,
+        "frame_id": "frame_0000146000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 136,
+        "frame_id": "frame_0000148000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 137,
+        "frame_id": "frame_0000149000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 153,
+        "frame_id": "frame_0000165000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 154,
+        "frame_id": "frame_0000166000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 158,
+        "frame_id": "frame_0000170000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 162,
+        "frame_id": "frame_0000174000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 163,
+        "frame_id": "frame_0000175000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 166,
+        "frame_id": "frame_0000178000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 167,
+        "frame_id": "frame_0000179000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 168,
+        "frame_id": "frame_0001044050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 169,
+        "frame_id": "frame_0001045050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 170,
+        "frame_id": "frame_0001046050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 171,
+        "frame_id": "frame_0001047050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 172,
+        "frame_id": "frame_0001048050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 173,
+        "frame_id": "frame_0001049050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 174,
+        "frame_id": "frame_0001050050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 175,
+        "frame_id": "frame_0001051050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 176,
+        "frame_id": "frame_0001052050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 184,
+        "frame_id": "frame_0001060050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 185,
+        "frame_id": "frame_0001061050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 194,
+        "frame_id": "frame_0001070050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 195,
+        "frame_id": "frame_0001071050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 196,
+        "frame_id": "frame_0001072050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 198,
+        "frame_id": "frame_0001074050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 199,
+        "frame_id": "frame_0001075050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 251,
+        "frame_id": "frame_0001127050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 252,
+        "frame_id": "frame_0001128050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 253,
+        "frame_id": "frame_0001129050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 254,
+        "frame_id": "frame_0001130050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 255,
+        "frame_id": "frame_0001131050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 256,
+        "frame_id": "frame_0001132050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 257,
+        "frame_id": "frame_0001133050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 258,
+        "frame_id": "frame_0001134050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 259,
+        "frame_id": "frame_0001135050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 260,
+        "frame_id": "frame_0001136050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 261,
+        "frame_id": "frame_0001137050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 262,
+        "frame_id": "frame_0001138050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 263,
+        "frame_id": "frame_0001139050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 264,
+        "frame_id": "frame_0001140050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 265,
+        "frame_id": "frame_0001141050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 266,
+        "frame_id": "frame_0001142050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 267,
+        "frame_id": "frame_0001143050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 268,
+        "frame_id": "frame_0001144050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 269,
+        "frame_id": "frame_0001145050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 270,
+        "frame_id": "frame_0001146050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 271,
+        "frame_id": "frame_0001147050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 272,
+        "frame_id": "frame_0001148050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 273,
+        "frame_id": "frame_0001149050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 274,
+        "frame_id": "frame_0001150050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 275,
+        "frame_id": "frame_0001151050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 276,
+        "frame_id": "frame_0001152050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 277,
+        "frame_id": "frame_0001153050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 278,
+        "frame_id": "frame_0001154050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 279,
+        "frame_id": "frame_0001155050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 280,
+        "frame_id": "frame_0001156050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 281,
+        "frame_id": "frame_0001157050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 282,
+        "frame_id": "frame_0001158050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 283,
+        "frame_id": "frame_0001159050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 284,
+        "frame_id": "frame_0001160050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 285,
+        "frame_id": "frame_0001161050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 286,
+        "frame_id": "frame_0001162050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 287,
+        "frame_id": "frame_0001163050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 288,
+        "frame_id": "frame_0001164050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 289,
+        "frame_id": "frame_0001165050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 290,
+        "frame_id": "frame_0001166050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 291,
+        "frame_id": "frame_0001167050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 292,
+        "frame_id": "frame_0001168050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 293,
+        "frame_id": "frame_0001169050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 294,
+        "frame_id": "frame_0001170050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 295,
+        "frame_id": "frame_0001171050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 296,
+        "frame_id": "frame_0001172050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 297,
+        "frame_id": "frame_0001173050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 298,
+        "frame_id": "frame_0001174050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 299,
+        "frame_id": "frame_0001175050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 300,
+        "frame_id": "frame_0001176050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 301,
+        "frame_id": "frame_0001177050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 302,
+        "frame_id": "frame_0001178050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 303,
+        "frame_id": "frame_0001179050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 304,
+        "frame_id": "frame_0001180050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 305,
+        "frame_id": "frame_0001181050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 306,
+        "frame_id": "frame_0001182050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 307,
+        "frame_id": "frame_0001183050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 308,
+        "frame_id": "frame_0001184050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 309,
+        "frame_id": "frame_0001185050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 310,
+        "frame_id": "frame_0001186050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 311,
+        "frame_id": "frame_0001187050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 312,
+        "frame_id": "frame_0001188050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 313,
+        "frame_id": "frame_0001189050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 314,
+        "frame_id": "frame_0001190050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 315,
+        "frame_id": "frame_0001191050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 316,
+        "frame_id": "frame_0001192050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 317,
+        "frame_id": "frame_0001193050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 318,
+        "frame_id": "frame_0001194050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 319,
+        "frame_id": "frame_0001195050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 320,
+        "frame_id": "frame_0001196050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 321,
+        "frame_id": "frame_0001197050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 322,
+        "frame_id": "frame_0001198050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 323,
+        "frame_id": "frame_0001199050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 324,
+        "frame_id": "frame_0001200050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 325,
+        "frame_id": "frame_0001201050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 326,
+        "frame_id": "frame_0001202050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 327,
+        "frame_id": "frame_0001203050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 328,
+        "frame_id": "frame_0001204050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 329,
+        "frame_id": "frame_0001205050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 330,
+        "frame_id": "frame_0001206050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 331,
+        "frame_id": "frame_0001207050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 332,
+        "frame_id": "frame_0001208050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 333,
+        "frame_id": "frame_0001209050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 334,
+        "frame_id": "frame_0001210050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 335,
+        "frame_id": "frame_0001211050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 336,
+        "frame_id": "frame_0001212050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 337,
+        "frame_id": "frame_0001213050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 338,
+        "frame_id": "frame_0001214050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 339,
+        "frame_id": "frame_0001215050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 340,
+        "frame_id": "frame_0001216050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 341,
+        "frame_id": "frame_0001217050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 342,
+        "frame_id": "frame_0001218050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 343,
+        "frame_id": "frame_0001219050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 344,
+        "frame_id": "frame_0001220050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 345,
+        "frame_id": "frame_0001221050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 346,
+        "frame_id": "frame_0001222050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 347,
+        "frame_id": "frame_0001223050ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 355,
+        "frame_id": "frame_0000138500ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 356,
+        "frame_id": "frame_0000168500ms",
+        "reason": "ROI report status is not needs_review"
+      }
+    ],
+    "rejected_frame_count": 186,
+    "before_frames": 105,
+    "after_frames": 75,
+    "candidate_pairs": 7875,
+    "rejected_pairs": 953,
+    "pair_rejection_counts": {
+      "eye_aperture_gap": 790,
+      "mouth_opening_gap": 104,
+      "pitch_gap": 31,
+      "roll_gap": 38
+    },
+    "eligible_pairs": 6922,
+    "diversity_skipped_pairs": 3891,
+    "top_k_omitted_pairs": 3021,
+    "selected_pairs": 10
+  }
+}

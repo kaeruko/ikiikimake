@@ -1,0 +1,714 @@
+{
+  "schema_version": 1,
+  "version": "selected-appearance-v1",
+  "fingerprint": "99d640e3df215d8b9402000f0aebc5c7fe02d4366178918958c8f234ebe6502f",
+  "selected_pair_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\selected_pair.json",
+  "selected_pair_sha256": "57b25fe09246e084b4db7372abef6c1f33665581136e19d683685dc658f17576",
+  "input_specification": {
+    "version": "selected-appearance-v1",
+    "inputs": {
+      "before": {
+        "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\frames\\frame_0000240991ms.png",
+        "image_sha256": "306b53ea48fcd052fb5a468fc0b57701a752ab0efc97eb5baaec03f2c7765c78",
+        "roi_masks_sha256": "596d6401c9c7f4ececf01d961a7d38128d174a40313e7f2dabce769648166652",
+        "roi_points_sha256": "a55cf7a82f9c88273364f1bdeba3642283552ab87f9b83fd8272fe1da0e42d15",
+        "roi_overlay_sha256": "809b7d1ab4dce4a6f06cb7530153c3ef086d47961cc4e2ee7d7f2129853b6f8a",
+        "timestamp_seconds": 240.99075
+      },
+      "after": {
+        "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\frames\\frame_0001403485ms.png",
+        "image_sha256": "5c786175de8d8fb652e6ae1ecbdaecbc686b1689796afa84e213572c6dd3a0d3",
+        "roi_masks_sha256": "1bcbba96cc5496d313f0cf0cad467f1e9e8d2106df3a67a492c9dcb4246ed14a",
+        "roi_points_sha256": "798d4de5d3754dc324b6f486f233c5b46559630398c1dd11fa22a16eec1100ba",
+        "roi_overlay_sha256": "f8314963602911299476ee3ac0a878dcc0bdc08fe38728b11374324357f89452",
+        "timestamp_seconds": 1403.4854166666667
+      }
+    },
+    "implementation_sha256": {
+      "analyze_appearance.py": "0a9d99183aa74694ff85db8559994fe0791d5d0d27bfe52e6ec323de16ca4dcc",
+      "appearance_features.py": "2c703954c13ef551d4bc683407e327fb66f4eb2180d2f8cb2d393f1f2dce988c"
+    },
+    "runtime": {
+      "opencv": "5.0.0",
+      "numpy": "2.5.3"
+    }
+  },
+  "output_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b",
+  "overall_impression": null,
+  "interpretation_status": "descriptive_features_only_requires_visual_review",
+  "quality": {
+    "image_dimensions": {
+      "before": [
+        1920,
+        1080
+      ],
+      "after": [
+        1920,
+        1080
+      ]
+    },
+    "face_width_px": {
+      "before": 566.9234860088211,
+      "after": 568.7026528621788
+    },
+    "pose_gaps_degrees": {
+      "yaw": 1.493435683734054,
+      "pitch": 0.3700694108168621,
+      "roll": 2.0630766695420486
+    },
+    "face_scale_ratio": 1.0031382839082628,
+    "warnings": [
+      "目・眉・唇のROIは新規の自動生成領域です。重ね合わせ画像で位置と遮蔽物を確認してください。",
+      "視線、表情、照明、ピント、動画圧縮は自動的に補正していません。前後の工程も画像で確認してください。",
+      "同じ人の2枚の記述比較です。総合的な好印象、化粧の効果、統計的な有意差は判定しません。"
+    ]
+  },
+  "measurements": {
+    "before": [
+      {
+        "id": "screen_left_brow_relative_L_contrast",
+        "region": "screen_left_brow",
+        "label": "画面左眉の相対明度コントラスト",
+        "unit": "L*",
+        "value": 26.214599609375,
+        "pixels": 4082,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象4082画素（必要32画素以上）。参照皮膚2862画素（必要64画素以上）。"
+      },
+      {
+        "id": "screen_left_upper_lid_relative_L_contrast",
+        "region": "screen_left_upper_lid",
+        "label": "画面左上まぶた外側帯の相対明度コントラスト",
+        "unit": "L*",
+        "value": 21.502685546875,
+        "pixels": 671,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象671画素（必要24画素以上）。参照皮膚1047画素（必要64画素以上）。"
+      },
+      {
+        "id": "screen_right_brow_relative_L_contrast",
+        "region": "screen_right_brow",
+        "label": "画面右眉の相対明度コントラスト",
+        "unit": "L*",
+        "value": 18.731689453125,
+        "pixels": 5108,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象5108画素（必要32画素以上）。参照皮膚3504画素（必要64画素以上）。"
+      },
+      {
+        "id": "screen_right_upper_lid_relative_L_contrast",
+        "region": "screen_right_upper_lid",
+        "label": "画面右上まぶた外側帯の相対明度コントラスト",
+        "unit": "L*",
+        "value": 23.651123046875,
+        "pixels": 697,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象697画素（必要24画素以上）。参照皮膚1141画素（必要64画素以上）。"
+      },
+      {
+        "id": "lips_relative_a",
+        "region": "lips",
+        "label": "唇と周囲皮膚のa*差",
+        "unit": "a*",
+        "value": 11.78125,
+        "pixels": 8478,
+        "status": "ok",
+        "note": "唇a*中央値 − 周囲皮膚a*中央値。口腔内・口の境界線は除外。正負に良し悪しを割り当てない。 元画像の対象8478画素（必要60画素以上）。参照皮膚6224画素（必要64画素以上）。"
+      },
+      {
+        "id": "lips_skin_delta_e76",
+        "region": "lips",
+        "label": "唇と周囲皮膚のLab色差",
+        "unit": "ΔE*ab（CIE76）",
+        "value": 15.315641403198242,
+        "pixels": 8478,
+        "status": "ok",
+        "note": "唇と周囲皮膚のL*・a*・b*各中央値のユークリッド距離。口腔内を除外した領域間の色差で、塗布効果や知覚的な改善量を保証しない。 元画像の対象8478画素（必要60画素以上）。参照皮膚6224画素（必要64画素以上）。"
+      },
+      {
+        "id": "left_cheek_L_median",
+        "region": "left_cheek",
+        "label": "画面左頬のL*中央値",
+        "unit": "L*",
+        "value": 75.579833984375,
+        "pixels": 7425,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7425画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_a_median",
+        "region": "left_cheek",
+        "label": "画面左頬のa*中央値",
+        "unit": "a*",
+        "value": 13.515625,
+        "pixels": 7425,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7425画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_b_median",
+        "region": "left_cheek",
+        "label": "画面左頬のb*中央値",
+        "unit": "b*",
+        "value": 20.4375,
+        "pixels": 7425,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7425画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_ab_mad",
+        "region": "left_cheek",
+        "label": "画面左頬の色ばらつき",
+        "unit": "Lab a*b*距離",
+        "value": 2.3577187061309814,
+        "pixels": 7425,
+        "status": "ok",
+        "note": "a*b*各中央値からの色平面距離の中央値（robust分散の代理量）。明度L*は含めない。値の大小を肌の良し悪しとみなさない。 元画像の対象7425画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_highlight_percent",
+        "region": "left_cheek",
+        "label": "画面左頬の明部率",
+        "unit": "%",
+        "value": 14.047138047138047,
+        "pixels": 7425,
+        "status": "ok",
+        "note": "ROI内L*中央値 + 8以上の画素割合。光沢の候補量であり、照明・影・形状・化粧の影響が混入する。0%は閾値を超える画素がないことを示し、光沢がないという意味ではない。光沢量の測定や改善判定ではない。 元画像の対象7425画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_L_median",
+        "region": "right_cheek",
+        "label": "画面右頬のL*中央値",
+        "unit": "L*",
+        "value": 80.50537109375,
+        "pixels": 10480,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象10480画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_a_median",
+        "region": "right_cheek",
+        "label": "画面右頬のa*中央値",
+        "unit": "a*",
+        "value": 10.578125,
+        "pixels": 10480,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象10480画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_b_median",
+        "region": "right_cheek",
+        "label": "画面右頬のb*中央値",
+        "unit": "b*",
+        "value": 18.078125,
+        "pixels": 10480,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象10480画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_ab_mad",
+        "region": "right_cheek",
+        "label": "画面右頬の色ばらつき",
+        "unit": "Lab a*b*距離",
+        "value": 3.914522409439087,
+        "pixels": 10480,
+        "status": "ok",
+        "note": "a*b*各中央値からの色平面距離の中央値（robust分散の代理量）。明度L*は含めない。値の大小を肌の良し悪しとみなさない。 元画像の対象10480画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_highlight_percent",
+        "region": "right_cheek",
+        "label": "画面右頬の明部率",
+        "unit": "%",
+        "value": 0.0,
+        "pixels": 10480,
+        "status": "ok",
+        "note": "ROI内L*中央値 + 8以上の画素割合。光沢の候補量であり、照明・影・形状・化粧の影響が混入する。0%は閾値を超える画素がないことを示し、光沢がないという意味ではない。光沢量の測定や改善判定ではない。 元画像の対象10480画素（必要100画素以上）。"
+      },
+      {
+        "id": "forehead_L_median",
+        "region": "forehead",
+        "label": "額のL*中央値",
+        "unit": "L*",
+        "value": 82.843017578125,
+        "pixels": 6480,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6480画素（必要100画素以上）。"
+      },
+      {
+        "id": "forehead_a_median",
+        "region": "forehead",
+        "label": "額のa*中央値",
+        "unit": "a*",
+        "value": 9.5,
+        "pixels": 6480,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6480画素（必要100画素以上）。"
+      },
+      {
+        "id": "forehead_b_median",
+        "region": "forehead",
+        "label": "額のb*中央値",
+        "unit": "b*",
+        "value": 16.84375,
+        "pixels": 6480,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6480画素（必要100画素以上）。"
+      }
+    ],
+    "after": [
+      {
+        "id": "screen_left_brow_relative_L_contrast",
+        "region": "screen_left_brow",
+        "label": "画面左眉の相対明度コントラスト",
+        "unit": "L*",
+        "value": 34.259033203125,
+        "pixels": 4427,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象4427画素（必要32画素以上）。参照皮膚2922画素（必要64画素以上）。"
+      },
+      {
+        "id": "screen_left_upper_lid_relative_L_contrast",
+        "region": "screen_left_upper_lid",
+        "label": "画面左上まぶた外側帯の相対明度コントラスト",
+        "unit": "L*",
+        "value": 24.7161865234375,
+        "pixels": 691,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象691画素（必要24画素以上）。参照皮膚1094画素（必要64画素以上）。"
+      },
+      {
+        "id": "screen_right_brow_relative_L_contrast",
+        "region": "screen_right_brow",
+        "label": "画面右眉の相対明度コントラスト",
+        "unit": "L*",
+        "value": 31.011962890625,
+        "pixels": 5193,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象5193画素（必要32画素以上）。参照皮膚3433画素（必要64画素以上）。"
+      },
+      {
+        "id": "screen_right_upper_lid_relative_L_contrast",
+        "region": "screen_right_upper_lid",
+        "label": "画面右上まぶた外側帯の相対明度コントラスト",
+        "unit": "L*",
+        "value": 30.078125,
+        "pixels": 718,
+        "status": "ok",
+        "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象718画素（必要24画素以上）。参照皮膚1198画素（必要64画素以上）。"
+      },
+      {
+        "id": "lips_relative_a",
+        "region": "lips",
+        "label": "唇と周囲皮膚のa*差",
+        "unit": "a*",
+        "value": 2.859375,
+        "pixels": 7197,
+        "status": "ok",
+        "note": "唇a*中央値 − 周囲皮膚a*中央値。口腔内・口の境界線は除外。正負に良し悪しを割り当てない。 元画像の対象7197画素（必要60画素以上）。参照皮膚6712画素（必要64画素以上）。"
+      },
+      {
+        "id": "lips_skin_delta_e76",
+        "region": "lips",
+        "label": "唇と周囲皮膚のLab色差",
+        "unit": "ΔE*ab（CIE76）",
+        "value": 7.876865386962891,
+        "pixels": 7197,
+        "status": "ok",
+        "note": "唇と周囲皮膚のL*・a*・b*各中央値のユークリッド距離。口腔内を除外した領域間の色差で、塗布効果や知覚的な改善量を保証しない。 元画像の対象7197画素（必要60画素以上）。参照皮膚6712画素（必要64画素以上）。"
+      },
+      {
+        "id": "left_cheek_L_median",
+        "region": "left_cheek",
+        "label": "画面左頬のL*中央値",
+        "unit": "L*",
+        "value": 66.485595703125,
+        "pixels": 7587,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7587画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_a_median",
+        "region": "left_cheek",
+        "label": "画面左頬のa*中央値",
+        "unit": "a*",
+        "value": 15.734375,
+        "pixels": 7587,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7587画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_b_median",
+        "region": "left_cheek",
+        "label": "画面左頬のb*中央値",
+        "unit": "b*",
+        "value": 17.5625,
+        "pixels": 7587,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7587画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_ab_mad",
+        "region": "left_cheek",
+        "label": "画面左頬の色ばらつき",
+        "unit": "Lab a*b*距離",
+        "value": 1.0817421674728394,
+        "pixels": 7587,
+        "status": "ok",
+        "note": "a*b*各中央値からの色平面距離の中央値（robust分散の代理量）。明度L*は含めない。値の大小を肌の良し悪しとみなさない。 元画像の対象7587画素（必要100画素以上）。"
+      },
+      {
+        "id": "left_cheek_highlight_percent",
+        "region": "left_cheek",
+        "label": "画面左頬の明部率",
+        "unit": "%",
+        "value": 0.6458415711084751,
+        "pixels": 7587,
+        "status": "ok",
+        "note": "ROI内L*中央値 + 8以上の画素割合。光沢の候補量であり、照明・影・形状・化粧の影響が混入する。0%は閾値を超える画素がないことを示し、光沢がないという意味ではない。光沢量の測定や改善判定ではない。 元画像の対象7587画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_L_median",
+        "region": "right_cheek",
+        "label": "画面右頬のL*中央値",
+        "unit": "L*",
+        "value": 78.289794921875,
+        "pixels": 9816,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象9816画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_a_median",
+        "region": "right_cheek",
+        "label": "画面右頬のa*中央値",
+        "unit": "a*",
+        "value": 11.671875,
+        "pixels": 9816,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象9816画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_b_median",
+        "region": "right_cheek",
+        "label": "画面右頬のb*中央値",
+        "unit": "b*",
+        "value": 17.71875,
+        "pixels": 9816,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象9816画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_ab_mad",
+        "region": "right_cheek",
+        "label": "画面右頬の色ばらつき",
+        "unit": "Lab a*b*距離",
+        "value": 1.762580394744873,
+        "pixels": 9816,
+        "status": "ok",
+        "note": "a*b*各中央値からの色平面距離の中央値（robust分散の代理量）。明度L*は含めない。値の大小を肌の良し悪しとみなさない。 元画像の対象9816画素（必要100画素以上）。"
+      },
+      {
+        "id": "right_cheek_highlight_percent",
+        "region": "right_cheek",
+        "label": "画面右頬の明部率",
+        "unit": "%",
+        "value": 0.0,
+        "pixels": 9816,
+        "status": "ok",
+        "note": "ROI内L*中央値 + 8以上の画素割合。光沢の候補量であり、照明・影・形状・化粧の影響が混入する。0%は閾値を超える画素がないことを示し、光沢がないという意味ではない。光沢量の測定や改善判定ではない。 元画像の対象9816画素（必要100画素以上）。"
+      },
+      {
+        "id": "forehead_L_median",
+        "region": "forehead",
+        "label": "額のL*中央値",
+        "unit": "L*",
+        "value": 82.281494140625,
+        "pixels": 6949,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6949画素（必要100画素以上）。"
+      },
+      {
+        "id": "forehead_a_median",
+        "region": "forehead",
+        "label": "額のa*中央値",
+        "unit": "a*",
+        "value": 9.296875,
+        "pixels": 6949,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6949画素（必要100画素以上）。"
+      },
+      {
+        "id": "forehead_b_median",
+        "region": "forehead",
+        "label": "額のb*中央値",
+        "unit": "b*",
+        "value": 14.4375,
+        "pixels": 6949,
+        "status": "ok",
+        "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6949画素（必要100画素以上）。"
+      }
+    ]
+  },
+  "deltas": [
+    {
+      "id": "screen_left_brow_relative_L_contrast",
+      "region": "screen_left_brow",
+      "label": "画面左眉の相対明度コントラスト",
+      "unit": "L*",
+      "before": 26.214599609375,
+      "after": 34.259033203125,
+      "delta": 8.04443359375,
+      "before_pixels": 4082,
+      "after_pixels": 4427,
+      "status": "ok",
+      "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象4082画素（必要32画素以上）。参照皮膚2862画素（必要64画素以上）。"
+    },
+    {
+      "id": "screen_left_upper_lid_relative_L_contrast",
+      "region": "screen_left_upper_lid",
+      "label": "画面左上まぶた外側帯の相対明度コントラスト",
+      "unit": "L*",
+      "before": 21.502685546875,
+      "after": 24.7161865234375,
+      "delta": 3.2135009765625,
+      "before_pixels": 671,
+      "after_pixels": 691,
+      "status": "ok",
+      "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象671画素（必要24画素以上）。参照皮膚1047画素（必要64画素以上）。"
+    },
+    {
+      "id": "screen_right_brow_relative_L_contrast",
+      "region": "screen_right_brow",
+      "label": "画面右眉の相対明度コントラスト",
+      "unit": "L*",
+      "before": 18.731689453125,
+      "after": 31.011962890625,
+      "delta": 12.2802734375,
+      "before_pixels": 5108,
+      "after_pixels": 5193,
+      "status": "ok",
+      "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象5108画素（必要32画素以上）。参照皮膚3504画素（必要64画素以上）。"
+    },
+    {
+      "id": "screen_right_upper_lid_relative_L_contrast",
+      "region": "screen_right_upper_lid",
+      "label": "画面右上まぶた外側帯の相対明度コントラスト",
+      "unit": "L*",
+      "before": 23.651123046875,
+      "after": 30.078125,
+      "delta": 6.427001953125,
+      "before_pixels": 697,
+      "after_pixels": 718,
+      "status": "ok",
+      "note": "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、改善判定ではない。毛・影・照明・位置ずれも混入する。 元画像の対象697画素（必要24画素以上）。参照皮膚1141画素（必要64画素以上）。"
+    },
+    {
+      "id": "lips_relative_a",
+      "region": "lips",
+      "label": "唇と周囲皮膚のa*差",
+      "unit": "a*",
+      "before": 11.78125,
+      "after": 2.859375,
+      "delta": -8.921875,
+      "before_pixels": 8478,
+      "after_pixels": 7197,
+      "status": "ok",
+      "note": "唇a*中央値 − 周囲皮膚a*中央値。口腔内・口の境界線は除外。正負に良し悪しを割り当てない。 元画像の対象8478画素（必要60画素以上）。参照皮膚6224画素（必要64画素以上）。"
+    },
+    {
+      "id": "lips_skin_delta_e76",
+      "region": "lips",
+      "label": "唇と周囲皮膚のLab色差",
+      "unit": "ΔE*ab（CIE76）",
+      "before": 15.315641403198242,
+      "after": 7.876865386962891,
+      "delta": -7.438776016235352,
+      "before_pixels": 8478,
+      "after_pixels": 7197,
+      "status": "ok",
+      "note": "唇と周囲皮膚のL*・a*・b*各中央値のユークリッド距離。口腔内を除外した領域間の色差で、塗布効果や知覚的な改善量を保証しない。 元画像の対象8478画素（必要60画素以上）。参照皮膚6224画素（必要64画素以上）。"
+    },
+    {
+      "id": "left_cheek_L_median",
+      "region": "left_cheek",
+      "label": "画面左頬のL*中央値",
+      "unit": "L*",
+      "before": 75.579833984375,
+      "after": 66.485595703125,
+      "delta": -9.09423828125,
+      "before_pixels": 7425,
+      "after_pixels": 7587,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7425画素（必要100画素以上）。"
+    },
+    {
+      "id": "left_cheek_a_median",
+      "region": "left_cheek",
+      "label": "画面左頬のa*中央値",
+      "unit": "a*",
+      "before": 13.515625,
+      "after": 15.734375,
+      "delta": 2.21875,
+      "before_pixels": 7425,
+      "after_pixels": 7587,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7425画素（必要100画素以上）。"
+    },
+    {
+      "id": "left_cheek_b_median",
+      "region": "left_cheek",
+      "label": "画面左頬のb*中央値",
+      "unit": "b*",
+      "before": 20.4375,
+      "after": 17.5625,
+      "delta": -2.875,
+      "before_pixels": 7425,
+      "after_pixels": 7587,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象7425画素（必要100画素以上）。"
+    },
+    {
+      "id": "left_cheek_ab_mad",
+      "region": "left_cheek",
+      "label": "画面左頬の色ばらつき",
+      "unit": "Lab a*b*距離",
+      "before": 2.3577187061309814,
+      "after": 1.0817421674728394,
+      "delta": -1.275976538658142,
+      "before_pixels": 7425,
+      "after_pixels": 7587,
+      "status": "ok",
+      "note": "a*b*各中央値からの色平面距離の中央値（robust分散の代理量）。明度L*は含めない。値の大小を肌の良し悪しとみなさない。 元画像の対象7425画素（必要100画素以上）。"
+    },
+    {
+      "id": "left_cheek_highlight_percent",
+      "region": "left_cheek",
+      "label": "画面左頬の明部率",
+      "unit": "%",
+      "before": 14.047138047138047,
+      "after": 0.6458415711084751,
+      "delta": -13.401296476029572,
+      "before_pixels": 7425,
+      "after_pixels": 7587,
+      "status": "ok",
+      "note": "ROI内L*中央値 + 8以上の画素割合。光沢の候補量であり、照明・影・形状・化粧の影響が混入する。0%は閾値を超える画素がないことを示し、光沢がないという意味ではない。光沢量の測定や改善判定ではない。 元画像の対象7425画素（必要100画素以上）。"
+    },
+    {
+      "id": "right_cheek_L_median",
+      "region": "right_cheek",
+      "label": "画面右頬のL*中央値",
+      "unit": "L*",
+      "before": 80.50537109375,
+      "after": 78.289794921875,
+      "delta": -2.215576171875,
+      "before_pixels": 10480,
+      "after_pixels": 9816,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象10480画素（必要100画素以上）。"
+    },
+    {
+      "id": "right_cheek_a_median",
+      "region": "right_cheek",
+      "label": "画面右頬のa*中央値",
+      "unit": "a*",
+      "before": 10.578125,
+      "after": 11.671875,
+      "delta": 1.09375,
+      "before_pixels": 10480,
+      "after_pixels": 9816,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象10480画素（必要100画素以上）。"
+    },
+    {
+      "id": "right_cheek_b_median",
+      "region": "right_cheek",
+      "label": "画面右頬のb*中央値",
+      "unit": "b*",
+      "before": 18.078125,
+      "after": 17.71875,
+      "delta": -0.359375,
+      "before_pixels": 10480,
+      "after_pixels": 9816,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象10480画素（必要100画素以上）。"
+    },
+    {
+      "id": "right_cheek_ab_mad",
+      "region": "right_cheek",
+      "label": "画面右頬の色ばらつき",
+      "unit": "Lab a*b*距離",
+      "before": 3.914522409439087,
+      "after": 1.762580394744873,
+      "delta": -2.151942014694214,
+      "before_pixels": 10480,
+      "after_pixels": 9816,
+      "status": "ok",
+      "note": "a*b*各中央値からの色平面距離の中央値（robust分散の代理量）。明度L*は含めない。値の大小を肌の良し悪しとみなさない。 元画像の対象10480画素（必要100画素以上）。"
+    },
+    {
+      "id": "right_cheek_highlight_percent",
+      "region": "right_cheek",
+      "label": "画面右頬の明部率",
+      "unit": "%",
+      "before": 0.0,
+      "after": 0.0,
+      "delta": 0.0,
+      "before_pixels": 10480,
+      "after_pixels": 9816,
+      "status": "ok",
+      "note": "ROI内L*中央値 + 8以上の画素割合。光沢の候補量であり、照明・影・形状・化粧の影響が混入する。0%は閾値を超える画素がないことを示し、光沢がないという意味ではない。光沢量の測定や改善判定ではない。 元画像の対象10480画素（必要100画素以上）。"
+    },
+    {
+      "id": "forehead_L_median",
+      "region": "forehead",
+      "label": "額のL*中央値",
+      "unit": "L*",
+      "before": 82.843017578125,
+      "after": 82.281494140625,
+      "delta": -0.5615234375,
+      "before_pixels": 6480,
+      "after_pixels": 6949,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6480画素（必要100画素以上）。"
+    },
+    {
+      "id": "forehead_a_median",
+      "region": "forehead",
+      "label": "額のa*中央値",
+      "unit": "a*",
+      "before": 9.5,
+      "after": 9.296875,
+      "delta": -0.203125,
+      "before_pixels": 6480,
+      "after_pixels": 6949,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6480画素（必要100画素以上）。"
+    },
+    {
+      "id": "forehead_b_median",
+      "region": "forehead",
+      "label": "額のb*中央値",
+      "unit": "b*",
+      "before": 16.84375,
+      "after": 14.4375,
+      "delta": -2.40625,
+      "before_pixels": 6480,
+      "after_pixels": 6949,
+      "status": "ok",
+      "note": "固定ROI内の中央値。部位の色と撮影条件の確認用で、照明・影・化粧の影響を分離しない。 元画像の対象6480画素（必要100画素以上）。"
+    }
+  ],
+  "color_conversion": "OpenCV float32 BGR/255 to CIELAB (L* 0..100)",
+  "pixel_correspondence": false,
+  "native_pixels_only": true,
+  "artifacts": {
+    "feature_summary.json": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\feature_summary.json",
+    "feature_deltas.csv": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\feature_deltas.csv",
+    "appearance_rois.png": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\appearance_rois.png",
+    "region_samples.png": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\region_samples.png",
+    "feature_changes.png": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\feature_changes.png",
+    "report.html": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\report.html",
+    "before_feature_masks.npz": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\before_feature_masks.npz",
+    "after_feature_masks.npz": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\appearance_selected_pair\\99d640e3df215d8b\\after_feature_masks.npz"
+  }
+}

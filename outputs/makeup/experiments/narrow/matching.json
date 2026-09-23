@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "method": "geometry-only-v1",
+  "notice": "Geometry-only ranking; lower is more similar, not higher confidence. RGB, Lab, forehead brightness and cosmetic color changes are not used for ranking or pair gates. Frame status/errors retain extraction hand/clipping checks. Landmark shape cannot establish that two frames show the same person. Treatment timing, identity and unobstructed ROI placement require human review. Limits and score weights are experimental.",
+  "settings": {
+    "split_seconds": 950.1257145,
+    "before_rule": "timestamp < split_seconds",
+    "after_rule": "timestamp >= split_seconds",
+    "min_gap_seconds": 475.06285725,
+    "top_k": 10,
+    "diversity_seconds": 15.0,
+    "pose_gap_limits_degrees": {
+      "yaw": 10.0,
+      "pitch": 10.0,
+      "roll": 12.0
+    },
+    "max_face_scale_ratio": 1.5,
+    "max_eye_aperture_gap_face_width": 0.04,
+    "max_mouth_opening_gap_face_width": 0.08,
+    "roi_shape_score_scale": 0.05,
+    "shape_rms_definition": "RMS distance after centering, unit RMS radius normalization, and proper rotation",
+    "expression_units": "pixel distances divided by face width in pixels",
+    "color_used_for_ranking": false,
+    "forehead_L_used_for_pair_gate": false,
+    "reflection_alignment_allowed": false,
+    "reject_mirrored_landmark_order_change": true,
+    "thresholds_validated": false
+  },
+  "ranked_pairs": [],
+  "stats": {
+    "total_frames": 11,
+    "accepted_frames": 0,
+    "rejected_frames": [
+      {
+        "record_index": 0,
+        "frame_id": "frame_0000061995ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 1,
+        "frame_id": "frame_0000067000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 2,
+        "frame_id": "frame_0000072005ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 3,
+        "frame_id": "frame_0000077010ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 4,
+        "frame_id": "frame_0000082015ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 5,
+        "frame_id": "frame_0001869000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 6,
+        "frame_id": "frame_0001874005ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 7,
+        "frame_id": "frame_0001879010ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 8,
+        "frame_id": "frame_0001884015ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 9,
+        "frame_id": "frame_0001888987ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 10,
+        "frame_id": "frame_0001893992ms",
+        "reason": "ROI report status is not needs_review"
+      }
+    ],
+    "rejected_frame_count": 11,
+    "before_frames": 0,
+    "after_frames": 0,
+    "candidate_pairs": 0,
+    "rejected_pairs": 0,
+    "pair_rejection_counts": {},
+    "eligible_pairs": 0,
+    "diversity_skipped_pairs": 0,
+    "top_k_omitted_pairs": 0,
+    "selected_pairs": 0
+  }
+}

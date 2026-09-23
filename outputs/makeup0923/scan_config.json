@@ -1,0 +1,38 @@
+{
+  "video": {
+    "path": "C:\\Users\\mail\\work\\ikiikimake\\makeup0923.mp4",
+    "sha256": "edbbe9eee48672296f813284ec118dab2c6c72dc03819660f49e00cc88e23956",
+    "duration_seconds": 1728.351625,
+    "fps": 23.976023976023978,
+    "width": 1920,
+    "height": 1080
+  },
+  "sample_interval_seconds": 1.0,
+  "extraction_signature": {
+    "roi_version": "mediapipe-cheek-forehead-v1",
+    "config": {
+      "min_face_detection_confidence": 0.6,
+      "min_face_presence_confidence": 0.6,
+      "min_hand_detection_confidence": 0.35,
+      "min_hand_presence_confidence": 0.35,
+      "max_yaw_degrees": 25.0,
+      "max_pitch_degrees": 25.0,
+      "max_roll_degrees": 20.0,
+      "min_face_width_px": 120.0,
+      "min_roi_pixels": 100,
+      "polygon_scale": 0.88,
+      "hand_margin_face_fraction": 0.025,
+      "max_hand_overlap_ratio": 0.02,
+      "max_clipped_pixel_ratio": 0.1
+    },
+    "mediapipe_version": "1.0.1",
+    "models": {
+      "face_landmarker.task": {
+        "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff"
+      },
+      "hand_landmarker.task": {
+        "sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1"
+      }
+    }
+  }
+}

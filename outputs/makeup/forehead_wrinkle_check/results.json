@@ -1,0 +1,118 @@
+{
+  "purpose": "Exploratory image contrast of horizontal forehead lines, NOT validated wrinkle severity or makeup efficacy.",
+  "selected_pair_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\selected_pair.json",
+  "canonical_eye_distance_px": 209.20986977005987,
+  "roi_bounds_xyxy": [
+    141,
+    70,
+    299,
+    112
+  ],
+  "common_pixels": 5442,
+  "neighboring_common_pixels": 4089,
+  "primary_setting": {
+    "filter_height_px": 5,
+    "extra_blur_sigma": 0.0,
+    "region": "full",
+    "metric": "relative_line_mean"
+  },
+  "reproducibility": {
+    "opencv_version": "5.0.0",
+    "numpy_version": "2.5.3",
+    "script_sha256": "95bf7736ffafefe1a96c9252cf347e23635a79a8fa5f9bb4e98eda964805d8c8"
+  },
+  "selected": {
+    "before": {
+      "side": "before",
+      "region": "full",
+      "filter_height_px": 5,
+      "extra_blur_sigma": 0.0,
+      "pixels": 5442,
+      "mean_L": 78.99674987792969,
+      "dark_line_mean_L": 0.35305801033973694,
+      "relative_line_mean": 0.4430125951766968,
+      "relative_line_p90": 1.5718902349472046,
+      "area_above_1pct": 15.380374862183022
+    },
+    "after": {
+      "side": "after",
+      "region": "full",
+      "filter_height_px": 5,
+      "extra_blur_sigma": 0.0,
+      "pixels": 5442,
+      "mean_L": 81.67279815673828,
+      "dark_line_mean_L": 0.4261605143547058,
+      "relative_line_mean": 0.5227957963943481,
+      "relative_line_p90": 1.9796786308288574,
+      "area_above_1pct": 19.110621095185593
+    }
+  },
+  "sources": {
+    "before": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\frames\\frame_0000034500ms.png",
+      "sha256": "7b90ce140238d8a4f1e22174d8bd550e6152fd6627366125523af651b8536132",
+      "roi_points_sha256": "1ea109729102575a0f94a575f6a743ee6cfcbd33b4408d7c4c022398dc27d9c1",
+      "transform": [
+        [
+          0.9999112541061927,
+          -0.013322308800682437,
+          -805.5159158033684
+        ],
+        [
+          0.013322308800682437,
+          0.9999112541061927,
+          -274.07183268645986
+        ]
+      ],
+      "pose": {
+        "pitch": -7.941080575637531,
+        "yaw": 1.3363610267543953,
+        "roll": 1.4609353205558222
+      }
+    },
+    "after": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\frames\\frame_0001067550ms.png",
+      "sha256": "fc3aec2697e8feeef6b59c9df57685a1e30dc3d284f6914a889b4cf5c7d8e06a",
+      "roi_points_sha256": "dc093aff51471228aa8b6bae5c5cbbd4b0d137458ea77bc52308a6fe037b601d",
+      "transform": [
+        [
+          0.979971344664279,
+          -0.012082215813846598,
+          -750.9481888898417
+        ],
+        [
+          0.012082215813846598,
+          0.979971344664279,
+          -314.12423832340176
+        ]
+      ],
+      "pose": {
+        "pitch": -7.85869907751179,
+        "yaw": 2.0296971404471296,
+        "roll": 1.146587720597134
+      }
+    }
+  },
+  "neighboring_summary": {
+    "before": {
+      "n": 6,
+      "median": 0.4321763664484024,
+      "min": 0.3986894190311432,
+      "max": 0.5006011128425598
+    },
+    "after": {
+      "n": 7,
+      "median": 0.5535596013069153,
+      "min": 0.49323275685310364,
+      "max": 0.6453456282615662
+    }
+  },
+  "limits": [
+    "One person, observational video, no controlled lighting/expression or focus.",
+    "Lines may include skin texture, compression, highlights or shadow; this is not verified wrinkle segmentation.",
+    "Local brightness normalization does not remove illumination direction, specular reflections or focus differences.",
+    "Pixels and neighboring frames are not independent people; no significance test or confidence interval.",
+    "The selected after frame is before lipstick, not confirmed final full makeup."
+  ],
+  "primary_percent_change": 18.00923993725949
+}

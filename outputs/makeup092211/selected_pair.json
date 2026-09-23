@@ -1,0 +1,26 @@
+{
+  "video_path": "C:\\Users\\mail\\work\\ikiikimake\\makeup092211.mp4",
+  "video_sha256": "e650570b754e6fe03be76024ad243f868b4fdadb78eec185585d89df8b7183b6",
+  "rank": 1,
+  "score": 0.7607765461274322,
+  "before": {
+    "frame_id": "frame_0000068000ms",
+    "timestamp_seconds": 68.0,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup092211\\frames\\frame_0000068000ms.png",
+    "image_sha256": "62b877c1b6a35c4dd0baff6d24135dab40c46e1768ed6b6b70b6243c6f623da7",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup092211\\rois\\frame_0000068000ms",
+    "roi_masks_sha256": "009716259998f448b8498b4e1c48630685936d573fddff857eb6ebcab76e8b6b",
+    "roi_points_sha256": "cf099907d7b18747d861f2025ca383d16d70e321c413c3eb308fed90ee496693",
+    "roi_overlay_sha256": "749a35aa7cda80b5d571e29e300b10f782b5ce1d93e30b1fab240491d3f2aa33"
+  },
+  "after": {
+    "frame_id": "frame_0001161300ms",
+    "timestamp_seconds": 1161.3,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup092211\\frames\\frame_0001161300ms.png",
+    "image_sha256": "e11443074af4bad3e0a8c8f669b59f8d536472d5346f93f5c998cd59625dd809",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup092211\\rois\\frame_0001161300ms",
+    "roi_masks_sha256": "cb5a8ab30e999ceeb41eedc7adbf4a744cf0c1ef13dbee466175b4692ded67e8",
+    "roi_points_sha256": "5316583e8aae961752a6a15a51b622043fe047a3a6e4f7afaab45fc1ed82d050",
+    "roi_overlay_sha256": "2ec17d1c34cf98a1694bd34cbec16b587d2641d22ba9f3c843733f074f5e55e7"
+  }
+}

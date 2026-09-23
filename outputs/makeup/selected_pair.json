@@ -1,0 +1,24 @@
+{
+  "rank": 1,
+  "score": 0.34207973710405815,
+  "before": {
+    "frame_id": "frame_0000034500ms",
+    "timestamp_seconds": 34.5,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\frames\\frame_0000034500ms.png",
+    "image_sha256": "7b90ce140238d8a4f1e22174d8bd550e6152fd6627366125523af651b8536132",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\rois\\frame_0000034500ms",
+    "roi_masks_sha256": "0b55ccf3e5d1ae3f540a521f6fa533920648446ae3cf40d1c55bbf3430d8a06d",
+    "roi_points_sha256": "2bab4a13da7cf3ad714de4ccc58f6faf5f30b7ba8414b365f471c171e88a7fb8",
+    "roi_overlay_sha256": "8f3d5c543d97760716e0ebd91a8d4c44149a49de63f265b103d4629af1eedb44"
+  },
+  "after": {
+    "frame_id": "frame_0001067550ms",
+    "timestamp_seconds": 1067.55,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\frames\\frame_0001067550ms.png",
+    "image_sha256": "fc3aec2697e8feeef6b59c9df57685a1e30dc3d284f6914a889b4cf5c7d8e06a",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup\\rois\\frame_0001067550ms",
+    "roi_masks_sha256": "3c85b644f716af6869bc7e416f212a93c3f9eb1e2f415da3b092f53e7d4f3796",
+    "roi_points_sha256": "2ea1778145765864fa7c8b3fd089667e095032478a4330206a923068346e1e68",
+    "roi_overlay_sha256": "f038cb505c1fbe9bc0e5251fb98a2ab2877879c6e7e188e8376050eb74e0a71e"
+  }
+}

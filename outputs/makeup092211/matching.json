@@ -1,0 +1,919 @@
+{
+  "schema_version": 1,
+  "method": "geometry-only-v1",
+  "notice": "Geometry-only ranking; lower is more similar, not higher confidence. RGB, Lab, forehead brightness and cosmetic color changes are not used for ranking or pair gates. Frame status/errors retain extraction hand/clipping checks. Landmark shape cannot establish that two frames show the same person. Treatment timing, identity and unobstructed ROI placement require human review. Limits and score weights are experimental.",
+  "settings": {
+    "split_seconds": 644.643991,
+    "before_rule": "timestamp < split_seconds",
+    "after_rule": "timestamp >= split_seconds",
+    "min_gap_seconds": 322.3219955,
+    "top_k": 10,
+    "diversity_seconds": 15.0,
+    "pose_gap_limits_degrees": {
+      "yaw": 10.0,
+      "pitch": 10.0,
+      "roll": 12.0
+    },
+    "max_face_scale_ratio": 1.5,
+    "max_eye_aperture_gap_face_width": 0.04,
+    "max_mouth_opening_gap_face_width": 0.08,
+    "roi_shape_score_scale": 0.05,
+    "shape_rms_definition": "RMS distance after centering, unit RMS radius normalization, and proper rotation",
+    "expression_units": "pixel distances divided by face width in pixels",
+    "color_used_for_ranking": false,
+    "forehead_L_used_for_pair_gate": false,
+    "reflection_alignment_allowed": false,
+    "reject_mirrored_landmark_order_change": true,
+    "thresholds_validated": false
+  },
+  "ranked_pairs": [
+    {
+      "before_id": "frame_0000068000ms",
+      "after_id": "frame_0001161300ms",
+      "before_time": 68.0,
+      "after_time": 1161.3,
+      "score": 0.7607765461274322,
+      "terms": {
+        "yaw_gap_degrees": 1.1408386237948422,
+        "pitch_gap_degrees": 1.7225135785594126,
+        "roll_gap_degrees": 0.8554574924861484,
+        "face_scale_ratio": 1.0043939465460772,
+        "log_face_scale_ratio": 0.004384321347723802,
+        "roi_procrustes_rms": 0.013578418247473554,
+        "eye_aperture_gap": 0.003369270454514836,
+        "mouth_opening_gap": 0.0029232006628605485,
+        "contributions": {
+          "yaw": 0.11408386237948423,
+          "pitch": 0.17225135785594126,
+          "roll": 0.0712881243738457,
+          "face_scale": 0.010813066920062116,
+          "roi_shape": 0.27156836494947106,
+          "eye_aperture": 0.0842317613628709,
+          "mouth_opening": 0.036540008285756855
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1093.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07094394085058683,
+            0.06674082601115754
+          ],
+          "mouth_opening": 0.022778312416009652
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.07067634249842888,
+            0.07011009646567237
+          ],
+          "mouth_opening": 0.019855111753149104
+        },
+        "screen_eye_aperture_gaps": [
+          0.00026759835215794947,
+          0.003369270454514836
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000065500ms",
+      "after_id": "frame_0001238300ms",
+      "before_time": 65.5,
+      "after_time": 1238.3,
+      "score": 0.7906909061658826,
+      "terms": {
+        "yaw_gap_degrees": 0.8687355220680792,
+        "pitch_gap_degrees": 0.1848900766417696,
+        "roll_gap_degrees": 0.9291991401398603,
+        "face_scale_ratio": 1.0692170659136393,
+        "log_face_scale_ratio": 0.06692666654099101,
+        "roi_procrustes_rms": 0.013114630322092813,
+        "eye_aperture_gap": 0.0017740173050315583,
+        "mouth_opening_gap": 0.010895246090685741,
+        "contributions": {
+          "yaw": 0.08687355220680792,
+          "pitch": 0.018489007664176958,
+          "roll": 0.0774332616783217,
+          "face_scale": 0.165061469415359,
+          "roi_shape": 0.26229260644185626,
+          "eye_aperture": 0.04435043262578896,
+          "mouth_opening": 0.13619057613357177
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1172.8,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.05458997349129873,
+            0.0526751982128497
+          ],
+          "mouth_opening": 0.0350534461734784
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.05636399079633029,
+            0.053231734703114174
+          ],
+          "mouth_opening": 0.04594869226416414
+        },
+        "screen_eye_aperture_gaps": [
+          0.0017740173050315583,
+          0.0005565364902644712
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000119000ms",
+      "after_id": "frame_0001121300ms",
+      "before_time": 119.0,
+      "after_time": 1121.3,
+      "score": 0.8007070754260691,
+      "terms": {
+        "yaw_gap_degrees": 0.5295685472117061,
+        "pitch_gap_degrees": 1.782315417111909,
+        "roll_gap_degrees": 0.6984587522345707,
+        "face_scale_ratio": 1.0245624780262024,
+        "log_face_scale_ratio": 0.02426567075753222,
+        "roi_procrustes_rms": 0.012102105388314103,
+        "eye_aperture_gap": 0.008256803172514496,
+        "mouth_opening_gap": 0.00024040704710619198,
+        "contributions": {
+          "yaw": 0.05295685472117061,
+          "pitch": 0.1782315417111909,
+          "roll": 0.05820489601954756,
+          "face_scale": 0.05984650780618825,
+          "roi_shape": 0.24204210776628204,
+          "eye_aperture": 0.20642007931286238,
+          "mouth_opening": 0.0030050880888274
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1002.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06370589533026749,
+            0.06823698102690746
+          ],
+          "mouth_opening": 0.038778621081783225
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.07196269850278199,
+            0.07210746965623233
+          ],
+          "mouth_opening": 0.03853821403467703
+        },
+        "screen_eye_aperture_gaps": [
+          0.008256803172514496,
+          0.0038704886293248614
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000068000ms",
+      "after_id": "frame_0001135300ms",
+      "before_time": 68.0,
+      "after_time": 1135.3,
+      "score": 0.8327947854679693,
+      "terms": {
+        "yaw_gap_degrees": 1.4425661426431513,
+        "pitch_gap_degrees": 0.2790155182162861,
+        "roll_gap_degrees": 1.7309558884540743,
+        "face_scale_ratio": 1.0139882416702974,
+        "log_face_scale_ratio": 0.013891309115857496,
+        "roi_procrustes_rms": 0.014524791245909658,
+        "eye_aperture_gap": 0.0037188735364632186,
+        "mouth_opening_gap": 0.007892995859602538,
+        "contributions": {
+          "yaw": 0.14425661426431513,
+          "pitch": 0.027901551821628612,
+          "roll": 0.14424632403783952,
+          "face_scale": 0.03426018376938063,
+          "roi_shape": 0.29049582491819315,
+          "eye_aperture": 0.09297183841158047,
+          "mouth_opening": 0.09866244824503173
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1067.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07094394085058683,
+            0.06674082601115754
+          ],
+          "mouth_opening": 0.022778312416009652
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.06722506731412362,
+            0.0663790240973301
+          ],
+          "mouth_opening": 0.03067130827561219
+        },
+        "screen_eye_aperture_gaps": [
+          0.0037188735364632186,
+          0.0003618019138274392
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000114000ms",
+      "after_id": "frame_0001216300ms",
+      "before_time": 114.0,
+      "after_time": 1216.3,
+      "score": 0.8955476195915922,
+      "terms": {
+        "yaw_gap_degrees": 0.15467848857950184,
+        "pitch_gap_degrees": 0.5411936315083832,
+        "roll_gap_degrees": 2.911136683078514,
+        "face_scale_ratio": 1.0311690384829264,
+        "log_face_scale_ratio": 0.0306931474470602,
+        "roi_procrustes_rms": 0.011563169387687589,
+        "eye_aperture_gap": 0.009742114475469313,
+        "mouth_opening_gap": 0.0026280654826022487,
+        "contributions": {
+          "yaw": 0.015467848857950184,
+          "pitch": 0.05411936315083832,
+          "roll": 0.2425947235898762,
+          "face_scale": 0.0756986158199149,
+          "roi_shape": 0.23126338775375177,
+          "eye_aperture": 0.2435528618867328,
+          "mouth_opening": 0.03285081853252811
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1102.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06017651907650478,
+            0.06330923852177774
+          ],
+          "mouth_opening": 0.07583099244028552
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.054883673880615116,
+            0.05356712404630842
+          ],
+          "mouth_opening": 0.07320292695768327
+        },
+        "screen_eye_aperture_gaps": [
+          0.005292845195889663,
+          0.009742114475469313
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000065000ms",
+      "after_id": "frame_0001221300ms",
+      "before_time": 65.0,
+      "after_time": 1221.3,
+      "score": 0.9303482356626652,
+      "terms": {
+        "yaw_gap_degrees": 2.5099167686731008,
+        "pitch_gap_degrees": 0.00818045361566,
+        "roll_gap_degrees": 2.694695276645365,
+        "face_scale_ratio": 1.0795669376332402,
+        "log_face_scale_ratio": 0.07655997704775203,
+        "roi_procrustes_rms": 0.010826338706335346,
+        "eye_aperture_gap": 0.00010646018016333136,
+        "mouth_opening_gap": 0.003677772688817676,
+        "contributions": {
+          "yaw": 0.25099167686731005,
+          "pitch": 0.0008180453615659999,
+          "roll": 0.2245579397204471,
+          "face_scale": 0.18882013647233095,
+          "roi_shape": 0.2165267741267069,
+          "eye_aperture": 0.002661504504083284,
+          "mouth_opening": 0.04597215861022095
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1156.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07286136398353889,
+            0.07462028927963318
+          ],
+          "mouth_opening": 0.01543158316133909
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.07275490380337556,
+            0.07462525972588457
+          ],
+          "mouth_opening": 0.019109355850156766
+        },
+        "screen_eye_aperture_gaps": [
+          0.00010646018016333136,
+          4.970446251389982e-06
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000087000ms",
+      "after_id": "frame_0001238300ms",
+      "before_time": 87.0,
+      "after_time": 1238.3,
+      "score": 0.9321194851574688,
+      "terms": {
+        "yaw_gap_degrees": 1.1157863615844896,
+        "pitch_gap_degrees": 0.4297389890143051,
+        "roll_gap_degrees": 0.27220456101393387,
+        "face_scale_ratio": 1.0857883911177921,
+        "log_face_scale_ratio": 0.08230635088462095,
+        "roi_procrustes_rms": 0.013155059377630157,
+        "eye_aperture_gap": 0.0040872768448432725,
+        "mouth_opening_gap": 0.01492861518750132,
+        "contributions": {
+          "yaw": 0.11157863615844896,
+          "pitch": 0.04297389890143051,
+          "roll": 0.022683713417827822,
+          "face_scale": 0.2029924381623101,
+          "roi_shape": 0.2631011875526031,
+          "eye_aperture": 0.1021819211210818,
+          "mouth_opening": 0.1866076898437665
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1151.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.05227671395148702,
+            0.05215226675269613
+          ],
+          "mouth_opening": 0.06087730745166546
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.05636399079633029,
+            0.053231734703114174
+          ],
+          "mouth_opening": 0.04594869226416414
+        },
+        "screen_eye_aperture_gaps": [
+          0.0040872768448432725,
+          0.0010794679504180435
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000112000ms",
+      "after_id": "frame_0001231300ms",
+      "before_time": 112.0,
+      "after_time": 1231.3,
+      "score": 0.9358591030987827,
+      "terms": {
+        "yaw_gap_degrees": 1.3572910374730258,
+        "pitch_gap_degrees": 1.6328126134918861,
+        "roll_gap_degrees": 0.54611558261987,
+        "face_scale_ratio": 1.007817911674628,
+        "log_face_scale_ratio": 0.0077875101512999015,
+        "roi_procrustes_rms": 0.014639280993640896,
+        "eye_aperture_gap": 0.010132065902660692,
+        "mouth_opening_gap": 0.0020836380342819684,
+        "contributions": {
+          "yaw": 0.13572910374730257,
+          "pitch": 0.1632812613491886,
+          "roll": 0.04550963188498917,
+          "face_scale": 0.019206363249442557,
+          "roi_shape": 0.2927856198728179,
+          "eye_aperture": 0.2533016475665173,
+          "mouth_opening": 0.026045475428524603
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1119.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06242089466501692,
+            0.06572128682959644
+          ],
+          "mouth_opening": 0.022734685648608595
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.056881388685987834,
+            0.055589220926935745
+          ],
+          "mouth_opening": 0.024818323682890563
+        },
+        "screen_eye_aperture_gaps": [
+          0.005539505979029087,
+          0.010132065902660692
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000116000ms",
+      "after_id": "frame_0001175300ms",
+      "before_time": 116.0,
+      "after_time": 1175.3,
+      "score": 0.9879262931101535,
+      "terms": {
+        "yaw_gap_degrees": 2.2407063711402913,
+        "pitch_gap_degrees": 0.6271220185318451,
+        "roll_gap_degrees": 0.9948726595449022,
+        "face_scale_ratio": 1.014483143607377,
+        "log_face_scale_ratio": 0.01437926467736168,
+        "roi_procrustes_rms": 0.013831595608480083,
+        "eye_aperture_gap": 0.001862245076844446,
+        "mouth_opening_gap": 0.02076685838639581,
+        "contributions": {
+          "yaw": 0.22407063711402914,
+          "pitch": 0.06271220185318452,
+          "roll": 0.08290605496207519,
+          "face_scale": 0.035463630260204236,
+          "roi_shape": 0.27663191216960165,
+          "eye_aperture": 0.04655612692111115,
+          "mouth_opening": 0.2595857298299476
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1059.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06858959191922401,
+            0.06980561208957567
+          ],
+          "mouth_opening": 0.020749180257976153
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.07045183699606845,
+            0.06903563947754325
+          ],
+          "mouth_opening": 0.041516038644371964
+        },
+        "screen_eye_aperture_gaps": [
+          0.001862245076844446,
+          0.0007699726120324185
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000118500ms",
+      "after_id": "frame_0001247300ms",
+      "before_time": 118.5,
+      "after_time": 1247.3,
+      "score": 0.9900914608414602,
+      "terms": {
+        "yaw_gap_degrees": 0.600330945658369,
+        "pitch_gap_degrees": 1.1860583120221138,
+        "roll_gap_degrees": 0.5777935192662853,
+        "face_scale_ratio": 1.2024300382755826,
+        "log_face_scale_ratio": 0.18434454107703832,
+        "roi_procrustes_rms": 0.01071146756900182,
+        "eye_aperture_gap": 0.0022157657831687674,
+        "mouth_opening_gap": 0.003122399939744419,
+        "contributions": {
+          "yaw": 0.0600330945658369,
+          "pitch": 0.11860583120221138,
+          "roll": 0.04814945993885711,
+          "face_scale": 0.4546495799284939,
+          "roi_shape": 0.2142293513800364,
+          "eye_aperture": 0.055394144579219186,
+          "mouth_opening": 0.03902999924680524
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1128.8,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.05137032502233413,
+            0.043905038401225324
+          ],
+          "mouth_opening": 0.05815704908747345
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.052574313755389734,
+            0.04612080418439409
+          ],
+          "mouth_opening": 0.06127944902721787
+        },
+        "screen_eye_aperture_gaps": [
+          0.0012039887330556054,
+          0.0022157657831687674
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    }
+  ],
+  "stats": {
+    "total_frames": 258,
+    "accepted_frames": 187,
+    "rejected_frames": [
+      {
+        "record_index": 3,
+        "frame_id": "frame_0000063000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 15,
+        "frame_id": "frame_0000075000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 16,
+        "frame_id": "frame_0000076000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 19,
+        "frame_id": "frame_0000079000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 23,
+        "frame_id": "frame_0000083000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 24,
+        "frame_id": "frame_0000084000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 40,
+        "frame_id": "frame_0000100000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 60,
+        "frame_id": "frame_0001109300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 61,
+        "frame_id": "frame_0001110300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 62,
+        "frame_id": "frame_0001111300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 68,
+        "frame_id": "frame_0001117300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 73,
+        "frame_id": "frame_0001122300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 74,
+        "frame_id": "frame_0001123300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 75,
+        "frame_id": "frame_0001124300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 76,
+        "frame_id": "frame_0001125300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 77,
+        "frame_id": "frame_0001126300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 78,
+        "frame_id": "frame_0001127300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 79,
+        "frame_id": "frame_0001128300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 80,
+        "frame_id": "frame_0001129300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 81,
+        "frame_id": "frame_0001130300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 82,
+        "frame_id": "frame_0001131300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 83,
+        "frame_id": "frame_0001132300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 91,
+        "frame_id": "frame_0001140300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 96,
+        "frame_id": "frame_0001145300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 97,
+        "frame_id": "frame_0001146300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 99,
+        "frame_id": "frame_0001148300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 105,
+        "frame_id": "frame_0001154300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 109,
+        "frame_id": "frame_0001158300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 111,
+        "frame_id": "frame_0001160300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 117,
+        "frame_id": "frame_0001166300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 118,
+        "frame_id": "frame_0001167300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 123,
+        "frame_id": "frame_0001172300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 131,
+        "frame_id": "frame_0001180300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 133,
+        "frame_id": "frame_0001182300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 134,
+        "frame_id": "frame_0001183300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 135,
+        "frame_id": "frame_0001184300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 142,
+        "frame_id": "frame_0001191300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 143,
+        "frame_id": "frame_0001192300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 149,
+        "frame_id": "frame_0001198300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 150,
+        "frame_id": "frame_0001199300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 151,
+        "frame_id": "frame_0001200300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 152,
+        "frame_id": "frame_0001201300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 153,
+        "frame_id": "frame_0001202300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 154,
+        "frame_id": "frame_0001203300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 155,
+        "frame_id": "frame_0001204300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 173,
+        "frame_id": "frame_0001222300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 191,
+        "frame_id": "frame_0001240300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 192,
+        "frame_id": "frame_0001241300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 193,
+        "frame_id": "frame_0001242300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 215,
+        "frame_id": "frame_0001264300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 220,
+        "frame_id": "frame_0001269300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 221,
+        "frame_id": "frame_0001270300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 222,
+        "frame_id": "frame_0001271300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 223,
+        "frame_id": "frame_0001272300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 224,
+        "frame_id": "frame_0001273300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 225,
+        "frame_id": "frame_0001274300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 226,
+        "frame_id": "frame_0001275300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 227,
+        "frame_id": "frame_0001276300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 228,
+        "frame_id": "frame_0001277300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 229,
+        "frame_id": "frame_0001278300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 230,
+        "frame_id": "frame_0001279300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 231,
+        "frame_id": "frame_0001280300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 232,
+        "frame_id": "frame_0001281300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 233,
+        "frame_id": "frame_0001282300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 234,
+        "frame_id": "frame_0001283300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 235,
+        "frame_id": "frame_0001284300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 236,
+        "frame_id": "frame_0001285300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 237,
+        "frame_id": "frame_0001286300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 238,
+        "frame_id": "frame_0001287300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 239,
+        "frame_id": "frame_0001288300ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 249,
+        "frame_id": "frame_0001121800ms",
+        "reason": "ROI report status is not needs_review"
+      }
+    ],
+    "rejected_frame_count": 71,
+    "before_frames": 61,
+    "after_frames": 126,
+    "candidate_pairs": 7686,
+    "rejected_pairs": 4775,
+    "pair_rejection_counts": {
+      "eye_aperture_gap": 2308,
+      "face_scale_ratio": 328,
+      "mouth_opening_gap": 272,
+      "pitch_gap": 2232,
+      "roll_gap": 559,
+      "yaw_gap": 1588
+    },
+    "eligible_pairs": 2911,
+    "diversity_skipped_pairs": 1900,
+    "top_k_omitted_pairs": 1001,
+    "selected_pairs": 10
+  }
+}
