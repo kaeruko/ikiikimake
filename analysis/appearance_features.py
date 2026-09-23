@@ -39,6 +39,15 @@ HIGHLIGHT_L_OFFSET = 8.0
 TEXTURE_BLUR_SIGMA = 1.2
 SESC_INSPIRED_THRESHOLD_MULTIPLIER = 19.0 / 13.0
 SESC_INSPIRED_MAX_GRAY = 240.0
+GVR_INSPIRED_CLAHE_CLIP_LIMIT = 2.0
+GVR_INSPIRED_CLAHE_TILE_GRID = (8, 8)
+GVR_INSPIRED_REGIONS = (
+    ("screen_left_upper_lid_skin", "画面左眉下の皮膚"),
+    ("screen_right_upper_lid_skin", "画面右眉下の皮膚"),
+    ("left_cheek", "画面左頬・対照"),
+    ("right_cheek", "画面右頬・対照"),
+    ("forehead", "額・対照"),
+)
 
 
 def _binary_mask(mask: np.ndarray, shape: tuple[int, int], name: str) -> np.ndarray:
@@ -78,6 +87,82 @@ def _strip_mask(line: np.ndarray, direction: np.ndarray, near: float, far: float
                 shape: tuple[int, int], name: str) -> np.ndarray:
     polygon = np.vstack((line + direction * near, (line + direction * far)[::-1]))
     return _polygon_mask(polygon, shape, name)
+
+
+def measure_gvr_inspired_features(
+    image_bgr: np.ndarray,
+    masks: dict[str, np.ndarray],
+) -> list[dict]:
+    """Measure a visible-light hydration-related GVR approximation.
+
+    Wu et al. (2024) used HSI intensity I=(R+G+B)/3, CLAHE, a reflectance
+    image obtained by subtracting the CLAHE image from the monochrome image,
+    and GVR = mean grayscale value of ROI / sum grayscale value of whole image.
+
+    The paper does not report CLAHE parameters. This implementation fixes
+    OpenCV CLAHE to clipLimit=2.0 and tileGridSize=(8, 8), and clips negative
+    I-CLAHE(I) residuals to zero. Therefore these values are named
+    GVR-inspired and are not interchangeable with the paper's calibrated GVR.
+    """
+    image = np.asarray(image_bgr)
+    if image.ndim != 3 or image.shape[2] != 3 or image.dtype != np.uint8 or not image.size:
+        raise ValueError("Expected a nonempty uint8 BGR image")
+
+    selected = {}
+    for name, _ in GVR_INSPIRED_REGIONS:
+        if name not in masks:
+            raise ValueError(f"Missing GVR-inspired mask: {name}")
+        selected[name] = _binary_mask(masks[name], image.shape[:2], name)
+
+    # HSI intensity from the paper: I = (R + G + B) / 3.
+    intensity = np.rint(image.astype(np.float32).mean(axis=2)).astype(np.uint8)
+    clahe = cv2.createCLAHE(
+        clipLimit=GVR_INSPIRED_CLAHE_CLIP_LIMIT,
+        tileGridSize=GVR_INSPIRED_CLAHE_TILE_GRID,
+    )
+    enhanced = clahe.apply(intensity)
+    reflectance = np.clip(
+        intensity.astype(np.int16) - enhanced.astype(np.int16),
+        0,
+        None,
+    ).astype(np.float64)
+    whole_sum = float(reflectance.sum())
+    if not np.isfinite(whole_sum) or whole_sum <= 0:
+        raise ValueError(
+            "GVR-inspired reflectance image has zero total intensity; metric is undefined"
+        )
+
+    rows = []
+    for name, label in GVR_INSPIRED_REGIONS:
+        mask = selected[name]
+        count = int(mask.sum())
+        minimum = MIN_TARGET_PIXELS["skin"]
+        if count >= minimum:
+            roi_mean = float(np.mean(reflectance[mask]))
+            value = roi_mean / whole_sum
+            status = "ok"
+        else:
+            value = None
+            status = "insufficient_pixels"
+        rows.append({
+            "id": f"{name}_gvr_inspired_ratio",
+            "region": name,
+            "label": f"{label}のGVR-inspired皮膚水分反射比",
+            "unit": "ratio",
+            "value": value,
+            "pixels": count,
+            "status": status,
+            "note": (
+                "Wu et al. (2024) の可視光GVRを参考に、HSI intensity I=(R+G+B)/3へCLAHEを適用し、"
+                "I-CLAHE(I)の負値を0へクリップしたreflectance-like画像について、"
+                "ROI平均 / 画像全体の画素和を計算。論文ではCLAHEパラメータが未記載のため、"
+                f"OpenCV clipLimit={GVR_INSPIRED_CLAHE_CLIP_LIMIT:.1f}, "
+                f"tileGridSize={GVR_INSPIRED_CLAHE_TILE_GRID}を固定した研究用近似。"
+                "EPISCANの標準化撮影を再現しておらず、皮膚水分量や乾燥の診断値ではない。 "
+                f"元画像の対象{count}画素（必要{minimum}画素以上）。"
+            ),
+        })
+    return rows
 
 
 def build_feature_masks(

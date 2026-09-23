@@ -10,7 +10,7 @@ import numpy as np
 from analysis.appearance_features import (
     BASE_NAMES, BROW_INDICES, FACE_OVAL_INDICES, INNER_LIP_INDICES,
     LOWER_EYE_INDICES, OUTER_LIP_INDICES, UPPER_EYE_INDICES,
-    build_feature_masks, measure_features,
+    build_feature_masks, measure_features, measure_gvr_inspired_features,
 )
 
 
@@ -260,6 +260,35 @@ class AppearanceFeatureTests(unittest.TestCase):
             specular[y, x] = (255, 255, 255)
         specular_rows = rows_by_id(specular, masks)
         self.assertAlmostEqual(specular_rows[key]["value"], 0.0)
+
+
+    def test_gvr_inspired_matches_documented_ratio_on_nonuniform_image(self):
+        image, _, masks, _ = fixture()
+        height, width = image.shape[:2]
+        gradient = np.tile(np.linspace(20, 230, width, dtype=np.uint8), (height, 1))
+        image = np.dstack((gradient, gradient, gradient))
+        rows = {row["id"]: row for row in measure_gvr_inspired_features(image, masks)}
+        self.assertEqual(len(rows), 5)
+
+        intensity = np.rint(image.astype(np.float32).mean(axis=2)).astype(np.uint8)
+        enhanced = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8)).apply(intensity)
+        reflectance = np.clip(
+            intensity.astype(np.int16) - enhanced.astype(np.int16), 0, None
+        ).astype(np.float64)
+        whole_sum = float(reflectance.sum())
+        self.assertGreater(whole_sum, 0)
+
+        key = "left_cheek_gvr_inspired_ratio"
+        expected = float(np.mean(reflectance[masks["left_cheek"]])) / whole_sum
+        self.assertEqual(rows[key]["status"], "ok")
+        self.assertAlmostEqual(rows[key]["value"], expected)
+        self.assertIn("Wu et al. (2024)", rows[key]["note"])
+        self.assertIn("clipLimit=2.0", rows[key]["note"])
+
+    def test_gvr_inspired_fails_fast_when_reflectance_sum_is_zero(self):
+        image, _, masks, _ = fixture()
+        with self.assertRaisesRegex(ValueError, "zero total intensity"):
+            measure_gvr_inspired_features(image, masks)
 
 
 if __name__ == "__main__":
