@@ -1,30 +1,30 @@
-*.mp4
-*.png
-*.jpg
-*.npz
-*.json
-cheek01_frames/
-cheek01_candidates/
-
+# Local Python/runtime state
 __pycache__/
 .venv/
 
+# Local source videos and large datasets
+*.mp4
+datasets/
+cheek01_frames/
+cheek01_candidates/
+
+# Local ML models / checkpoints
 models/*.task
-outputs/roi_debug/
-*.png
-*.jpg
-*.npz
-*.json
-
-!review_exports/
-!review_exports/*.png
-!review_exports/*.jpg
-!review_exports/*.html
-
-# Generated makeup-transfer data, training weights and local verification runs.
-outputs/makeup_transfer*/
 models/makeup_transfer*/
 *.pt
 *.pth
 
-datasets/
+# Heavy generated intermediates.
+# Keep human-review artifacts (PNG/HTML/CSV/small JSON) trackable so analysis
+# results can be reviewed directly in GitHub.
+outputs/roi_debug/
+outputs/makeup_transfer*/
+outputs/**/frames/
+outputs/**/rois/
+outputs/**/frames.jsonl
+outputs/**/*.npz
+outputs/**/scan_manifest.json
+
+# Optional explicit review-export directory remains trackable.
+!review_exports/
+!review_exports/**
