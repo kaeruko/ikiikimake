@@ -23,7 +23,7 @@ from analysis.analyze_cheek_lab import load_image, load_masks
 from analysis.appearance_features import build_feature_masks, measure_features
 
 
-ANALYSIS_VERSION = "selected-region-appearance-v3"
+ANALYSIS_VERSION = "selected-region-appearance-v4"
 
 REGION_METRIC_IDS = {
     "eye_texture": (
@@ -37,6 +37,11 @@ REGION_METRIC_IDS = {
         "right_cheek_highpass_p90_pct",
         "forehead_highpass_median_pct",
         "forehead_highpass_p90_pct",
+        "screen_left_upper_lid_skin_sesc_inspired_scaliness_pct",
+        "screen_right_upper_lid_skin_sesc_inspired_scaliness_pct",
+        "left_cheek_sesc_inspired_scaliness_pct",
+        "right_cheek_sesc_inspired_scaliness_pct",
+        "forehead_sesc_inspired_scaliness_pct",
     ),
     "lips": (
         "lips_relative_a",
@@ -209,7 +214,7 @@ table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;b
 @media(max-width:800px){{.pair{{grid-template-columns:1fr}}}}
 </style><body><h1>承認済み部位別 before / after の記述解析</h1>
 <p class="notice">この結果は画像上の記述的特徴です。乾燥・シワの診断、メイク効果の因果推定、美しさの採点ではありません。
-眉下の皮膚の高周波指標にはピント・照明・圧縮・眉毛・メイク境界などが混入し得ます。左右頬と額を同一フレームの対照ROIとして同じ式で測定します。</p>
+眉下の皮膚の高周波指標にはピント・照明・圧縮・眉毛・メイク境界などが混入し得ます。左右頬と額を同一フレームの対照ROIとして同じ式で測定します。SEsc-inspired bright-scaliness率は公開されたSEsc閾値定義を普通の動画grayへ適用した研究用近似で、Visioscan SEscそのものや乾燥診断ではありません。</p>
 {"".join(sections)}
 </body></html>"""
 

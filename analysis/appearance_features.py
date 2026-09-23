@@ -37,6 +37,8 @@ MIN_TARGET_PIXELS = {"brow": 32, "upper_lid": 24, "lips": 60, "skin": 100}
 MIN_REFERENCE_PIXELS = 64
 HIGHLIGHT_L_OFFSET = 8.0
 TEXTURE_BLUR_SIGMA = 1.2
+SESC_INSPIRED_THRESHOLD_MULTIPLIER = 19.0 / 13.0
+SESC_INSPIRED_MAX_GRAY = 240.0
 
 
 def _binary_mask(mask: np.ndarray, shape: tuple[int, int], name: str) -> np.ndarray:
@@ -224,6 +226,7 @@ def measure_features(image_bgr: np.ndarray, masks: dict[str, np.ndarray]) -> lis
     lightness = lab[:, :, 0]
     low_frequency = cv2.GaussianBlur(lightness, (0, 0), TEXTURE_BLUR_SIGMA)
     highpass_abs = np.abs(lightness - low_frequency)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY).astype(np.float64)
     rows = []
 
     def add(identifier, region, label, unit, value_fn, note, minimum, reference=None):
@@ -306,6 +309,31 @@ def measure_features(image_bgr: np.ndarray, masks: dict[str, np.ndarray]) -> lis
             f"Gaussian blur σ={TEXTURE_BLUR_SIGMA:.1f}px を引いた |L*残差| の90百分位を領域L*中央値で正規化。"
             "眉下ROIと同じ式で撮影条件由来の局所的な細線・粒状感を確認する対照指標。乾燥・シワの診断ではない。",
             minimum)
+
+    for name, label in (
+        ("screen_left_upper_lid_skin", "画面左眉下の皮膚"),
+        ("screen_right_upper_lid_skin", "画面右眉下の皮膚"),
+        ("left_cheek", "画面左頬・対照"),
+        ("right_cheek", "画面右頬・対照"),
+        ("forehead", "額・対照"),
+    ):
+        def sesc_inspired(n=name):
+            vals = gray[selected[n]]
+            mean_gray = float(np.mean(vals))
+            threshold = SESC_INSPIRED_THRESHOLD_MULTIPLIER * mean_gray
+            bright_scale = (vals > threshold) & (vals <= SESC_INSPIRED_MAX_GRAY)
+            return 100.0 * np.mean(bright_scale)
+        add(
+            f"{name}_sesc_inspired_scaliness_pct",
+            name,
+            f"{label}のSEsc-inspired bright-scaliness率",
+            "%",
+            sesc_inspired,
+            "Visioscan SEscで公開されている閾値定義を参考に、ROI平均grayの19/13倍より明るく、"
+            "gray 240以下の画素割合を計算する。通常のBGR動画をOpenCV grayへ変換した研究用の近似指標で、"
+            "Visioscan専用UVA撮影によるSEscそのものではなく、乾燥・鱗屑の診断値でもない。",
+            MIN_TARGET_PIXELS["skin"],
+        )
 
     add("lips_relative_a", "lips", "唇と周囲皮膚のa*差", "a*",
         lambda: np.median(values["lips"][:, 1]) - np.median(values["lip_skin"][:, 1]),

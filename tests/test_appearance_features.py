@@ -59,8 +59,8 @@ class AppearanceFeatureTests(unittest.TestCase):
     def test_constant_color_produces_zero_contrasts_dispersion_and_highlights(self):
         image, _, masks, _ = fixture()
         rows = measure_features(image, masks)
-        self.assertEqual(len(rows), 29)
-        self.assertEqual(len({row["id"] for row in rows}), 29)
+        self.assertEqual(len(rows), 34)
+        self.assertEqual(len({row["id"] for row in rows}), 34)
         for row in rows:
             with self.subTest(feature=row["id"]):
                 self.assertEqual(row["status"], "ok")
@@ -235,6 +235,31 @@ class AppearanceFeatureTests(unittest.TestCase):
             self.assertEqual(changed[key]["status"], "ok")
             self.assertGreater(changed[key]["value"], baseline[key]["value"])
             self.assertIn("対照", changed[key]["note"])
+
+
+    def test_sesc_inspired_scaliness_counts_bright_non_specular_pixels(self):
+        image, _, masks, _ = fixture()
+        baseline = rows_by_id(image, masks)
+        key = "left_cheek_sesc_inspired_scaliness_pct"
+        self.assertEqual(baseline[key]["status"], "ok")
+        self.assertAlmostEqual(baseline[key]["value"], 0.0)
+
+        region_pixels = np.argwhere(masks["left_cheek"])
+        n_bright = max(1, len(region_pixels) // 20)
+
+        flaky = image.copy()
+        for y, x in region_pixels[:n_bright]:
+            flaky[y, x] = (240, 240, 240)
+        flaky_rows = rows_by_id(flaky, masks)
+        self.assertGreater(flaky_rows[key]["value"], 0.0)
+        self.assertIn("19/13", flaky_rows[key]["note"])
+        self.assertIn("Visioscan", flaky_rows[key]["note"])
+
+        specular = image.copy()
+        for y, x in region_pixels[:n_bright]:
+            specular[y, x] = (255, 255, 255)
+        specular_rows = rows_by_id(specular, masks)
+        self.assertAlmostEqual(specular_rows[key]["value"], 0.0)
 
 
 if __name__ == "__main__":
