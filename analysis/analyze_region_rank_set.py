@@ -1,0 +1,413 @@
+"""Analyze appearance metrics across multiple candidate before/after ranks.
+
+This runner is for repeatability review. It never modifies
+selected_region_pairs.json or promotes a candidate to an approved pair.
+"""
+
+from __future__ import annotations
+
+import csv
+import hashlib
+import html
+import json
+from pathlib import Path
+from typing import Iterable
+
+from analysis.analyze_selected_regions import (
+    REGION_LABELS,
+    REGION_METRIC_IDS,
+    _load_phase,
+    _overlay,
+    _save_png,
+    sha256_file,
+)
+
+
+RANK_SET_VERSION = "candidate-rank-set-v1"
+
+EYE_TEXTURE_FOCUS_IDS = (
+    "screen_left_upper_lid_skin_highpass_median_pct",
+    "screen_left_upper_lid_skin_highpass_p90_pct",
+    "screen_right_upper_lid_skin_highpass_median_pct",
+    "screen_right_upper_lid_skin_highpass_p90_pct",
+    "screen_left_nasolabial_crease_darkness_p90_pct",
+    "screen_right_nasolabial_crease_darkness_p90_pct",
+)
+
+
+def _normalize_ranks(ranks: Iterable[int]) -> tuple[int, ...]:
+    if isinstance(ranks, (str, bytes)):
+        raise TypeError("ranks must be an iterable of positive integers")
+    try:
+        values = tuple(ranks)
+    except TypeError as exc:
+        raise TypeError("ranks must be an iterable of positive integers") from exc
+    if not values:
+        raise ValueError("ranks must not be empty")
+    for rank in values:
+        if isinstance(rank, bool) or not isinstance(rank, int):
+            raise TypeError(f"rank must be an integer, got {type(rank).__name__}: {rank!r}")
+        if rank < 1:
+            raise ValueError(f"rank must be >= 1, got {rank}")
+    if len(set(values)) != len(values):
+        raise ValueError(f"ranks must not contain duplicates: {values}")
+    return values
+
+
+def _selected_frame(record: dict) -> dict:
+    if not isinstance(record, dict):
+        raise TypeError("scan record must be an object")
+    required_keys = ("frame_id", "timestamp_seconds", "image_path", "roi_dir")
+    missing = [key for key in required_keys if key not in record]
+    if missing:
+        raise ValueError(f"scan record is missing keys: {missing}")
+
+    image_path = Path(record["image_path"])
+    roi_dir = Path(record["roi_dir"])
+    required_files = {
+        "roi_masks_sha256": roi_dir / "roi_masks.npz",
+        "roi_points_sha256": roi_dir / "roi_points.json",
+        "roi_overlay_sha256": roi_dir / "roi_overlay.png",
+    }
+    for path in (image_path, *required_files.values()):
+        if not path.is_file():
+            raise FileNotFoundError(path)
+
+    return {
+        "frame_id": record["frame_id"],
+        "timestamp_seconds": record["timestamp_seconds"],
+        "image_path": str(image_path),
+        "image_sha256": sha256_file(image_path),
+        "roi_dir": str(roi_dir),
+        **{name: sha256_file(path) for name, path in required_files.items()},
+    }
+
+
+def _delta_rows(
+    region: str,
+    rank: int,
+    before_rows: dict[str, dict],
+    after_rows: dict[str, dict],
+) -> list[dict]:
+    rows = []
+    for identifier in REGION_METRIC_IDS[region]:
+        before = before_rows[identifier]
+        after = after_rows[identifier]
+        status = (
+            before["status"]
+            if before["status"] == after["status"]
+            else f'before={before["status"]}; after={after["status"]}'
+        )
+        before_value = before["value"]
+        after_value = after["value"]
+        delta = (
+            float(after_value - before_value)
+            if before_value is not None and after_value is not None
+            else None
+        )
+        rows.append(
+            {
+                "rank": rank,
+                "region": region,
+                "id": identifier,
+                "label": before["label"],
+                "unit": before["unit"],
+                "before": before_value,
+                "after": after_value,
+                "delta": delta,
+                "before_pixels": before["pixels"],
+                "after_pixels": after["pixels"],
+                "status": status,
+                "note": before["note"],
+            }
+        )
+    return rows
+
+
+def _write_csv(path: Path, rows: list[dict]) -> None:
+    fields = (
+        "rank", "region", "id", "label", "unit", "before", "after", "delta",
+        "before_pixels", "after_pixels", "status", "note",
+    )
+    with path.open("w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _format_value(value, signed: bool = False) -> str:
+    if value is None:
+        return "—"
+    value = float(value)
+    if value != 0 and abs(value) < 0.001:
+        return f"{value:+.3e}" if signed else f"{value:.3e}"
+    return f"{value:+.3f}" if signed else f"{value:.3f}"
+
+
+def _report_html(summary: dict) -> str:
+    region = summary["region"]
+    focus_ids = EYE_TEXTURE_FOCUS_IDS if region == "eye_texture" else ()
+    focus_section = ""
+    if focus_ids:
+        labels = {
+            row["id"]: row["label"]
+            for row in summary["pairs"][0]["deltas"]
+        }
+        head = "".join(f"<th>{html.escape(labels[mid])}</th>" for mid in focus_ids)
+        body = []
+        for pair in summary["pairs"]:
+            by_id = {row["id"]: row for row in pair["deltas"]}
+            cells = "".join(
+                f"<td>{_format_value(by_id[mid]['delta'], signed=True)}</td>"
+                for mid in focus_ids
+            )
+            body.append(
+                f"<tr><td>{pair['rank']}</td>"
+                f"<td>{pair['selection']['before']['timestamp_seconds']:.2f}s → "
+                f"{pair['selection']['after']['timestamp_seconds']:.2f}s</td>{cells}</tr>"
+            )
+        focus_section = (
+            "<section><h2>rank横断の主要差分</h2>"
+            "<p>値は after - before。正負の方向がrank間で再現するかを確認します。</p>"
+            "<div class='scroll'><table><thead><tr><th>rank</th><th>before → after</th>"
+            + head + "</tr></thead><tbody>" + "".join(body)
+            + "</tbody></table></div></section>"
+        )
+
+    sections = []
+    for pair in summary["pairs"]:
+        rows = []
+        for row in pair["deltas"]:
+            rows.append(
+                "<tr>"
+                f"<td>{html.escape(row['label'])}</td>"
+                f"<td>{html.escape(row['unit'])}</td>"
+                f"<td>{_format_value(row['before'])}</td>"
+                f"<td>{_format_value(row['after'])}</td>"
+                f"<td>{_format_value(row['delta'], signed=True)}</td>"
+                f"<td>{html.escape(row['status'])}</td>"
+                "</tr>"
+            )
+        sel = pair["selection"]
+        gate = sel["region_gate"]
+        sections.append(
+            f"<section><h2>{html.escape(REGION_LABELS[region])} / rank {pair['rank']}</h2>"
+            f"<p>score {sel['score']:.4f} ／ before {sel['before']['timestamp_seconds']:.2f}s "
+            f"→ after {sel['after']['timestamp_seconds']:.2f}s</p>"
+            f"<p>顔サイズ比 {sel['face_scale_ratio']:.4f} ／ "
+            f"手の重なり before {gate['before_hand_overlap_ratio']:.2%} / "
+            f"after {gate['after_hand_overlap_ratio']:.2%}</p>"
+            f"<div class='pair'><img src='{html.escape(pair['images']['before'])}'>"
+            f"<img src='{html.escape(pair['images']['after'])}'></div>"
+            "<table><thead><tr><th>指標</th><th>単位</th><th>before</th>"
+            "<th>after</th><th>差</th><th>状態</th></tr></thead>"
+            f"<tbody>{''.join(rows)}</tbody></table></section>"
+        )
+
+    return f"""<!doctype html><html lang="ja"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>複数 candidate rank 再現性確認</title>
+<style>
+body{{font:16px/1.7 system-ui,sans-serif;max-width:1400px;margin:28px auto;padding:0 22px;color:#25322d}}
+section{{border:1px solid #d6dfda;border-radius:10px;padding:18px;margin:22px 0}}
+.pair{{display:grid;grid-template-columns:1fr 1fr;gap:14px}}img{{max-width:100%;height:auto}}
+table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;border-bottom:1px solid #d7ded9;text-align:left;vertical-align:top}}
+.scroll{{overflow-x:auto}}.notice{{background:#fff2c8;padding:14px;border-left:5px solid #d79b20}}
+@media(max-width:800px){{.pair{{grid-template-columns:1fr}}}}
+</style><body><h1>複数 before / after candidate rank の再現性確認</h1>
+<p class="notice">これは候補rankの探索的比較です。rankを承認済みペアへ昇格する処理ではありません。
+画像上の記述指標であり、乾燥・シワの診断、物理的なシワ深さ、メイク効果の因果推定ではありません。
+各候補は必ず画像を目視し、表情・照明・ピント・圧縮・手や道具の影響を確認してください。</p>
+{focus_section}
+{''.join(sections)}
+</body></html>"""
+
+
+def analyze_region_rank_set(
+    selected_path: Path,
+    region: str,
+    ranks: Iterable[int],
+    output_root: Path,
+) -> dict:
+    selected_path = Path(selected_path)
+    output_root = Path(output_root)
+    ranks = _normalize_ranks(ranks)
+
+    if not selected_path.is_file():
+        raise FileNotFoundError(selected_path)
+    selected = json.loads(selected_path.read_text(encoding="utf-8"))
+    if selected.get("schema_version") != 1:
+        raise ValueError(
+            f"Unsupported selected_region_pairs schema_version: {selected.get('schema_version')!r}"
+        )
+    if region not in REGION_METRIC_IDS:
+        raise ValueError(f"Unknown region: {region}")
+
+    candidate_run_raw = selected.get("region_candidate_run")
+    if not isinstance(candidate_run_raw, str) or not candidate_run_raw:
+        raise ValueError("selected_region_pairs.json has no region_candidate_run")
+    matching_path = Path(candidate_run_raw) / "region_matching.json"
+    scan_manifest_path = selected_path.parent / "scan_manifest.json"
+    for path in (matching_path, scan_manifest_path):
+        if not path.is_file():
+            raise FileNotFoundError(path)
+
+    manifest = json.loads(scan_manifest_path.read_text(encoding="utf-8"))
+    matching = json.loads(matching_path.read_text(encoding="utf-8"))
+    video_info = manifest.get("video")
+    if not isinstance(video_info, dict):
+        raise ValueError("scan_manifest.json has no video object")
+    if video_info.get("sha256") != selected.get("video_sha256"):
+        raise RuntimeError("scan_manifest video SHA-256 differs from selected_region_pairs.json")
+    selected_video_path = selected.get("video_path")
+    manifest_video_path = video_info.get("path")
+    if not isinstance(selected_video_path, str) or not isinstance(manifest_video_path, str):
+        raise ValueError("video path is missing")
+    if Path(selected_video_path).resolve() != Path(manifest_video_path).resolve():
+        raise RuntimeError("scan_manifest video path differs from selected_region_pairs.json")
+
+    records = manifest.get("records")
+    if not isinstance(records, list) or not records:
+        raise ValueError("scan_manifest.json has no records")
+    by_id = {}
+    for record in records:
+        if not isinstance(record, dict) or "frame_id" not in record:
+            raise ValueError("scan_manifest record is invalid")
+        frame_id = record["frame_id"]
+        if frame_id in by_id:
+            raise ValueError(f"scan_manifest has duplicate frame_id: {frame_id}")
+        by_id[frame_id] = record
+
+    regions = matching.get("regions")
+    if not isinstance(regions, dict) or region not in regions:
+        raise ValueError(f"region_matching.json has no region: {region}")
+    ranked_pairs = regions[region].get("ranked_pairs")
+    if not isinstance(ranked_pairs, list):
+        raise ValueError(f"{region}: ranked_pairs is not a list")
+    if max(ranks) > len(ranked_pairs):
+        raise ValueError(
+            f"{region}: requested rank {max(ranks)}, but only {len(ranked_pairs)} candidates exist"
+        )
+
+    implementation_path = Path(__file__)
+    fingerprint_spec = {
+        "version": RANK_SET_VERSION,
+        "region": region,
+        "ranks": list(ranks),
+        "selected_region_pairs_sha256": sha256_file(selected_path),
+        "scan_manifest_sha256": sha256_file(scan_manifest_path),
+        "region_matching_sha256": sha256_file(matching_path),
+        "implementation_sha256": sha256_file(implementation_path),
+        "selected_region_analysis_sha256": sha256_file(
+            implementation_path.with_name("analyze_selected_regions.py")
+        ),
+        "appearance_features_sha256": sha256_file(
+            implementation_path.with_name("appearance_features.py")
+        ),
+    }
+    fingerprint = hashlib.sha256(
+        json.dumps(fingerprint_spec, ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()
+
+    if output_root.exists() and not output_root.is_dir():
+        raise NotADirectoryError(output_root)
+    output_root.mkdir(parents=True, exist_ok=True)
+    summary_path = output_root / "summary.json"
+    report_path = output_root / "report.html"
+    csv_path = output_root / "feature_deltas.csv"
+
+    if summary_path.exists():
+        if not summary_path.is_file():
+            raise FileExistsError(f"summary.json is not a file: {summary_path}")
+        saved = json.loads(summary_path.read_text(encoding="utf-8"))
+        if (
+            saved.get("fingerprint") == fingerprint
+            and saved.get("fingerprint_spec") == fingerprint_spec
+        ):
+            expected = [report_path, csv_path]
+            for rank in ranks:
+                expected.extend(
+                    (
+                        output_root / f"{region}_rank{rank}_before.png",
+                        output_root / f"{region}_rank{rank}_after.png",
+                    )
+                )
+            missing = [str(path) for path in expected if not path.is_file()]
+            if missing:
+                raise FileExistsError(f"Cached rank-set output is incomplete: {missing}")
+            return saved
+
+    for pattern in (f"{region}_rank*_before.png", f"{region}_rank*_after.png"):
+        for path in output_root.glob(pattern):
+            if not path.is_file():
+                raise FileExistsError(f"Expected generated file path: {path}")
+            path.unlink()
+
+    summary = {
+        "schema_version": 1,
+        "version": RANK_SET_VERSION,
+        "region": region,
+        "ranks": list(ranks),
+        "fingerprint": fingerprint,
+        "fingerprint_spec": fingerprint_spec,
+        "selected_region_pairs_path": str(selected_path.resolve()),
+        "scan_manifest_path": str(scan_manifest_path.resolve()),
+        "region_matching_path": str(matching_path.resolve()),
+        "output_dir": str(output_root.resolve()),
+        "pairs": [],
+    }
+    all_rows = []
+
+    for rank in ranks:
+        candidate = ranked_pairs[rank - 1]
+        for key in ("before_id", "after_id", "score", "terms", "region_gate"):
+            if key not in candidate:
+                raise ValueError(f"{region} rank {rank}: candidate is missing {key}")
+        before_id = candidate["before_id"]
+        after_id = candidate["after_id"]
+        if before_id not in by_id or after_id not in by_id:
+            raise ValueError(
+                f"{region} rank {rank}: candidate frame is missing from scan_manifest"
+            )
+        terms = candidate["terms"]
+        if not isinstance(terms, dict) or "face_scale_ratio" not in terms:
+            raise ValueError(f"{region} rank {rank}: candidate terms lack face_scale_ratio")
+
+        selection = {
+            "rank": rank,
+            "score": float(candidate["score"]),
+            "face_scale_ratio": float(terms["face_scale_ratio"]),
+            "region_gate": candidate["region_gate"],
+            "before": _selected_frame(by_id[before_id]),
+            "after": _selected_frame(by_id[after_id]),
+        }
+        before_image, before_masks, before_rows = _load_phase(selection["before"], region)
+        after_image, after_masks, after_rows = _load_phase(selection["after"], region)
+        if before_image.shape != after_image.shape:
+            raise RuntimeError(
+                f"{region} rank {rank}: source image dimensions differ: "
+                f"{before_image.shape} vs {after_image.shape}"
+            )
+
+        deltas = _delta_rows(region, rank, before_rows, after_rows)
+        all_rows.extend(deltas)
+        before_name = f"{region}_rank{rank}_before.png"
+        after_name = f"{region}_rank{rank}_after.png"
+        _save_png(output_root / before_name, _overlay(before_image, before_masks, region))
+        _save_png(output_root / after_name, _overlay(after_image, after_masks, region))
+        summary["pairs"].append(
+            {
+                "rank": rank,
+                "selection": selection,
+                "images": {"before": before_name, "after": after_name},
+                "deltas": deltas,
+            }
+        )
+
+    _write_csv(csv_path, all_rows)
+    summary_path.write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+        encoding="utf-8",
+    )
+    report_path.write_text(_report_html(summary), encoding="utf-8")
+    return summary
