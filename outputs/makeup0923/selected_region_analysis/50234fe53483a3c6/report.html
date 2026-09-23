@@ -1,0 +1,15 @@
+<!doctype html><html lang="ja"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>部位別 selected pair 解析</title>
+<style>
+body{font:16px/1.7 system-ui,sans-serif;max-width:1300px;margin:28px auto;padding:0 22px;color:#25322d}
+section{border:1px solid #d6dfda;border-radius:10px;padding:18px;margin:22px 0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}img{max-width:100%;height:auto}
+table{border-collapse:collapse;width:100%;margin-top:16px}th,td{padding:8px;border-bottom:1px solid #d7ded9;text-align:left}
+.notice{background:#fff2c8;padding:14px;border-left:5px solid #d79b20}
+@media(max-width:800px){.pair{grid-template-columns:1fr}}
+</style><body><h1>承認済み部位別 before / after の記述解析</h1>
+<p class="notice">この結果は画像上の記述的特徴です。乾燥・シワの診断、メイク効果の因果推定、美しさの採点ではありません。
+目の下の高周波指標にはピント・照明・圧縮・まつげ・メイク境界などが混入し得ます。</p>
+<section><h2>目の下の質感</h2><p>選択rank 1 ／ before 240.99s → after 1403.49s</p><p>候補選定時の顔サイズ上限 1.030。画像自体のサイズ補正・登録・平滑化は行っていません。</p><div class='pair'><img src='eye_texture_before.png'><img src='eye_texture_after.png'></div><table><thead><tr><th>指標</th><th>単位</th><th>before</th><th>after</th><th>差</th><th>状態</th></tr></thead><tbody><tr><td>画面左目の下の細かな質感コントラスト（中央値）</td><td>局所L*比 %</td><td>0.335</td><td>1.634</td><td>+1.299</td><td>ok</td></tr><tr><td>画面左目の下の細かな質感コントラスト（p90）</td><td>局所L*比 %</td><td>0.829</td><td>7.002</td><td>+6.172</td><td>ok</td></tr><tr><td>画面右目の下の細かな質感コントラスト（中央値）</td><td>局所L*比 %</td><td>0.184</td><td>1.492</td><td>+1.307</td><td>ok</td></tr><tr><td>画面右目の下の細かな質感コントラスト（p90）</td><td>局所L*比 %</td><td>0.551</td><td>8.152</td><td>+7.601</td><td>ok</td></tr></tbody></table></section>
+</body></html>

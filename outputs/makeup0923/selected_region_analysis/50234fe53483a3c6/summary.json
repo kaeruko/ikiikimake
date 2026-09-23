@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "version": "selected-region-appearance-v1",
+  "fingerprint": "50234fe53483a3c64774f64e14a94817331b3c5d7378cebd8a03f1785aaeba97",
+  "fingerprint_spec": {
+    "version": "selected-region-appearance-v1",
+    "selected_region_pairs_sha256": "712ce76661e23f409f1c4cf1f71d716384f376d51d10c8c34294a7aed9dc2dc8",
+    "implementation_sha256": "16924032dc5c4f07433b8cebe08ad95761584db5f67cef37110045542282ba29",
+    "appearance_features_sha256": "20144145dfee1eb167f780ea7254dce577bc0ed643bb968b4f77568489b735c0"
+  },
+  "selected_region_pairs_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\selected_region_pairs.json",
+  "output_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\selected_region_analysis\\50234fe53483a3c6",
+  "regions": {
+    "eye_texture": {
+      "selection": {
+        "rank": 1,
+        "score": 0.9303127057259103,
+        "region_gate": {
+          "region": "eye_texture",
+          "max_face_scale_ratio": 1.03,
+          "max_hand_overlap_ratio": 0.01,
+          "before_hand_overlap_ratio": 0.0,
+          "after_hand_overlap_ratio": 0.0
+        },
+        "before": {
+          "frame_id": "frame_0000240991ms",
+          "timestamp_seconds": 240.99075,
+          "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\frames\\frame_0000240991ms.png",
+          "image_sha256": "306b53ea48fcd052fb5a468fc0b57701a752ab0efc97eb5baaec03f2c7765c78",
+          "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\rois\\frame_0000240991ms",
+          "roi_masks_sha256": "596d6401c9c7f4ececf01d961a7d38128d174a40313e7f2dabce769648166652",
+          "roi_points_sha256": "a55cf7a82f9c88273364f1bdeba3642283552ab87f9b83fd8272fe1da0e42d15",
+          "roi_overlay_sha256": "809b7d1ab4dce4a6f06cb7530153c3ef086d47961cc4e2ee7d7f2129853b6f8a"
+        },
+        "after": {
+          "frame_id": "frame_0001403485ms",
+          "timestamp_seconds": 1403.4854166666667,
+          "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\frames\\frame_0001403485ms.png",
+          "image_sha256": "5c786175de8d8fb652e6ae1ecbdaecbc686b1689796afa84e213572c6dd3a0d3",
+          "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\rois\\frame_0001403485ms",
+          "roi_masks_sha256": "1bcbba96cc5496d313f0cf0cad467f1e9e8d2106df3a67a492c9dcb4246ed14a",
+          "roi_points_sha256": "798d4de5d3754dc324b6f486f233c5b46559630398c1dd11fa22a16eec1100ba",
+          "roi_overlay_sha256": "f8314963602911299476ee3ac0a878dcc0bdc08fe38728b11374324357f89452"
+        }
+      },
+      "deltas": [
+        {
+          "region": "eye_texture",
+          "id": "screen_left_lower_eye_skin_highpass_median_pct",
+          "label": "画面左目の下の細かな質感コントラスト（中央値）",
+          "unit": "局所L*比 %",
+          "before": 0.3349822759628296,
+          "after": 1.6342029571533203,
+          "delta": 1.2992206811904907,
+          "before_pixels": 1524,
+          "after_pixels": 1626,
+          "status": "ok",
+          "note": "Gaussian blur σ=1.2px を引いた |L*残差| の中央値を領域L*中央値で正規化。細かな凹凸・線・メイク境界・ピント・圧縮ノイズをまとめて拾う画像指標で、乾燥・シワの診断ではない。 元画像の対象1524画素（必要100画素以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_left_lower_eye_skin_highpass_p90_pct",
+          "label": "画面左目の下の細かな質感コントラスト（p90）",
+          "unit": "局所L*比 %",
+          "before": 0.8294658660888672,
+          "after": 7.001926422119141,
+          "delta": 6.172460556030273,
+          "before_pixels": 1524,
+          "after_pixels": 1626,
+          "status": "ok",
+          "note": "Gaussian blur σ=1.2px を引いた |L*残差| の90百分位を領域L*中央値で正規化。局所的に強く見える細線や粒状感の候補で、乾燥・シワの診断ではない。 元画像の対象1524画素（必要100画素以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_right_lower_eye_skin_highpass_median_pct",
+          "label": "画面右目の下の細かな質感コントラスト（中央値）",
+          "unit": "局所L*比 %",
+          "before": 0.18428246676921844,
+          "after": 1.491732120513916,
+          "delta": 1.3074496537446976,
+          "before_pixels": 1629,
+          "after_pixels": 1727,
+          "status": "ok",
+          "note": "Gaussian blur σ=1.2px を引いた |L*残差| の中央値を領域L*中央値で正規化。細かな凹凸・線・メイク境界・ピント・圧縮ノイズをまとめて拾う画像指標で、乾燥・シワの診断ではない。 元画像の対象1629画素（必要100画素以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_right_lower_eye_skin_highpass_p90_pct",
+          "label": "画面右目の下の細かな質感コントラスト（p90）",
+          "unit": "局所L*比 %",
+          "before": 0.5513306856155396,
+          "after": 8.151851654052734,
+          "delta": 7.600520968437195,
+          "before_pixels": 1629,
+          "after_pixels": 1727,
+          "status": "ok",
+          "note": "Gaussian blur σ=1.2px を引いた |L*残差| の90百分位を領域L*中央値で正規化。局所的に強く見える細線や粒状感の候補で、乾燥・シワの診断ではない。 元画像の対象1629画素（必要100画素以上）。"
+        }
+      ]
+    }
+  }
+}
