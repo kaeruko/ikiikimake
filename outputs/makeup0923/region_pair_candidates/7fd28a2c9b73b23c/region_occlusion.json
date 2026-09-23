@@ -1,0 +1,4831 @@
+{
+  "schema_version": 1,
+  "version": "region-specific-v1",
+  "hand_model": {
+    "path": "C:\\Users\\mail\\work\\ikiikimake\\models\\hand_landmarker.task",
+    "sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1",
+    "mediapipe_version": "1.0.1",
+    "settings": {
+      "min_hand_detection_confidence": 0.35,
+      "min_hand_presence_confidence": 0.35,
+      "hand_margin_face_fraction": 0.025
+    }
+  },
+  "rules": {
+    "eye_texture": {
+      "mask_names": [
+        "screen_left_lower_eye_skin",
+        "screen_right_lower_eye_skin"
+      ],
+      "max_face_scale_ratio": 1.03,
+      "max_hand_overlap_ratio": 0.01
+    },
+    "lips": {
+      "mask_names": [
+        "lips",
+        "lip_skin"
+      ],
+      "max_face_scale_ratio": 1.1,
+      "max_hand_overlap_ratio": 0.01
+    },
+    "cheeks": {
+      "mask_names": [
+        "left_cheek",
+        "right_cheek"
+      ],
+      "max_face_scale_ratio": 1.1,
+      "max_hand_overlap_ratio": 0.01
+    }
+  },
+  "frames": {
+    "frame_0000206998ms": {
+      "timestamp_seconds": 206.99845833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 13,
+      "hand_hulls_px": [
+        [
+          [
+            869,
+            789
+          ],
+          [
+            867,
+            841
+          ],
+          [
+            807,
+            949
+          ],
+          [
+            706,
+            923
+          ],
+          [
+            605,
+            882
+          ],
+          [
+            517,
+            821
+          ],
+          [
+            501,
+            673
+          ],
+          [
+            570,
+            474
+          ],
+          [
+            694,
+            541
+          ],
+          [
+            760,
+            632
+          ],
+          [
+            854,
+            766
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3063,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10832,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 15535,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000210001ms": {
+      "timestamp_seconds": 210.00145833333332,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3121,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14217,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17874,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000211002ms": {
+      "timestamp_seconds": 211.00245833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            387,
+            633
+          ],
+          [
+            489,
+            311
+          ],
+          [
+            586,
+            240
+          ],
+          [
+            656,
+            207
+          ],
+          [
+            708,
+            183
+          ],
+          [
+            730,
+            216
+          ],
+          [
+            733,
+            294
+          ],
+          [
+            699,
+            372
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3951,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15012,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17023,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000212003ms": {
+      "timestamp_seconds": 212.00345833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            715,
+            192
+          ],
+          [
+            699,
+            370
+          ],
+          [
+            633,
+            440
+          ],
+          [
+            551,
+            517
+          ],
+          [
+            448,
+            599
+          ],
+          [
+            309,
+            608
+          ],
+          [
+            479,
+            352
+          ],
+          [
+            581,
+            271
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3258,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12110,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17643,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000213004ms": {
+      "timestamp_seconds": 213.00445833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            669,
+            369
+          ],
+          [
+            646,
+            403
+          ],
+          [
+            618,
+            443
+          ],
+          [
+            566,
+            509
+          ],
+          [
+            379,
+            631
+          ],
+          [
+            523,
+            363
+          ],
+          [
+            595,
+            280
+          ],
+          [
+            662,
+            223
+          ],
+          [
+            667,
+            311
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3298,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15136,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17733,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000214005ms": {
+      "timestamp_seconds": 214.00545833333334,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            806,
+            349
+          ],
+          [
+            749,
+            409
+          ],
+          [
+            687,
+            465
+          ],
+          [
+            490,
+            607
+          ],
+          [
+            507,
+            539
+          ],
+          [
+            626,
+            358
+          ],
+          [
+            700,
+            279
+          ],
+          [
+            773,
+            205
+          ],
+          [
+            786,
+            242
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3481,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13504,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18411,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000215006ms": {
+      "timestamp_seconds": 215.0064583333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            836,
+            314
+          ],
+          [
+            776,
+            392
+          ],
+          [
+            713,
+            456
+          ],
+          [
+            511,
+            615
+          ],
+          [
+            517,
+            546
+          ],
+          [
+            577,
+            454
+          ],
+          [
+            645,
+            356
+          ],
+          [
+            721,
+            266
+          ],
+          [
+            803,
+            170
+          ],
+          [
+            822,
+            195
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3288,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15145,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17835,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000216007ms": {
+      "timestamp_seconds": 216.00745833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            807,
+            343
+          ],
+          [
+            805,
+            415
+          ],
+          [
+            737,
+            462
+          ],
+          [
+            663,
+            510
+          ],
+          [
+            459,
+            613
+          ],
+          [
+            499,
+            538
+          ],
+          [
+            605,
+            346
+          ],
+          [
+            756,
+            202
+          ],
+          [
+            785,
+            266
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3264,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15223,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17532,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000221012ms": {
+      "timestamp_seconds": 221.0124583333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            820,
+            270
+          ],
+          [
+            745,
+            358
+          ],
+          [
+            674,
+            428
+          ],
+          [
+            447,
+            599
+          ],
+          [
+            462,
+            552
+          ],
+          [
+            574,
+            310
+          ],
+          [
+            742,
+            72
+          ],
+          [
+            772,
+            89
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3296,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10805,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18091,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000222013ms": {
+      "timestamp_seconds": 222.01345833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            411,
+            636
+          ],
+          [
+            429,
+            567
+          ],
+          [
+            542,
+            321
+          ],
+          [
+            722,
+            121
+          ],
+          [
+            781,
+            196
+          ],
+          [
+            801,
+            304
+          ],
+          [
+            800,
+            396
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3691,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13535,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17924,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000223014ms": {
+      "timestamp_seconds": 223.01445833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            654,
+            708
+          ],
+          [
+            615,
+            761
+          ],
+          [
+            510,
+            901
+          ],
+          [
+            349,
+            858
+          ],
+          [
+            217,
+            802
+          ],
+          [
+            379,
+            565
+          ],
+          [
+            522,
+            388
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3195,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13336,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17734,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000224015ms": {
+      "timestamp_seconds": 224.01545833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            379,
+            633
+          ],
+          [
+            371,
+            570
+          ],
+          [
+            472,
+            311
+          ],
+          [
+            553,
+            205
+          ],
+          [
+            610,
+            137
+          ],
+          [
+            654,
+            86
+          ],
+          [
+            688,
+            136
+          ],
+          [
+            714,
+            268
+          ],
+          [
+            713,
+            409
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3318,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13085,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17600,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000225016ms": {
+      "timestamp_seconds": 225.01645833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            544,
+            320
+          ],
+          [
+            400,
+            604
+          ],
+          [
+            358,
+            670
+          ],
+          [
+            295,
+            768
+          ],
+          [
+            180,
+            840
+          ],
+          [
+            361,
+            403
+          ],
+          [
+            396,
+            324
+          ],
+          [
+            430,
+            260
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3290,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13655,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18241,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000226017ms": {
+      "timestamp_seconds": 226.01745833333334,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            266,
+            853
+          ],
+          [
+            271,
+            797
+          ],
+          [
+            363,
+            537
+          ],
+          [
+            428,
+            423
+          ],
+          [
+            523,
+            297
+          ],
+          [
+            618,
+            394
+          ],
+          [
+            593,
+            662
+          ],
+          [
+            555,
+            758
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3555,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14120,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18979,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000227018ms": {
+      "timestamp_seconds": 227.0184583333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            356,
+            837
+          ],
+          [
+            316,
+            875
+          ],
+          [
+            260,
+            927
+          ],
+          [
+            198,
+            951
+          ],
+          [
+            92,
+            922
+          ],
+          [
+            -13,
+            820
+          ],
+          [
+            109,
+            646
+          ],
+          [
+            145,
+            654
+          ],
+          [
+            211,
+            710
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3822,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14569,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17858,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000228019ms": {
+      "timestamp_seconds": 228.01945833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            526,
+            471
+          ],
+          [
+            430,
+            717
+          ],
+          [
+            359,
+            785
+          ],
+          [
+            104,
+            806
+          ],
+          [
+            94,
+            702
+          ],
+          [
+            157,
+            585
+          ],
+          [
+            244,
+            509
+          ],
+          [
+            324,
+            457
+          ],
+          [
+            489,
+            382
+          ],
+          [
+            516,
+            396
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3581,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14579,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18047,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000229020ms": {
+      "timestamp_seconds": 229.02045833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            492,
+            666
+          ],
+          [
+            428,
+            765
+          ],
+          [
+            404,
+            775
+          ],
+          [
+            114,
+            749
+          ],
+          [
+            83,
+            700
+          ],
+          [
+            133,
+            619
+          ],
+          [
+            305,
+            417
+          ],
+          [
+            387,
+            388
+          ],
+          [
+            444,
+            417
+          ],
+          [
+            476,
+            529
+          ],
+          [
+            491,
+            592
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3250,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14619,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17800,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000229980ms": {
+      "timestamp_seconds": 229.97975,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            559,
+            637
+          ],
+          [
+            552,
+            788
+          ],
+          [
+            383,
+            871
+          ],
+          [
+            363,
+            874
+          ],
+          [
+            370,
+            378
+          ],
+          [
+            406,
+            311
+          ],
+          [
+            455,
+            329
+          ],
+          [
+            515,
+            461
+          ],
+          [
+            539,
+            541
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3435,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15258,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18034,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000230981ms": {
+      "timestamp_seconds": 230.98075,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            542,
+            756
+          ],
+          [
+            486,
+            823
+          ],
+          [
+            162,
+            830
+          ],
+          [
+            117,
+            764
+          ],
+          [
+            145,
+            663
+          ],
+          [
+            223,
+            570
+          ],
+          [
+            315,
+            510
+          ],
+          [
+            442,
+            438
+          ],
+          [
+            483,
+            527
+          ],
+          [
+            529,
+            632
+          ],
+          [
+            542,
+            690
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3534,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15731,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18296,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000231982ms": {
+      "timestamp_seconds": 231.98175,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            515,
+            389
+          ],
+          [
+            504,
+            548
+          ],
+          [
+            413,
+            638
+          ],
+          [
+            328,
+            708
+          ],
+          [
+            74,
+            836
+          ],
+          [
+            55,
+            723
+          ],
+          [
+            102,
+            605
+          ],
+          [
+            239,
+            449
+          ],
+          [
+            466,
+            339
+          ],
+          [
+            490,
+            332
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3083,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14041,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17540,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000232983ms": {
+      "timestamp_seconds": 232.98274999999998,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            491,
+            431
+          ],
+          [
+            467,
+            573
+          ],
+          [
+            380,
+            657
+          ],
+          [
+            300,
+            720
+          ],
+          [
+            46,
+            816
+          ],
+          [
+            33,
+            714
+          ],
+          [
+            79,
+            611
+          ],
+          [
+            217,
+            473
+          ],
+          [
+            453,
+            379
+          ],
+          [
+            475,
+            372
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3182,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12395,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17350,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000233984ms": {
+      "timestamp_seconds": 233.98375,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            127,
+            966
+          ],
+          [
+            82,
+            856
+          ],
+          [
+            108,
+            525
+          ],
+          [
+            278,
+            609
+          ],
+          [
+            350,
+            724
+          ],
+          [
+            386,
+            828
+          ],
+          [
+            382,
+            938
+          ],
+          [
+            310,
+            958
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3242,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12620,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17628,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000234985ms": {
+      "timestamp_seconds": 234.98475,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            721,
+            727
+          ],
+          [
+            679,
+            764
+          ],
+          [
+            604,
+            800
+          ],
+          [
+            461,
+            810
+          ],
+          [
+            242,
+            757
+          ],
+          [
+            250,
+            623
+          ],
+          [
+            322,
+            506
+          ],
+          [
+            417,
+            432
+          ],
+          [
+            488,
+            400
+          ],
+          [
+            624,
+            421
+          ],
+          [
+            668,
+            535
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3333,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13993,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18244,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000235986ms": {
+      "timestamp_seconds": 235.98575,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            621,
+            557
+          ],
+          [
+            578,
+            689
+          ],
+          [
+            530,
+            717
+          ],
+          [
+            469,
+            747
+          ],
+          [
+            369,
+            795
+          ],
+          [
+            206,
+            811
+          ],
+          [
+            222,
+            686
+          ],
+          [
+            273,
+            558
+          ],
+          [
+            442,
+            470
+          ],
+          [
+            540,
+            448
+          ],
+          [
+            614,
+            437
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3295,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14066,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17616,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000236987ms": {
+      "timestamp_seconds": 236.98675,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            516,
+            519
+          ],
+          [
+            490,
+            558
+          ],
+          [
+            438,
+            602
+          ],
+          [
+            320,
+            628
+          ],
+          [
+            64,
+            615
+          ],
+          [
+            69,
+            506
+          ],
+          [
+            113,
+            411
+          ],
+          [
+            167,
+            343
+          ],
+          [
+            207,
+            302
+          ],
+          [
+            279,
+            282
+          ],
+          [
+            291,
+            279
+          ],
+          [
+            353,
+            307
+          ],
+          [
+            410,
+            370
+          ],
+          [
+            433,
+            396
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3233,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14035,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18168,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000237988ms": {
+      "timestamp_seconds": 237.98775,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3272,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 11456,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17913,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000238989ms": {
+      "timestamp_seconds": 238.98874999999998,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            1613,
+            575
+          ],
+          [
+            1600,
+            691
+          ],
+          [
+            1499,
+            755
+          ],
+          [
+            1181,
+            834
+          ],
+          [
+            1178,
+            658
+          ],
+          [
+            1268,
+            539
+          ],
+          [
+            1427,
+            360
+          ],
+          [
+            1558,
+            431
+          ],
+          [
+            1590,
+            491
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3671,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12497,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17585,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000239990ms": {
+      "timestamp_seconds": 239.98975,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            1311,
+            739
+          ],
+          [
+            1296,
+            584
+          ],
+          [
+            1367,
+            459
+          ],
+          [
+            1477,
+            293
+          ],
+          [
+            1585,
+            366
+          ],
+          [
+            1591,
+            564
+          ],
+          [
+            1589,
+            611
+          ],
+          [
+            1569,
+            649
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4006,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13522,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18482,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000240991ms": {
+      "timestamp_seconds": 240.99075,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3153,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14702,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17905,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000241992ms": {
+      "timestamp_seconds": 241.99175,
+      "detected_hands": 2,
+      "hand_margin_px": 9,
+      "hand_hulls_px": [
+        [
+          [
+            491,
+            598
+          ],
+          [
+            503,
+            586
+          ],
+          [
+            553,
+            553
+          ],
+          [
+            590,
+            539
+          ],
+          [
+            618,
+            648
+          ],
+          [
+            579,
+            678
+          ],
+          [
+            522,
+            715
+          ],
+          [
+            444,
+            755
+          ],
+          [
+            372,
+            720
+          ]
+        ],
+        [
+          [
+            -41,
+            750
+          ],
+          [
+            -54,
+            643
+          ],
+          [
+            -10,
+            525
+          ],
+          [
+            80,
+            434
+          ],
+          [
+            146,
+            396
+          ],
+          [
+            200,
+            380
+          ],
+          [
+            275,
+            563
+          ],
+          [
+            260,
+            599
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 1325,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 5849,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 7503,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000242993ms": {
+      "timestamp_seconds": 242.99275,
+      "detected_hands": 2,
+      "hand_margin_px": 9,
+      "hand_hulls_px": [
+        [
+          [
+            134,
+            653
+          ],
+          [
+            120,
+            532
+          ],
+          [
+            167,
+            381
+          ],
+          [
+            270,
+            300
+          ],
+          [
+            328,
+            278
+          ],
+          [
+            369,
+            271
+          ],
+          [
+            413,
+            394
+          ],
+          [
+            425,
+            462
+          ],
+          [
+            391,
+            530
+          ]
+        ],
+        [
+          [
+            834,
+            661
+          ],
+          [
+            733,
+            749
+          ],
+          [
+            710,
+            765
+          ],
+          [
+            580,
+            797
+          ],
+          [
+            764,
+            507
+          ],
+          [
+            788,
+            548
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 1390,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 5656,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 7571,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000243994ms": {
+      "timestamp_seconds": 243.99375,
+      "detected_hands": 2,
+      "hand_margin_px": 9,
+      "hand_hulls_px": [
+        [
+          [
+            160,
+            646
+          ],
+          [
+            161,
+            522
+          ],
+          [
+            214,
+            380
+          ],
+          [
+            325,
+            302
+          ],
+          [
+            389,
+            279
+          ],
+          [
+            436,
+            268
+          ],
+          [
+            469,
+            403
+          ],
+          [
+            473,
+            480
+          ],
+          [
+            452,
+            536
+          ]
+        ],
+        [
+          [
+            751,
+            696
+          ],
+          [
+            737,
+            728
+          ],
+          [
+            714,
+            748
+          ],
+          [
+            679,
+            775
+          ],
+          [
+            515,
+            812
+          ],
+          [
+            692,
+            599
+          ],
+          [
+            725,
+            612
+          ],
+          [
+            745,
+            635
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 1361,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 5674,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 7648,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000252002ms": {
+      "timestamp_seconds": 252.00175,
+      "detected_hands": 1,
+      "hand_margin_px": 8,
+      "hand_hulls_px": [
+        [
+          [
+            -3,
+            551
+          ],
+          [
+            29,
+            396
+          ],
+          [
+            103,
+            324
+          ],
+          [
+            159,
+            295
+          ],
+          [
+            206,
+            285
+          ],
+          [
+            253,
+            501
+          ],
+          [
+            226,
+            547
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 1170,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 6302,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 7429,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000255005ms": {
+      "timestamp_seconds": 255.00475,
+      "detected_hands": 1,
+      "hand_margin_px": 5,
+      "hand_hulls_px": [
+        [
+          [
+            891,
+            723
+          ],
+          [
+            886,
+            729
+          ],
+          [
+            795,
+            750
+          ],
+          [
+            743,
+            757
+          ],
+          [
+            675,
+            763
+          ],
+          [
+            735,
+            734
+          ],
+          [
+            770,
+            720
+          ],
+          [
+            820,
+            707
+          ],
+          [
+            854,
+            710
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 438,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 2191,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 2251,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001392016ms": {
+      "timestamp_seconds": 1392.015625,
+      "detected_hands": 2,
+      "hand_margin_px": 5,
+      "hand_hulls_px": [
+        [
+          [
+            968,
+            791
+          ],
+          [
+            974,
+            780
+          ],
+          [
+            982,
+            776
+          ],
+          [
+            1126,
+            870
+          ],
+          [
+            1093,
+            877
+          ],
+          [
+            1053,
+            879
+          ],
+          [
+            1006,
+            874
+          ],
+          [
+            976,
+            854
+          ]
+        ],
+        [
+          [
+            924,
+            881
+          ],
+          [
+            906,
+            852
+          ],
+          [
+            908,
+            824
+          ],
+          [
+            925,
+            816
+          ],
+          [
+            1000,
+            782
+          ],
+          [
+            1107,
+            876
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 436,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 2030,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 2427,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001400983ms": {
+      "timestamp_seconds": 1400.9829166666666,
+      "detected_hands": 2,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [
+        [
+          [
+            591,
+            641
+          ],
+          [
+            547,
+            511
+          ],
+          [
+            572,
+            376
+          ],
+          [
+            734,
+            215
+          ],
+          [
+            753,
+            215
+          ],
+          [
+            828,
+            263
+          ],
+          [
+            876,
+            317
+          ],
+          [
+            885,
+            400
+          ],
+          [
+            866,
+            429
+          ]
+        ],
+        [
+          [
+            1582,
+            901
+          ],
+          [
+            1529,
+            1027
+          ],
+          [
+            1190,
+            1159
+          ],
+          [
+            1172,
+            994
+          ],
+          [
+            1229,
+            842
+          ],
+          [
+            1348,
+            630
+          ],
+          [
+            1529,
+            778
+          ],
+          [
+            1570,
+            826
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4158,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 17627,
+          "hand_overlap_ratio": 0.03840698927781245
+        },
+        "cheeks": {
+          "pixels": 18538,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001401984ms": {
+      "timestamp_seconds": 1401.9839166666666,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            437,
+            720
+          ],
+          [
+            409,
+            594
+          ],
+          [
+            432,
+            456
+          ],
+          [
+            584,
+            296
+          ],
+          [
+            636,
+            372
+          ],
+          [
+            675,
+            442
+          ],
+          [
+            708,
+            523
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4052,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15311,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17498,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001402985ms": {
+      "timestamp_seconds": 1402.9849166666665,
+      "detected_hands": 2,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            1262,
+            900
+          ],
+          [
+            1222,
+            1045
+          ],
+          [
+            929,
+            1236
+          ],
+          [
+            838,
+            1091
+          ],
+          [
+            826,
+            938
+          ],
+          [
+            888,
+            813
+          ],
+          [
+            957,
+            735
+          ],
+          [
+            988,
+            707
+          ],
+          [
+            1129,
+            753
+          ],
+          [
+            1205,
+            811
+          ]
+        ],
+        [
+          [
+            686,
+            534
+          ],
+          [
+            674,
+            542
+          ],
+          [
+            573,
+            607
+          ],
+          [
+            389,
+            721
+          ],
+          [
+            356,
+            593
+          ],
+          [
+            384,
+            450
+          ],
+          [
+            543,
+            290
+          ],
+          [
+            609,
+            352
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3424,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15211,
+          "hand_overlap_ratio": 0.5513772927486688
+        },
+        "cheeks": {
+          "pixels": 17625,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001403986ms": {
+      "timestamp_seconds": 1403.9859166666665,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            711,
+            560
+          ],
+          [
+            408,
+            723
+          ],
+          [
+            369,
+            597
+          ],
+          [
+            393,
+            459
+          ],
+          [
+            486,
+            385
+          ],
+          [
+            569,
+            340
+          ],
+          [
+            577,
+            337
+          ],
+          [
+            637,
+            411
+          ],
+          [
+            677,
+            473
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3551,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21655,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17816,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001404987ms": {
+      "timestamp_seconds": 1404.9869166666667,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            365,
+            621
+          ],
+          [
+            335,
+            512
+          ],
+          [
+            356,
+            390
+          ],
+          [
+            443,
+            200
+          ],
+          [
+            479,
+            150
+          ],
+          [
+            505,
+            115
+          ],
+          [
+            599,
+            351
+          ],
+          [
+            601,
+            412
+          ],
+          [
+            571,
+            463
+          ],
+          [
+            531,
+            503
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3583,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 18688,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18442,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001405988ms": {
+      "timestamp_seconds": 1405.9879166666667,
+      "detected_hands": 2,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            590,
+            374
+          ],
+          [
+            579,
+            415
+          ],
+          [
+            539,
+            473
+          ],
+          [
+            486,
+            520
+          ],
+          [
+            326,
+            611
+          ],
+          [
+            285,
+            508
+          ],
+          [
+            310,
+            383
+          ],
+          [
+            490,
+            119
+          ]
+        ],
+        [
+          [
+            1295,
+            916
+          ],
+          [
+            1284,
+            972
+          ],
+          [
+            1271,
+            987
+          ],
+          [
+            1246,
+            1004
+          ],
+          [
+            1211,
+            1018
+          ],
+          [
+            938,
+            1071
+          ],
+          [
+            910,
+            984
+          ],
+          [
+            951,
+            864
+          ],
+          [
+            1048,
+            666
+          ],
+          [
+            1212,
+            805
+          ],
+          [
+            1274,
+            863
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3973,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 18938,
+          "hand_overlap_ratio": 0.29168866828598583
+        },
+        "cheeks": {
+          "pixels": 17540,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001406989ms": {
+      "timestamp_seconds": 1406.9889166666667,
+      "detected_hands": 2,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [
+        [
+          [
+            316,
+            601
+          ],
+          [
+            273,
+            501
+          ],
+          [
+            294,
+            377
+          ],
+          [
+            489,
+            125
+          ],
+          [
+            581,
+            389
+          ],
+          [
+            568,
+            438
+          ],
+          [
+            525,
+            492
+          ],
+          [
+            471,
+            533
+          ]
+        ],
+        [
+          [
+            1216,
+            874
+          ],
+          [
+            1201,
+            997
+          ],
+          [
+            898,
+            1100
+          ],
+          [
+            850,
+            1008
+          ],
+          [
+            865,
+            886
+          ],
+          [
+            951,
+            679
+          ],
+          [
+            1004,
+            689
+          ],
+          [
+            1117,
+            769
+          ],
+          [
+            1185,
+            821
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3424,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 18620,
+          "hand_overlap_ratio": 0.2588614393125671
+        },
+        "cheeks": {
+          "pixels": 17947,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001407990ms": {
+      "timestamp_seconds": 1407.9899166666667,
+      "detected_hands": 1,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [
+        [
+          [
+            289,
+            602
+          ],
+          [
+            249,
+            494
+          ],
+          [
+            274,
+            371
+          ],
+          [
+            468,
+            120
+          ],
+          [
+            574,
+            291
+          ],
+          [
+            588,
+            379
+          ],
+          [
+            550,
+            451
+          ],
+          [
+            489,
+            514
+          ],
+          [
+            432,
+            563
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3948,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 17934,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17606,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001408991ms": {
+      "timestamp_seconds": 1408.9909166666666,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            273,
+            600
+          ],
+          [
+            244,
+            487
+          ],
+          [
+            268,
+            366
+          ],
+          [
+            454,
+            138
+          ],
+          [
+            465,
+            131
+          ],
+          [
+            581,
+            366
+          ],
+          [
+            568,
+            405
+          ],
+          [
+            526,
+            459
+          ],
+          [
+            463,
+            504
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3502,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 19569,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17936,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001409992ms": {
+      "timestamp_seconds": 1409.9919166666666,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            277,
+            589
+          ],
+          [
+            241,
+            489
+          ],
+          [
+            260,
+            371
+          ],
+          [
+            403,
+            171
+          ],
+          [
+            434,
+            129
+          ],
+          [
+            458,
+            107
+          ],
+          [
+            544,
+            266
+          ],
+          [
+            560,
+            370
+          ],
+          [
+            539,
+            419
+          ],
+          [
+            482,
+            481
+          ],
+          [
+            418,
+            528
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3424,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 17388,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17850,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001410993ms": {
+      "timestamp_seconds": 1410.9929166666666,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            300,
+            609
+          ],
+          [
+            252,
+            504
+          ],
+          [
+            265,
+            372
+          ],
+          [
+            475,
+            111
+          ],
+          [
+            583,
+            371
+          ],
+          [
+            575,
+            423
+          ],
+          [
+            533,
+            478
+          ],
+          [
+            482,
+            525
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3558,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 19014,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18225,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001411994ms": {
+      "timestamp_seconds": 1411.9939166666666,
+      "detected_hands": 1,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [
+        [
+          [
+            541,
+            473
+          ],
+          [
+            497,
+            516
+          ],
+          [
+            324,
+            635
+          ],
+          [
+            308,
+            517
+          ],
+          [
+            349,
+            310
+          ],
+          [
+            404,
+            224
+          ],
+          [
+            442,
+            180
+          ],
+          [
+            527,
+            320
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3683,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 17358,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18049,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001412995ms": {
+      "timestamp_seconds": 1412.9949166666665,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            954,
+            918
+          ],
+          [
+            890,
+            867
+          ],
+          [
+            866,
+            796
+          ],
+          [
+            865,
+            722
+          ],
+          [
+            917,
+            759
+          ],
+          [
+            1144,
+            951
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3502,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 19496,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18177,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001413996ms": {
+      "timestamp_seconds": 1413.9959166666665,
+      "detected_hands": 0,
+      "hand_margin_px": 13,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2821,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12797,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 16386,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001414997ms": {
+      "timestamp_seconds": 1414.9969166666667,
+      "detected_hands": 0,
+      "hand_margin_px": 13,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2626,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12477,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 15978,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001415998ms": {
+      "timestamp_seconds": 1415.9979166666667,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3133,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14572,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17404,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001418000ms": {
+      "timestamp_seconds": 1417.9999166666666,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3347,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 18320,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 16395,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001419001ms": {
+      "timestamp_seconds": 1419.0009166666664,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2987,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15618,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 16426,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001421003ms": {
+      "timestamp_seconds": 1421.0029166666666,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3857,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13936,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 16025,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001422004ms": {
+      "timestamp_seconds": 1422.0039166666666,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3311,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12127,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 16499,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001440981ms": {
+      "timestamp_seconds": 1440.9812083333331,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            448,
+            414
+          ],
+          [
+            362,
+            575
+          ],
+          [
+            319,
+            609
+          ],
+          [
+            270,
+            640
+          ],
+          [
+            189,
+            674
+          ],
+          [
+            -7,
+            755
+          ],
+          [
+            -2,
+            643
+          ],
+          [
+            32,
+            542
+          ],
+          [
+            79,
+            405
+          ],
+          [
+            165,
+            372
+          ],
+          [
+            412,
+            313
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4189,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 22028,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21593,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001441982ms": {
+      "timestamp_seconds": 1441.9822083333333,
+      "detected_hands": 0,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4637,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 20742,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21630,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001442983ms": {
+      "timestamp_seconds": 1442.9832083333333,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            501,
+            326
+          ],
+          [
+            426,
+            532
+          ],
+          [
+            366,
+            611
+          ],
+          [
+            88,
+            731
+          ],
+          [
+            56,
+            614
+          ],
+          [
+            88,
+            503
+          ],
+          [
+            208,
+            364
+          ],
+          [
+            343,
+            299
+          ],
+          [
+            493,
+            255
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4763,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 20256,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21776,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001443984ms": {
+      "timestamp_seconds": 1443.9842083333333,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            483,
+            470
+          ],
+          [
+            470,
+            503
+          ],
+          [
+            445,
+            541
+          ],
+          [
+            373,
+            610
+          ],
+          [
+            68,
+            720
+          ],
+          [
+            45,
+            615
+          ],
+          [
+            85,
+            503
+          ],
+          [
+            217,
+            367
+          ],
+          [
+            341,
+            304
+          ],
+          [
+            433,
+            310
+          ],
+          [
+            461,
+            363
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4141,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21596,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21556,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001444985ms": {
+      "timestamp_seconds": 1444.9852083333333,
+      "detected_hands": 0,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4719,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21935,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21764,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001445986ms": {
+      "timestamp_seconds": 1445.9862083333333,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            544,
+            368
+          ],
+          [
+            538,
+            423
+          ],
+          [
+            509,
+            483
+          ],
+          [
+            429,
+            572
+          ],
+          [
+            108,
+            699
+          ],
+          [
+            75,
+            582
+          ],
+          [
+            132,
+            447
+          ],
+          [
+            280,
+            295
+          ],
+          [
+            351,
+            236
+          ],
+          [
+            387,
+            239
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4716,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 19786,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 22291,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001446987ms": {
+      "timestamp_seconds": 1446.9872083333332,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            544,
+            391
+          ],
+          [
+            543,
+            440
+          ],
+          [
+            521,
+            494
+          ],
+          [
+            445,
+            576
+          ],
+          [
+            119,
+            698
+          ],
+          [
+            83,
+            580
+          ],
+          [
+            145,
+            446
+          ],
+          [
+            294,
+            298
+          ],
+          [
+            385,
+            243
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4588,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21288,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 22318,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001447988ms": {
+      "timestamp_seconds": 1447.9882083333332,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            594,
+            404
+          ],
+          [
+            571,
+            452
+          ],
+          [
+            533,
+            501
+          ],
+          [
+            443,
+            581
+          ],
+          [
+            101,
+            709
+          ],
+          [
+            71,
+            585
+          ],
+          [
+            134,
+            450
+          ],
+          [
+            280,
+            300
+          ],
+          [
+            385,
+            239
+          ],
+          [
+            490,
+            305
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4244,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21828,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 22500,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001448989ms": {
+      "timestamp_seconds": 1448.9892083333332,
+      "detected_hands": 0,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3571,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 19002,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21132,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001449990ms": {
+      "timestamp_seconds": 1449.9902083333334,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3378,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 16670,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 19815,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001450991ms": {
+      "timestamp_seconds": 1450.9912083333334,
+      "detected_hands": 0,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3862,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21875,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 22007,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001451992ms": {
+      "timestamp_seconds": 1451.9922083333333,
+      "detected_hands": 0,
+      "hand_margin_px": 15,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3486,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 20943,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 20428,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001452993ms": {
+      "timestamp_seconds": 1452.9932083333333,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2785,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 15600,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 19704,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001461001ms": {
+      "timestamp_seconds": 1461.0012083333334,
+      "detected_hands": 1,
+      "hand_margin_px": 7,
+      "hand_hulls_px": [
+        [
+          [
+            829,
+            652
+          ],
+          [
+            817,
+            723
+          ],
+          [
+            720,
+            826
+          ],
+          [
+            625,
+            910
+          ],
+          [
+            578,
+            861
+          ],
+          [
+            557,
+            804
+          ],
+          [
+            545,
+            708
+          ],
+          [
+            771,
+            612
+          ],
+          [
+            819,
+            613
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 751,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 4433,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 3779,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001466006ms": {
+      "timestamp_seconds": 1466.0062083333332,
+      "detected_hands": 1,
+      "hand_margin_px": 4,
+      "hand_hulls_px": [
+        [
+          [
+            1002,
+            659
+          ],
+          [
+            993,
+            697
+          ],
+          [
+            963,
+            779
+          ],
+          [
+            946,
+            664
+          ],
+          [
+            962,
+            623
+          ],
+          [
+            980,
+            599
+          ],
+          [
+            996,
+            581
+          ],
+          [
+            1000,
+            597
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 394,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 1162,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 1825,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001477017ms": {
+      "timestamp_seconds": 1477.0172083333332,
+      "detected_hands": 0,
+      "hand_margin_px": 11,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2219,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10355,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 12961,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001478018ms": {
+      "timestamp_seconds": 1478.0182083333332,
+      "detected_hands": 0,
+      "hand_margin_px": 12,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2497,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10853,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 13157,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001479019ms": {
+      "timestamp_seconds": 1479.0192083333334,
+      "detected_hands": 0,
+      "hand_margin_px": 11,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2359,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 9954,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 12539,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001480020ms": {
+      "timestamp_seconds": 1480.0202083333334,
+      "detected_hands": 1,
+      "hand_margin_px": 11,
+      "hand_hulls_px": [
+        [
+          [
+            374,
+            685
+          ],
+          [
+            367,
+            727
+          ],
+          [
+            261,
+            820
+          ],
+          [
+            193,
+            839
+          ],
+          [
+            167,
+            700
+          ],
+          [
+            165,
+            669
+          ],
+          [
+            209,
+            405
+          ],
+          [
+            240,
+            374
+          ],
+          [
+            329,
+            533
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2068,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 9501,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 12711,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001480980ms": {
+      "timestamp_seconds": 1480.9795,
+      "detected_hands": 1,
+      "hand_margin_px": 11,
+      "hand_hulls_px": [
+        [
+          [
+            435,
+            675
+          ],
+          [
+            375,
+            758
+          ],
+          [
+            321,
+            829
+          ],
+          [
+            230,
+            880
+          ],
+          [
+            202,
+            640
+          ],
+          [
+            269,
+            334
+          ],
+          [
+            408,
+            613
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2209,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 8698,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 12651,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001483982ms": {
+      "timestamp_seconds": 1483.9824999999998,
+      "detected_hands": 0,
+      "hand_margin_px": 12,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2466,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10954,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 13462,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001485984ms": {
+      "timestamp_seconds": 1485.9845,
+      "detected_hands": 2,
+      "hand_margin_px": 5,
+      "hand_hulls_px": [
+        [
+          [
+            613,
+            900
+          ],
+          [
+            627,
+            847
+          ],
+          [
+            667,
+            807
+          ],
+          [
+            710,
+            791
+          ],
+          [
+            747,
+            788
+          ],
+          [
+            779,
+            797
+          ],
+          [
+            799,
+            808
+          ],
+          [
+            803,
+            854
+          ],
+          [
+            796,
+            885
+          ],
+          [
+            759,
+            916
+          ],
+          [
+            751,
+            918
+          ]
+        ],
+        [
+          [
+            999,
+            798
+          ],
+          [
+            994,
+            839
+          ],
+          [
+            974,
+            855
+          ],
+          [
+            901,
+            890
+          ],
+          [
+            878,
+            846
+          ],
+          [
+            878,
+            794
+          ],
+          [
+            883,
+            732
+          ],
+          [
+            953,
+            740
+          ],
+          [
+            977,
+            754
+          ],
+          [
+            992,
+            769
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 415,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 1161,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 1761,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000212504ms": {
+      "timestamp_seconds": 212.50395833333332,
+      "detected_hands": 2,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            502,
+            701
+          ],
+          [
+            438,
+            821
+          ],
+          [
+            235,
+            816
+          ],
+          [
+            440,
+            537
+          ],
+          [
+            472,
+            615
+          ]
+        ],
+        [
+          [
+            579,
+            217
+          ],
+          [
+            556,
+            449
+          ],
+          [
+            356,
+            559
+          ],
+          [
+            254,
+            553
+          ],
+          [
+            208,
+            390
+          ],
+          [
+            202,
+            308
+          ],
+          [
+            222,
+            281
+          ],
+          [
+            378,
+            236
+          ],
+          [
+            523,
+            202
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3210,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14368,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17909,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000213505ms": {
+      "timestamp_seconds": 213.50495833333332,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            733,
+            390
+          ],
+          [
+            671,
+            455
+          ],
+          [
+            609,
+            516
+          ],
+          [
+            425,
+            625
+          ],
+          [
+            566,
+            382
+          ],
+          [
+            713,
+            223
+          ],
+          [
+            730,
+            324
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3167,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 14036,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17962,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000215507ms": {
+      "timestamp_seconds": 215.50695833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            827,
+            390
+          ],
+          [
+            765,
+            435
+          ],
+          [
+            700,
+            481
+          ],
+          [
+            503,
+            611
+          ],
+          [
+            516,
+            540
+          ],
+          [
+            625,
+            355
+          ],
+          [
+            749,
+            209
+          ],
+          [
+            783,
+            269
+          ],
+          [
+            806,
+            331
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3299,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13984,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17672,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000216508ms": {
+      "timestamp_seconds": 216.50795833333333,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            828,
+            355
+          ],
+          [
+            766,
+            413
+          ],
+          [
+            697,
+            466
+          ],
+          [
+            484,
+            593
+          ],
+          [
+            499,
+            526
+          ],
+          [
+            636,
+            340
+          ],
+          [
+            719,
+            268
+          ],
+          [
+            798,
+            207
+          ],
+          [
+            815,
+            248
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3374,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12344,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18039,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000222514ms": {
+      "timestamp_seconds": 222.51395833333333,
+      "detected_hands": 0,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3294,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12753,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17946,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000237487ms": {
+      "timestamp_seconds": 237.48725,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            486,
+            436
+          ],
+          [
+            434,
+            524
+          ],
+          [
+            89,
+            646
+          ],
+          [
+            45,
+            489
+          ],
+          [
+            69,
+            356
+          ],
+          [
+            110,
+            278
+          ],
+          [
+            140,
+            254
+          ],
+          [
+            279,
+            243
+          ],
+          [
+            388,
+            283
+          ],
+          [
+            449,
+            339
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3278,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 12682,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 18730,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0000241491ms": {
+      "timestamp_seconds": 241.49124999999998,
+      "detected_hands": 1,
+      "hand_margin_px": 9,
+      "hand_hulls_px": [
+        [
+          [
+            363,
+            708
+          ],
+          [
+            356,
+            769
+          ],
+          [
+            311,
+            818
+          ],
+          [
+            284,
+            839
+          ],
+          [
+            243,
+            863
+          ],
+          [
+            155,
+            899
+          ],
+          [
+            8,
+            893
+          ],
+          [
+            22,
+            800
+          ],
+          [
+            77,
+            728
+          ],
+          [
+            81,
+            723
+          ],
+          [
+            187,
+            663
+          ],
+          [
+            247,
+            640
+          ],
+          [
+            292,
+            628
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 1302,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 5758,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 7314,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001402484ms": {
+      "timestamp_seconds": 1402.4844166666667,
+      "detected_hands": 1,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            409,
+            718
+          ],
+          [
+            373,
+            590
+          ],
+          [
+            398,
+            453
+          ],
+          [
+            486,
+            382
+          ],
+          [
+            587,
+            329
+          ],
+          [
+            644,
+            388
+          ],
+          [
+            674,
+            452
+          ],
+          [
+            698,
+            525
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3859,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 19344,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 17365,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001403485ms": {
+      "timestamp_seconds": 1403.4854166666667,
+      "detected_hands": 2,
+      "hand_margin_px": 14,
+      "hand_hulls_px": [
+        [
+          [
+            1236,
+            867
+          ],
+          [
+            1225,
+            1014
+          ],
+          [
+            932,
+            1232
+          ],
+          [
+            842,
+            1095
+          ],
+          [
+            812,
+            951
+          ],
+          [
+            857,
+            821
+          ],
+          [
+            926,
+            756
+          ],
+          [
+            957,
+            733
+          ],
+          [
+            1013,
+            723
+          ],
+          [
+            1110,
+            739
+          ],
+          [
+            1189,
+            785
+          ]
+        ],
+        [
+          [
+            393,
+            733
+          ],
+          [
+            376,
+            603
+          ],
+          [
+            397,
+            464
+          ],
+          [
+            547,
+            302
+          ],
+          [
+            605,
+            359
+          ],
+          [
+            642,
+            435
+          ],
+          [
+            686,
+            538
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 3353,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 13909,
+          "hand_overlap_ratio": 0.46811417068085415
+        },
+        "cheeks": {
+          "pixels": 17403,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001443484ms": {
+      "timestamp_seconds": 1443.4837083333332,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            536,
+            476
+          ],
+          [
+            506,
+            510
+          ],
+          [
+            464,
+            547
+          ],
+          [
+            378,
+            608
+          ],
+          [
+            82,
+            718
+          ],
+          [
+            51,
+            610
+          ],
+          [
+            79,
+            500
+          ],
+          [
+            213,
+            362
+          ],
+          [
+            347,
+            297
+          ],
+          [
+            487,
+            271
+          ],
+          [
+            524,
+            342
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4116,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 21576,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21583,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001444485ms": {
+      "timestamp_seconds": 1444.4847083333332,
+      "detected_hands": 1,
+      "hand_margin_px": 16,
+      "hand_hulls_px": [
+        [
+          [
+            535,
+            432
+          ],
+          [
+            520,
+            573
+          ],
+          [
+            490,
+            594
+          ],
+          [
+            446,
+            616
+          ],
+          [
+            89,
+            742
+          ],
+          [
+            56,
+            634
+          ],
+          [
+            81,
+            519
+          ],
+          [
+            199,
+            380
+          ],
+          [
+            317,
+            342
+          ],
+          [
+            505,
+            305
+          ]
+        ]
+      ],
+      "regions": {
+        "eye_texture": {
+          "pixels": 4276,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 22625,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 21943,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001477518ms": {
+      "timestamp_seconds": 1477.5177083333333,
+      "detected_hands": 0,
+      "hand_margin_px": 12,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2243,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10101,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 13199,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    },
+    "frame_0001478519ms": {
+      "timestamp_seconds": 1478.5187083333333,
+      "detected_hands": 0,
+      "hand_margin_px": 12,
+      "hand_hulls_px": [],
+      "regions": {
+        "eye_texture": {
+          "pixels": 2845,
+          "hand_overlap_ratio": 0.0
+        },
+        "lips": {
+          "pixels": 10890,
+          "hand_overlap_ratio": 0.0
+        },
+        "cheeks": {
+          "pixels": 12830,
+          "hand_overlap_ratio": 0.0
+        }
+      }
+    }
+  },
+  "notice": "Detected-hand overlap is a rejection heuristic. A zero overlap does not prove absence of a hand, tool, shadow, hair, or other occlusion."
+}

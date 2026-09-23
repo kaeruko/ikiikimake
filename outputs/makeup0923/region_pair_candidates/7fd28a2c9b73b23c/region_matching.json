@@ -1,0 +1,1118 @@
+{
+  "schema_version": 1,
+  "version": "region-specific-v1",
+  "top_k": 10,
+  "diversity_seconds": 15.0,
+  "regions": {
+    "eye_texture": {
+      "label": "目の下の質感",
+      "rule": {
+        "mask_names": [
+          "screen_left_lower_eye_skin",
+          "screen_right_lower_eye_skin"
+        ],
+        "max_face_scale_ratio": 1.03,
+        "max_hand_overlap_ratio": 0.01
+      },
+      "ranked_pairs": [
+        {
+          "before_id": "frame_0000240991ms",
+          "after_id": "frame_0001403485ms",
+          "before_time": 240.99075,
+          "after_time": 1403.4854166666667,
+          "score": 0.9303127057259103,
+          "terms": {
+            "yaw_gap_degrees": 1.493435683734054,
+            "pitch_gap_degrees": 0.3700694108168621,
+            "roll_gap_degrees": 2.0630766695420486,
+            "face_scale_ratio": 1.0031382839082628,
+            "log_face_scale_ratio": 0.0031333697739331467,
+            "roi_procrustes_rms": 0.017656496275262883,
+            "eye_aperture_gap": 0.004869448190593609,
+            "mouth_opening_gap": 0.007155613558655448,
+            "contributions": {
+              "yaw": 0.1493435683734054,
+              "pitch": 0.037006941081686215,
+              "roll": 0.17192305579517073,
+              "face_scale": 0.007727840722356977,
+              "roi_shape": 0.3531299255052576,
+              "eye_aperture": 0.12173620476484022,
+              "mouth_opening": 0.0894451694831931
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1162.4946666666667,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.04037167419476505,
+                0.039368722256463075
+              ],
+              "mouth_opening": 0.015302551971233386
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.039581808297442046,
+                0.034499274065869466
+              ],
+              "mouth_opening": 0.008146938412577938
+            },
+            "screen_eye_aperture_gaps": [
+              0.0007898658973230013,
+              0.004869448190593609
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "eye_texture",
+            "max_face_scale_ratio": 1.03,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000223014ms",
+          "after_id": "frame_0001403485ms",
+          "before_time": 223.01445833333332,
+          "after_time": 1403.4854166666667,
+          "score": 0.9494640823384634,
+          "terms": {
+            "yaw_gap_degrees": 1.4704092714251473,
+            "pitch_gap_degrees": 0.26283190163493647,
+            "roll_gap_degrees": 1.6296732598064354,
+            "face_scale_ratio": 1.000307652328504,
+            "log_face_scale_ratio": 0.0003076050132305082,
+            "roi_procrustes_rms": 0.016248735815751328,
+            "eye_aperture_gap": 0.009491977457116968,
+            "mouth_opening_gap": 0.006184084799716792,
+            "contributions": {
+              "yaw": 0.14704092714251474,
+              "pitch": 0.026283190163493647,
+              "roll": 0.1358061049838696,
+              "face_scale": 0.0007586473091747504,
+              "roi_shape": 0.32497471631502656,
+              "eye_aperture": 0.2372994364279242,
+              "mouth_opening": 0.0773010599964599
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1180.4709583333333,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.03008983084032508,
+                0.03206417504912478
+              ],
+              "mouth_opening": 0.0019628536128611465
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.039581808297442046,
+                0.034499274065869466
+              ],
+              "mouth_opening": 0.008146938412577938
+            },
+            "screen_eye_aperture_gaps": [
+              0.009491977457116968,
+              0.002435099016744685
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "eye_texture",
+            "max_face_scale_ratio": 1.03,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000238989ms",
+          "after_id": "frame_0001421003ms",
+          "before_time": 238.98874999999998,
+          "after_time": 1421.0029166666666,
+          "score": 2.839228991945738,
+          "terms": {
+            "yaw_gap_degrees": 4.142381210063033,
+            "pitch_gap_degrees": 8.495254826792921,
+            "roll_gap_degrees": 4.192766981347965,
+            "face_scale_ratio": 1.010219941512371,
+            "log_face_scale_ratio": 0.01016807101969198,
+            "roi_procrustes_rms": 0.04593327646803135,
+            "eye_aperture_gap": 0.009951804418525988,
+            "mouth_opening_gap": 0.0026823960983317022,
+            "contributions": {
+              "yaw": 0.4142381210063033,
+              "pitch": 0.8495254826792922,
+              "roll": 0.3493972484456638,
+              "face_scale": 0.025077548761555785,
+              "roi_shape": 0.918665529360627,
+              "eye_aperture": 0.2487951104631497,
+              "mouth_opening": 0.03352995122914628
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1182.0141666666666,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.0016856679143794405,
+                0.005951704701389386
+              ],
+              "mouth_opening": 0.00434424564825019
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.011637472332905428,
+                0.010183702602200275
+              ],
+              "mouth_opening": 0.0016618495499184874
+            },
+            "screen_eye_aperture_gaps": [
+              0.009951804418525988,
+              0.004231997900810889
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "eye_texture",
+            "max_face_scale_ratio": 1.03,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000221012ms",
+          "after_id": "frame_0001421003ms",
+          "before_time": 221.0124583333333,
+          "after_time": 1421.0029166666666,
+          "score": 3.105331756061265,
+          "terms": {
+            "yaw_gap_degrees": 3.9403108018199537,
+            "pitch_gap_degrees": 6.0128324082910085,
+            "roll_gap_degrees": 1.6740978683263685,
+            "face_scale_ratio": 1.008247020952214,
+            "log_face_scale_ratio": 0.00821320009523139,
+            "roi_procrustes_rms": 0.047040786214931185,
+            "eye_aperture_gap": 0.039855045926839,
+            "mouth_opening_gap": 0.0010448930443717093,
+            "contributions": {
+              "yaw": 0.3940310801819954,
+              "pitch": 0.6012832408291009,
+              "roll": 0.13950815569386404,
+              "face_scale": 0.020256243832059616,
+              "roi_shape": 0.9408157242986237,
+              "eye_aperture": 0.996376148170975,
+              "mouth_opening": 0.013061163054646366
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1199.9904583333332,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.049323075251081136,
+                0.05003874852903927
+              ],
+              "mouth_opening": 0.0027067425942901967
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.011637472332905428,
+                0.010183702602200275
+              ],
+              "mouth_opening": 0.0016618495499184874
+            },
+            "screen_eye_aperture_gaps": [
+              0.03768560291817571,
+              0.039855045926839
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "eye_texture",
+            "max_face_scale_ratio": 1.03,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        }
+      ],
+      "eligible_before_diversity": 281,
+      "diversity_skipped": 277,
+      "rejected": {
+        "face_scale_ratio": 383,
+        "hand_overlap": 0
+      }
+    },
+    "lips": {
+      "label": "唇",
+      "rule": {
+        "mask_names": [
+          "lips",
+          "lip_skin"
+        ],
+        "max_face_scale_ratio": 1.1,
+        "max_hand_overlap_ratio": 0.01
+      },
+      "ranked_pairs": [
+        {
+          "before_id": "frame_0000222514ms",
+          "after_id": "frame_0001410993ms",
+          "before_time": 222.51395833333333,
+          "after_time": 1410.9929166666666,
+          "score": 1.1003702566167637,
+          "terms": {
+            "yaw_gap_degrees": 4.320629497125586,
+            "pitch_gap_degrees": 0.15522580424704835,
+            "roll_gap_degrees": 0.008091359784189622,
+            "face_scale_ratio": 1.0136369022835943,
+            "log_face_scale_ratio": 0.013544756508471357,
+            "roi_procrustes_rms": 0.02230098558703809,
+            "eye_aperture_gap": 0.0012695938738647022,
+            "mouth_opening_gap": 0.011275632642897321,
+            "contributions": {
+              "yaw": 0.43206294971255865,
+              "pitch": 0.015522580424704835,
+              "roll": 0.0006742799820158019,
+              "face_scale": 0.033405479873888616,
+              "roi_shape": 0.44601971174076177,
+              "eye_aperture": 0.031739846846617556,
+              "mouth_opening": 0.14094540803621652
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1188.4789583333331,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.058311246867528956,
+                0.05585078088204178
+              ],
+              "mouth_opening": 0.0013908894522775747
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.05704165299366425,
+                0.05638493680791118
+              ],
+              "mouth_opening": 0.012666522095174895
+            },
+            "screen_eye_aperture_gaps": [
+              0.0012695938738647022,
+              0.0005341559258693965
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "lips",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000237988ms",
+          "after_id": "frame_0001410993ms",
+          "before_time": 237.98775,
+          "after_time": 1410.9929166666666,
+          "score": 1.265856119689999,
+          "terms": {
+            "yaw_gap_degrees": 2.4294162021348598,
+            "pitch_gap_degrees": 0.8311882553271419,
+            "roll_gap_degrees": 0.7751504585378353,
+            "face_scale_ratio": 1.0341249389002358,
+            "log_face_scale_ratio": 0.033555599444669744,
+            "roi_procrustes_rms": 0.03001826834322679,
+            "eye_aperture_gap": 0.004226642414902601,
+            "mouth_opening_gap": 0.0069128067255498134,
+            "contributions": {
+              "yaw": 0.24294162021348598,
+              "pitch": 0.08311882553271419,
+              "roll": 0.0645958715448196,
+              "face_scale": 0.08275829109250565,
+              "roi_shape": 0.6003653668645358,
+              "eye_aperture": 0.10566606037256503,
+              "mouth_opening": 0.08641008406937267
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1173.0051666666666,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.057353303183719784,
+                0.05215829439300858
+              ],
+              "mouth_opening": 0.005753715369625082
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.05704165299366425,
+                0.05638493680791118
+              ],
+              "mouth_opening": 0.012666522095174895
+            },
+            "screen_eye_aperture_gaps": [
+              0.00031165019005553046,
+              0.004226642414902601
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "lips",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000206998ms",
+          "after_id": "frame_0001478519ms",
+          "before_time": 206.99845833333333,
+          "after_time": 1478.5187083333333,
+          "score": 1.5013580269811924,
+          "terms": {
+            "yaw_gap_degrees": 2.0943258821162773,
+            "pitch_gap_degrees": 5.233628228306884,
+            "roll_gap_degrees": 0.9585322494733743,
+            "face_scale_ratio": 1.0855313776488065,
+            "log_face_scale_ratio": 0.08206961608960549,
+            "roi_procrustes_rms": 0.01876986210080261,
+            "eye_aperture_gap": 0.004396309445476004,
+            "mouth_opening_gap": 7.770976096887214e-05,
+            "contributions": {
+              "yaw": 0.20943258821162775,
+              "pitch": 0.5233628228306884,
+              "roll": 0.07987768745611452,
+              "face_scale": 0.2024085783176985,
+              "roi_shape": 0.3753972420160522,
+              "eye_aperture": 0.10990773613690011,
+              "mouth_opening": 0.0009713720121109018
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1271.52025,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.007634246685299787,
+                0.010105535608541423
+              ],
+              "mouth_opening": 0.0021400199051740763
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.009870191358196645,
+                0.005709226163065418
+              ],
+              "mouth_opening": 0.002062310144205204
+            },
+            "screen_eye_aperture_gaps": [
+              0.0022359446728968573,
+              0.004396309445476004
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "lips",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000215006ms",
+          "after_id": "frame_0001450991ms",
+          "before_time": 215.0064583333333,
+          "after_time": 1450.9912083333334,
+          "score": 1.78539525581725,
+          "terms": {
+            "yaw_gap_degrees": 1.4474784397938816,
+            "pitch_gap_degrees": 0.5244793358354063,
+            "roll_gap_degrees": 6.2704521323382805,
+            "face_scale_ratio": 1.0982161364688803,
+            "log_face_scale_ratio": 0.09368716931585896,
+            "roi_procrustes_rms": 0.016242401617311848,
+            "eye_aperture_gap": 0.005242044612879047,
+            "mouth_opening_gap": 0.030296133026184106,
+            "contributions": {
+              "yaw": 0.14474784397938817,
+              "pitch": 0.05244793358354063,
+              "roll": 0.5225376776948567,
+              "face_scale": 0.23106099006394995,
+              "roi_shape": 0.32484803234623694,
+              "eye_aperture": 0.1310511153219762,
+              "mouth_opening": 0.37870166282730133
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1235.98475,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.05205733736134845,
+                0.05199444440378238
+              ],
+              "mouth_opening": 0.018863293913175157
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.0572993819742275,
+                0.05631376377827745
+              ],
+              "mouth_opening": 0.04915942693935926
+            },
+            "screen_eye_aperture_gaps": [
+              0.005242044612879047,
+              0.004319319374495069
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "lips",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000236987ms",
+          "after_id": "frame_0001450991ms",
+          "before_time": 236.98675,
+          "after_time": 1450.9912083333334,
+          "score": 2.147824591197799,
+          "terms": {
+            "yaw_gap_degrees": 2.0840774314623296,
+            "pitch_gap_degrees": 0.578821157940913,
+            "roll_gap_degrees": 6.521528681564572,
+            "face_scale_ratio": 1.0977716511549633,
+            "log_face_scale_ratio": 0.09328235347627005,
+            "roi_procrustes_rms": 0.021922834938015556,
+            "eye_aperture_gap": 0.0028529155442159823,
+            "mouth_opening_gap": 0.04785854640567222,
+            "contributions": {
+              "yaw": 0.20840774314623295,
+              "pitch": 0.057882115794091304,
+              "roll": 0.5434607234637143,
+              "face_scale": 0.230062591357147,
+              "roi_shape": 0.4384566987603111,
+              "eye_aperture": 0.07132288860539955,
+              "mouth_opening": 0.5982318300709027
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1214.0044583333333,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.05776031766151356,
+                0.059166679322493435
+              ],
+              "mouth_opening": 0.001300880533687041
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.0572993819742275,
+                0.05631376377827745
+              ],
+              "mouth_opening": 0.04915942693935926
+            },
+            "screen_eye_aperture_gaps": [
+              0.00046093568728605705,
+              0.0028529155442159823
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "lips",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000206998ms",
+          "after_id": "frame_0001402484ms",
+          "before_time": 206.99845833333333,
+          "after_time": 1402.4844166666667,
+          "score": 2.2606473991516736,
+          "terms": {
+            "yaw_gap_degrees": 0.7409558207625073,
+            "pitch_gap_degrees": 2.3784932598478297,
+            "roll_gap_degrees": 0.7193918964922099,
+            "face_scale_ratio": 1.0937421315736167,
+            "log_face_scale_ratio": 0.08960496467397407,
+            "roi_procrustes_rms": 0.03799903649542957,
+            "eye_aperture_gap": 0.005951983381114855,
+            "mouth_opening_gap": 0.060718385385996214,
+            "contributions": {
+              "yaw": 0.07409558207625074,
+              "pitch": 0.23784932598478298,
+              "roll": 0.05994932470768416,
+              "face_scale": 0.22099303462154007,
+              "roi_shape": 0.7599807299085914,
+              "eye_aperture": 0.14879958452787137,
+              "mouth_opening": 0.7589798173249527
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1195.4859583333334,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.007634246685299787,
+                0.010105535608541423
+              ],
+              "mouth_opening": 0.0021400199051740763
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.013586230066414642,
+                0.013846555209949667
+              ],
+              "mouth_opening": 0.06285840529117029
+            },
+            "screen_eye_aperture_gaps": [
+              0.005951983381114855,
+              0.0037410196014082443
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "lips",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        }
+      ],
+      "eligible_before_diversity": 263,
+      "diversity_skipped": 257,
+      "rejected": {
+        "face_scale_ratio": 305,
+        "hand_overlap": 96
+      }
+    },
+    "cheeks": {
+      "label": "頬",
+      "rule": {
+        "mask_names": [
+          "left_cheek",
+          "right_cheek"
+        ],
+        "max_face_scale_ratio": 1.1,
+        "max_hand_overlap_ratio": 0.01
+      },
+      "ranked_pairs": [
+        {
+          "before_id": "frame_0000240991ms",
+          "after_id": "frame_0001403485ms",
+          "before_time": 240.99075,
+          "after_time": 1403.4854166666667,
+          "score": 0.9303127057259103,
+          "terms": {
+            "yaw_gap_degrees": 1.493435683734054,
+            "pitch_gap_degrees": 0.3700694108168621,
+            "roll_gap_degrees": 2.0630766695420486,
+            "face_scale_ratio": 1.0031382839082628,
+            "log_face_scale_ratio": 0.0031333697739331467,
+            "roi_procrustes_rms": 0.017656496275262883,
+            "eye_aperture_gap": 0.004869448190593609,
+            "mouth_opening_gap": 0.007155613558655448,
+            "contributions": {
+              "yaw": 0.1493435683734054,
+              "pitch": 0.037006941081686215,
+              "roll": 0.17192305579517073,
+              "face_scale": 0.007727840722356977,
+              "roi_shape": 0.3531299255052576,
+              "eye_aperture": 0.12173620476484022,
+              "mouth_opening": 0.0894451694831931
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1162.4946666666667,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.04037167419476505,
+                0.039368722256463075
+              ],
+              "mouth_opening": 0.015302551971233386
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.039581808297442046,
+                0.034499274065869466
+              ],
+              "mouth_opening": 0.008146938412577938
+            },
+            "screen_eye_aperture_gaps": [
+              0.0007898658973230013,
+              0.004869448190593609
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000223014ms",
+          "after_id": "frame_0001403485ms",
+          "before_time": 223.01445833333332,
+          "after_time": 1403.4854166666667,
+          "score": 0.9494640823384634,
+          "terms": {
+            "yaw_gap_degrees": 1.4704092714251473,
+            "pitch_gap_degrees": 0.26283190163493647,
+            "roll_gap_degrees": 1.6296732598064354,
+            "face_scale_ratio": 1.000307652328504,
+            "log_face_scale_ratio": 0.0003076050132305082,
+            "roi_procrustes_rms": 0.016248735815751328,
+            "eye_aperture_gap": 0.009491977457116968,
+            "mouth_opening_gap": 0.006184084799716792,
+            "contributions": {
+              "yaw": 0.14704092714251474,
+              "pitch": 0.026283190163493647,
+              "roll": 0.1358061049838696,
+              "face_scale": 0.0007586473091747504,
+              "roi_shape": 0.32497471631502656,
+              "eye_aperture": 0.2372994364279242,
+              "mouth_opening": 0.0773010599964599
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1180.4709583333333,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.03008983084032508,
+                0.03206417504912478
+              ],
+              "mouth_opening": 0.0019628536128611465
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.039581808297442046,
+                0.034499274065869466
+              ],
+              "mouth_opening": 0.008146938412577938
+            },
+            "screen_eye_aperture_gaps": [
+              0.009491977457116968,
+              0.002435099016744685
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000206998ms",
+          "after_id": "frame_0001478519ms",
+          "before_time": 206.99845833333333,
+          "after_time": 1478.5187083333333,
+          "score": 1.5013580269811924,
+          "terms": {
+            "yaw_gap_degrees": 2.0943258821162773,
+            "pitch_gap_degrees": 5.233628228306884,
+            "roll_gap_degrees": 0.9585322494733743,
+            "face_scale_ratio": 1.0855313776488065,
+            "log_face_scale_ratio": 0.08206961608960549,
+            "roi_procrustes_rms": 0.01876986210080261,
+            "eye_aperture_gap": 0.004396309445476004,
+            "mouth_opening_gap": 7.770976096887214e-05,
+            "contributions": {
+              "yaw": 0.20943258821162775,
+              "pitch": 0.5233628228306884,
+              "roll": 0.07987768745611452,
+              "face_scale": 0.2024085783176985,
+              "roi_shape": 0.3753972420160522,
+              "eye_aperture": 0.10990773613690011,
+              "mouth_opening": 0.0009713720121109018
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1271.52025,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.007634246685299787,
+                0.010105535608541423
+              ],
+              "mouth_opening": 0.0021400199051740763
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.009870191358196645,
+                0.005709226163065418
+              ],
+              "mouth_opening": 0.002062310144205204
+            },
+            "screen_eye_aperture_gaps": [
+              0.0022359446728968573,
+              0.004396309445476004
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000215006ms",
+          "after_id": "frame_0001450991ms",
+          "before_time": 215.0064583333333,
+          "after_time": 1450.9912083333334,
+          "score": 1.78539525581725,
+          "terms": {
+            "yaw_gap_degrees": 1.4474784397938816,
+            "pitch_gap_degrees": 0.5244793358354063,
+            "roll_gap_degrees": 6.2704521323382805,
+            "face_scale_ratio": 1.0982161364688803,
+            "log_face_scale_ratio": 0.09368716931585896,
+            "roi_procrustes_rms": 0.016242401617311848,
+            "eye_aperture_gap": 0.005242044612879047,
+            "mouth_opening_gap": 0.030296133026184106,
+            "contributions": {
+              "yaw": 0.14474784397938817,
+              "pitch": 0.05244793358354063,
+              "roll": 0.5225376776948567,
+              "face_scale": 0.23106099006394995,
+              "roi_shape": 0.32484803234623694,
+              "eye_aperture": 0.1310511153219762,
+              "mouth_opening": 0.37870166282730133
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1235.98475,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.05205733736134845,
+                0.05199444440378238
+              ],
+              "mouth_opening": 0.018863293913175157
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.0572993819742275,
+                0.05631376377827745
+              ],
+              "mouth_opening": 0.04915942693935926
+            },
+            "screen_eye_aperture_gaps": [
+              0.005242044612879047,
+              0.004319319374495069
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000206998ms",
+          "after_id": "frame_0001402985ms",
+          "before_time": 206.99845833333333,
+          "after_time": 1402.9849166666665,
+          "score": 1.8215974727206707,
+          "terms": {
+            "yaw_gap_degrees": 0.9581348813073864,
+            "pitch_gap_degrees": 0.9800373989699052,
+            "roll_gap_degrees": 0.16702648369356554,
+            "face_scale_ratio": 1.0884487020513194,
+            "log_face_scale_ratio": 0.08475347338977078,
+            "roi_procrustes_rms": 0.023227672388689984,
+            "eye_aperture_gap": 0.03080597599359538,
+            "mouth_opening_gap": 0.013610459085480529,
+            "contributions": {
+              "yaw": 0.09581348813073864,
+              "pitch": 0.09800373989699052,
+              "roll": 0.013918873641130461,
+              "face_scale": 0.20902778486962045,
+              "roi_shape": 0.46455344777379964,
+              "eye_aperture": 0.7701493998398845,
+              "mouth_opening": 0.1701307385685066
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1195.9864583333333,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.007634246685299787,
+                0.010105535608541423
+              ],
+              "mouth_opening": 0.0021400199051740763
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.038440222678895165,
+                0.036179008919101335
+              ],
+              "mouth_opening": 0.015750478990654605
+            },
+            "screen_eye_aperture_gaps": [
+              0.03080597599359538,
+              0.02607347331055991
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000236987ms",
+          "after_id": "frame_0001450991ms",
+          "before_time": 236.98675,
+          "after_time": 1450.9912083333334,
+          "score": 2.147824591197799,
+          "terms": {
+            "yaw_gap_degrees": 2.0840774314623296,
+            "pitch_gap_degrees": 0.578821157940913,
+            "roll_gap_degrees": 6.521528681564572,
+            "face_scale_ratio": 1.0977716511549633,
+            "log_face_scale_ratio": 0.09328235347627005,
+            "roi_procrustes_rms": 0.021922834938015556,
+            "eye_aperture_gap": 0.0028529155442159823,
+            "mouth_opening_gap": 0.04785854640567222,
+            "contributions": {
+              "yaw": 0.20840774314623295,
+              "pitch": 0.057882115794091304,
+              "roll": 0.5434607234637143,
+              "face_scale": 0.230062591357147,
+              "roi_shape": 0.4384566987603111,
+              "eye_aperture": 0.07132288860539955,
+              "mouth_opening": 0.5982318300709027
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1214.0044583333333,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.05776031766151356,
+                0.059166679322493435
+              ],
+              "mouth_opening": 0.001300880533687041
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.0572993819742275,
+                0.05631376377827745
+              ],
+              "mouth_opening": 0.04915942693935926
+            },
+            "screen_eye_aperture_gaps": [
+              0.00046093568728605705,
+              0.0028529155442159823
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000238989ms",
+          "after_id": "frame_0001421003ms",
+          "before_time": 238.98874999999998,
+          "after_time": 1421.0029166666666,
+          "score": 2.839228991945738,
+          "terms": {
+            "yaw_gap_degrees": 4.142381210063033,
+            "pitch_gap_degrees": 8.495254826792921,
+            "roll_gap_degrees": 4.192766981347965,
+            "face_scale_ratio": 1.010219941512371,
+            "log_face_scale_ratio": 0.01016807101969198,
+            "roi_procrustes_rms": 0.04593327646803135,
+            "eye_aperture_gap": 0.009951804418525988,
+            "mouth_opening_gap": 0.0026823960983317022,
+            "contributions": {
+              "yaw": 0.4142381210063033,
+              "pitch": 0.8495254826792922,
+              "roll": 0.3493972484456638,
+              "face_scale": 0.025077548761555785,
+              "roi_shape": 0.918665529360627,
+              "eye_aperture": 0.2487951104631497,
+              "mouth_opening": 0.03352995122914628
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1182.0141666666666,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.0016856679143794405,
+                0.005951704701389386
+              ],
+              "mouth_opening": 0.00434424564825019
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.011637472332905428,
+                0.010183702602200275
+              ],
+              "mouth_opening": 0.0016618495499184874
+            },
+            "screen_eye_aperture_gaps": [
+              0.009951804418525988,
+              0.004231997900810889
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        },
+        {
+          "before_id": "frame_0000221012ms",
+          "after_id": "frame_0001421003ms",
+          "before_time": 221.0124583333333,
+          "after_time": 1421.0029166666666,
+          "score": 3.105331756061265,
+          "terms": {
+            "yaw_gap_degrees": 3.9403108018199537,
+            "pitch_gap_degrees": 6.0128324082910085,
+            "roll_gap_degrees": 1.6740978683263685,
+            "face_scale_ratio": 1.008247020952214,
+            "log_face_scale_ratio": 0.00821320009523139,
+            "roi_procrustes_rms": 0.047040786214931185,
+            "eye_aperture_gap": 0.039855045926839,
+            "mouth_opening_gap": 0.0010448930443717093,
+            "contributions": {
+              "yaw": 0.3940310801819954,
+              "pitch": 0.6012832408291009,
+              "roll": 0.13950815569386404,
+              "face_scale": 0.020256243832059616,
+              "roi_shape": 0.9408157242986237,
+              "eye_aperture": 0.996376148170975,
+              "mouth_opening": 0.013061163054646366
+            }
+          },
+          "diagnostics": {
+            "time_gap_seconds": 1199.9904583333332,
+            "before_expression": {
+              "screen_eye_apertures": [
+                0.049323075251081136,
+                0.05003874852903927
+              ],
+              "mouth_opening": 0.0027067425942901967
+            },
+            "after_expression": {
+              "screen_eye_apertures": [
+                0.011637472332905428,
+                0.010183702602200275
+              ],
+              "mouth_opening": 0.0016618495499184874
+            },
+            "screen_eye_aperture_gaps": [
+              0.03768560291817571,
+              0.039855045926839
+            ],
+            "mirrored_landmark_order_changed": false,
+            "alignment_allows_reflection": false,
+            "needs_human_review": true,
+            "identity_verified": false
+          },
+          "region_gate": {
+            "region": "cheeks",
+            "max_face_scale_ratio": 1.1,
+            "max_hand_overlap_ratio": 0.01,
+            "before_hand_overlap_ratio": 0.0,
+            "after_hand_overlap_ratio": 0.0
+          }
+        }
+      ],
+      "eligible_before_diversity": 359,
+      "diversity_skipped": 351,
+      "rejected": {
+        "face_scale_ratio": 305,
+        "hand_overlap": 0
+      }
+    }
+  },
+  "geometry_eligible_pairs": 664,
+  "settings": {
+    "split_seconds": 864.1758125,
+    "min_gap_seconds": 432.08790625,
+    "color_used_for_ranking": false,
+    "region_hand_overlap_used_as_gate": true,
+    "region_scale_used_as_gate": true,
+    "thresholds_validated": false
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "fingerprint": "7fd28a2c9b73b23c415b2590532a9f5049d7e2997d4c7d88b7489ee306691b57",
+  "specification": {
+    "scan_manifest_sha256": "aa17b439e4c3d54a14fa8bbd596892616be474495ed9e5b6db7479dc4b938505",
+    "implementation_sha256": "a6e285f74b93e57e7e50a7863020094cf2bbee6a782404c0870f7ec05c086a6a",
+    "hand_model": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\models\\hand_landmarker.task",
+      "sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1",
+      "mediapipe_version": "1.0.1",
+      "settings": {
+        "min_hand_detection_confidence": 0.35,
+        "min_hand_presence_confidence": 0.35,
+        "hand_margin_face_fraction": 0.025
+      }
+    },
+    "rules": {
+      "eye_texture": {
+        "mask_names": [
+          "screen_left_lower_eye_skin",
+          "screen_right_lower_eye_skin"
+        ],
+        "max_face_scale_ratio": 1.03,
+        "max_hand_overlap_ratio": 0.01
+      },
+      "lips": {
+        "mask_names": [
+          "lips",
+          "lip_skin"
+        ],
+        "max_face_scale_ratio": 1.1,
+        "max_hand_overlap_ratio": 0.01
+      },
+      "cheeks": {
+        "mask_names": [
+          "left_cheek",
+          "right_cheek"
+        ],
+        "max_face_scale_ratio": 1.1,
+        "max_hand_overlap_ratio": 0.01
+      }
+    },
+    "top": 10,
+    "diversity_seconds": 15.0
+  }
+}
