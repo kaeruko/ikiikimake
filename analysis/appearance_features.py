@@ -36,6 +36,7 @@ FACE_OVAL_INDICES = (10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 288,
 MIN_TARGET_PIXELS = {"brow": 32, "upper_lid": 24, "lips": 60, "skin": 100}
 MIN_REFERENCE_PIXELS = 64
 HIGHLIGHT_L_OFFSET = 8.0
+TEXTURE_BLUR_SIGMA = 1.2
 
 
 def _binary_mask(mask: np.ndarray, shape: tuple[int, int], name: str) -> np.ndarray:
@@ -88,8 +89,9 @@ def build_feature_masks(
     upper-eye contour points shifted toward the brow by .008–.025 face widths;
     the eye aperture and an extra pixel margin are excluded. Their skin reference
     uses .040–.068 widths above that contour, excluding eyebrows and all targets.
-    Brow skin uses a strip .010–.040 widths above the top brow contour. Lip skin
-    is an external .012–.035-width ring. Mouth interior has an additional exclusion
+    Brow skin uses a strip .010–.040 widths above the top brow contour. Lower-eye
+    skin uses a .012–.055-width strip below the lower-eye contour, outside the eye
+    aperture. Lip skin is an external .012–.035-width ring. Mouth interior has an additional exclusion
     margin; the outer lip loses one boundary pixel. All measurements keep native
     pixel counts, so empty/thin masks remain unavailable rather than being enlarged.
     """
@@ -145,6 +147,7 @@ def build_feature_masks(
             masks[f"{side}_upper_lid"] = np.zeros(shape, bool)
             raw_references[f"{side}_brow_skin"] = np.zeros(shape, bool)
             raw_references[f"{side}_upper_lid_skin"] = np.zeros(shape, bool)
+            masks[f"{side}_lower_eye_skin"] = np.zeros(shape, bool)
             continue
         direction = away_from_eye / magnitude
         masks[f"{side}_upper_lid"] = _strip_mask(
@@ -159,6 +162,10 @@ def build_feature_masks(
             upper_eye[2:-2], direction, 0.040 * face_width, 0.068 * face_width,
             shape, f"{side} upper-lid skin",
         )
+        masks[f"{side}_lower_eye_skin"] = _strip_mask(
+            lower_eye[2:-2], -direction, 0.012 * face_width, 0.055 * face_width,
+            shape, f"{side} lower-eye skin",
+        ) & ~group_eye_guard & face_mask
     for side in SIDE_NAMES:
         masks[f"{side}_upper_lid"] &= ~brow_guard
     outer_lips = _polygon_mask(points[list(OUTER_LIP_INDICES)], shape, "outer lips")
@@ -198,7 +205,9 @@ def measure_features(image_bgr: np.ndarray, masks: dict[str, np.ndarray]) -> lis
     if image.ndim != 3 or image.shape[2] != 3 or image.dtype != np.uint8 or not image.size:
         raise ValueError("Expected a nonempty uint8 BGR image")
     targets = [f"{side}_{feature}" for side in SIDE_NAMES for feature in ("brow", "upper_lid")]
-    required = (*BASE_NAMES, *targets, *(f"{name}_skin" for name in targets), "lips", "lip_skin")
+    lower_eye_regions = tuple(f"{side}_lower_eye_skin" for side in SIDE_NAMES)
+    required = (*BASE_NAMES, *targets, *lower_eye_regions,
+                *(f"{name}_skin" for name in targets), "lips", "lip_skin")
     selected = {}
     for name in required:
         if name not in masks:
@@ -212,6 +221,9 @@ def measure_features(image_bgr: np.ndarray, masks: dict[str, np.ndarray]) -> lis
             raise ValueError(f"{name}: reference skin overlaps a brow/eyelid/lip target")
     lab = cv2.cvtColor(image.astype(np.float32) / 255.0, cv2.COLOR_BGR2LAB)
     values = {name: lab[mask] for name, mask in selected.items()}
+    lightness = lab[:, :, 0]
+    low_frequency = cv2.GaussianBlur(lightness, (0, 0), TEXTURE_BLUR_SIGMA)
+    highpass_abs = np.abs(lightness - low_frequency)
     rows = []
 
     def add(identifier, region, label, unit, value_fn, note, minimum, reference=None):
@@ -233,6 +245,27 @@ def measure_features(image_bgr: np.ndarray, masks: dict[str, np.ndarray]) -> lis
                 lambda n=name, r=reference: np.median(values[r][:, 0]) - np.percentile(values[n][:, 0], 25),
                 "参照皮膚L*中央値 − 対象L*第25百分位数（p25）。正値は対象が相対的に暗いことを示すだけで、"
                 "改善判定ではない。毛・影・照明・位置ずれも混入する。", MIN_TARGET_PIXELS[feature], reference)
+    for side, side_label in (("screen_left", "画面左"), ("screen_right", "画面右")):
+        name = f"{side}_lower_eye_skin"
+        count = int(selected[name].sum())
+        minimum = MIN_TARGET_PIXELS["skin"]
+        median_l = float(np.median(lightness[selected[name]])) if count else 0.0
+        def texture_stat(percentile, n=name, base_l=median_l):
+            if base_l <= 1e-6:
+                raise ValueError(f"{n}: median L* is too small for normalized texture measurement")
+            vals = highpass_abs[selected[n]]
+            return 100.0 * np.percentile(vals, percentile) / base_l
+        add(f"{name}_highpass_median_pct", name, f"{side_label}目の下の細かな質感コントラスト（中央値）", "局所L*比 %",
+            lambda n=name, base_l=median_l: texture_stat(50, n, base_l),
+            f"Gaussian blur σ={TEXTURE_BLUR_SIGMA:.1f}px を引いた |L*残差| の中央値を領域L*中央値で正規化。"
+            "細かな凹凸・線・メイク境界・ピント・圧縮ノイズをまとめて拾う画像指標で、乾燥・シワの診断ではない。",
+            minimum)
+        add(f"{name}_highpass_p90_pct", name, f"{side_label}目の下の細かな質感コントラスト（p90）", "局所L*比 %",
+            lambda n=name, base_l=median_l: texture_stat(90, n, base_l),
+            f"Gaussian blur σ={TEXTURE_BLUR_SIGMA:.1f}px を引いた |L*残差| の90百分位を領域L*中央値で正規化。"
+            "局所的に強く見える細線や粒状感の候補で、乾燥・シワの診断ではない。",
+            minimum)
+
     add("lips_relative_a", "lips", "唇と周囲皮膚のa*差", "a*",
         lambda: np.median(values["lips"][:, 1]) - np.median(values["lip_skin"][:, 1]),
         "唇a*中央値 − 周囲皮膚a*中央値。口腔内・口の境界線は除外。正負に良し悪しを割り当てない。",
