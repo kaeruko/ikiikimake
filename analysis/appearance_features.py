@@ -91,42 +91,55 @@ def _strip_mask(line: np.ndarray, direction: np.ndarray, near: float, far: float
     return _polygon_mask(polygon, shape, name)
 
 
-def _segment_band_mask(
+def _quadratic_bezier_band_mask(
     start: np.ndarray,
+    control: np.ndarray,
     end: np.ndarray,
-    start_fraction: float,
-    end_fraction: float,
     half_width: float,
     shape: tuple[int, int],
     name: str,
-    lateral_offset: float = 0.0,
-    outward_hint: np.ndarray | None = None,
+    outward_hint: np.ndarray,
+    normal_offset: float = 0.0,
+    samples: int = 32,
 ) -> np.ndarray:
-    if not (0.0 <= start_fraction < end_fraction <= 1.0):
-        raise ValueError(f"{name}: invalid segment fractions")
-    vector = np.asarray(end, dtype=float) - np.asarray(start, dtype=float)
-    length = float(np.linalg.norm(vector))
-    if length < 1.0:
-        raise ValueError(f"{name}: anchor segment is degenerate")
-    direction = vector / length
-    normal = np.array((-direction[1], direction[0]), dtype=float)
-    if outward_hint is not None:
-        hint = np.asarray(outward_hint, dtype=float)
-        if hint.shape != (2,) or not np.isfinite(hint).all() or float(np.linalg.norm(hint)) < 1.0:
-            raise ValueError(f"{name}: outward hint is invalid")
-        if float(np.dot(normal, hint)) < 0.0:
-            normal = -normal
-    p0 = np.asarray(start, dtype=float) + vector * start_fraction
-    p1 = np.asarray(start, dtype=float) + vector * end_fraction
-    shift = normal * lateral_offset
-    p0 = p0 + shift
-    p1 = p1 + shift
-    polygon = np.vstack((
-        p0 + normal * half_width,
-        p1 + normal * half_width,
-        p1 - normal * half_width,
-        p0 - normal * half_width,
-    ))
+    if samples < 8:
+        raise ValueError(f"{name}: samples must be >= 8")
+    start = np.asarray(start, dtype=float)
+    control = np.asarray(control, dtype=float)
+    end = np.asarray(end, dtype=float)
+    hint = np.asarray(outward_hint, dtype=float)
+    if any(point.shape != (2,) or not np.isfinite(point).all()
+           for point in (start, control, end, hint)):
+        raise ValueError(f"{name}: invalid bezier geometry")
+    if float(np.linalg.norm(end - start)) < 1.0:
+        raise ValueError(f"{name}: bezier endpoints are degenerate")
+    if float(np.linalg.norm(hint)) < 1.0:
+        raise ValueError(f"{name}: outward hint is invalid")
+    if half_width <= 0.0 or normal_offset < 0.0:
+        raise ValueError(f"{name}: band widths must be positive")
+
+    t = np.linspace(0.0, 1.0, samples)
+    omt = 1.0 - t
+    curve = (
+        (omt * omt)[:, None] * start
+        + (2.0 * omt * t)[:, None] * control
+        + (t * t)[:, None] * end
+    )
+    tangent = (
+        (2.0 * omt)[:, None] * (control - start)
+        + (2.0 * t)[:, None] * (end - control)
+    )
+    tangent_length = np.linalg.norm(tangent, axis=1)
+    if np.any(tangent_length < 1e-6):
+        raise ValueError(f"{name}: bezier tangent is degenerate")
+    normals = np.column_stack((-tangent[:, 1], tangent[:, 0])) / tangent_length[:, None]
+    mid = len(normals) // 2
+    if float(np.dot(normals[mid], hint)) < 0.0:
+        normals = -normals
+
+    outer = curve + normals * (normal_offset + half_width)
+    inner = curve + normals * (normal_offset - half_width)
+    polygon = np.vstack((outer, inner[::-1]))
     return _polygon_mask(polygon, shape, name)
 
 
@@ -219,9 +232,10 @@ def build_feature_masks(
     uses .040–.068 widths above that contour, excluding eyebrows and all targets.
     Brow skin uses a strip .010–.040 widths above the top brow contour. Lower-eye
     skin uses a .012–.055-width strip below the lower-eye contour, outside the eye
-    aperture. Nasolabial candidates are broad straight bands from the nose-wing
-    landmarks toward the mouth corners, shortened before the mouth corner and
-    shifted slightly toward the cheek; they are review ROIs, not wrinkle masks.
+    aperture. Nasolabial review ROIs use a quadratic Bezier curve from the
+    nose-wing landmark toward the mouth corner, bowed toward the cheek. A second,
+    non-overlapping band farther toward the cheek is retained as surrounding-skin
+    control. These are review ROIs, not detected wrinkles or physical depth.
     Lip skin is an external .012–.035-width ring. Mouth interior has an additional exclusion
     margin; the outer lip loses one boundary pixel. All measurements keep native
     pixel counts, so empty/thin masks remain unavailable rather than being enlarged.
@@ -325,20 +339,45 @@ def build_feature_masks(
         if len(cheek_x) == 0:
             raise ValueError(f"{cheek_name}: base cheek mask is empty")
         cheek_center = np.array([cheek_x.mean(), cheek_y.mean()], dtype=float)
-        line_midpoint = nose_point + (mouth_point - nose_point) * 0.36
+
+        end_point = nose_point + (mouth_point - nose_point) * 0.70
+        line_midpoint = 0.5 * (nose_point + end_point)
         outward_hint = cheek_center - line_midpoint
-        candidate = _segment_band_mask(
+        outward_length = float(np.linalg.norm(outward_hint))
+        if outward_length < 1.0:
+            raise ValueError(f"{side}: nasolabial outward direction is degenerate")
+        outward_unit = outward_hint / outward_length
+        control_point = line_midpoint + outward_unit * (0.040 * face_width)
+
+        candidate = _quadratic_bezier_band_mask(
             nose_point,
-            mouth_point,
-            0.00,
-            0.72,
-            0.026 * face_width,
+            control_point,
+            end_point,
+            0.022 * face_width,
             shape,
             f"{side} nasolabial candidate",
-            lateral_offset=0.012 * face_width,
             outward_hint=outward_hint,
         )
-        masks[f"{side}_nasolabial_candidate"] = candidate & face_mask & ~mouth_guard
+        candidate &= face_mask & ~mouth_guard
+
+        outer_control = _quadratic_bezier_band_mask(
+            nose_point,
+            control_point,
+            end_point,
+            0.014 * face_width,
+            shape,
+            f"{side} nasolabial outer control",
+            outward_hint=outward_hint,
+            normal_offset=0.052 * face_width,
+        )
+        outer_control &= face_mask & ~mouth_guard & ~candidate
+
+        if not candidate.any():
+            raise ValueError(f"{side}: nasolabial candidate is empty")
+        if not outer_control.any():
+            raise ValueError(f"{side}: nasolabial outer control is empty")
+        masks[f"{side}_nasolabial_candidate"] = candidate
+        masks[f"{side}_nasolabial_outer_control"] = outer_control
 
     eroded_lips = cv2.erode(outer_lips.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
     masks["lips"] = eroded_lips & ~mouth_guard & face_mask

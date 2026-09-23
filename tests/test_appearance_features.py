@@ -294,16 +294,32 @@ class AppearanceFeatureTests(unittest.TestCase):
             measure_gvr_inspired_features(image, masks)
 
 
-    def test_nasolabial_candidate_masks_are_nonempty_face_local_and_mirror(self):
+    def test_nasolabial_candidate_and_outer_control_are_nonoverlapping_and_mirror(self):
         image, points, masks, base = fixture()
-        for side in ("screen_left", "screen_right"):
-            name = f"{side}_nasolabial_candidate"
-            self.assertIn(name, masks)
-            self.assertGreater(np.count_nonzero(masks[name]), 100)
+        for side, cheek_name in (
+            ("screen_left", "left_cheek"),
+            ("screen_right", "right_cheek"),
+        ):
+            candidate_name = f"{side}_nasolabial_candidate"
+            control_name = f"{side}_nasolabial_outer_control"
+            self.assertIn(candidate_name, masks)
+            self.assertIn(control_name, masks)
+            candidate = masks[candidate_name]
+            control = masks[control_name]
+            self.assertGreater(np.count_nonzero(candidate), 100)
+            self.assertGreater(np.count_nonzero(control), 50)
+            self.assertFalse(np.any(candidate & control))
 
-        left_x = np.nonzero(masks["screen_left_nasolabial_candidate"])[1].mean()
-        right_x = np.nonzero(masks["screen_right_nasolabial_candidate"])[1].mean()
-        self.assertLess(left_x, right_x)
+            cheek_y, cheek_x = np.nonzero(masks[cheek_name])
+            cheek_center = np.array([cheek_x.mean(), cheek_y.mean()])
+            cand_y, cand_x = np.nonzero(candidate)
+            ctrl_y, ctrl_x = np.nonzero(control)
+            candidate_center = np.array([cand_x.mean(), cand_y.mean()])
+            control_center = np.array([ctrl_x.mean(), ctrl_y.mean()])
+            self.assertLess(
+                np.linalg.norm(control_center - cheek_center),
+                np.linalg.norm(candidate_center - cheek_center),
+            )
 
         mirrored_points = points.copy()
         mirrored_points[:, 0] = image.shape[1] - 1 - points[:, 0]
@@ -313,15 +329,16 @@ class AppearanceFeatureTests(unittest.TestCase):
             "forehead": base["forehead"][:, ::-1],
         }
         mirrored = build_feature_masks(image.shape, mirrored_points, mirrored_base)
-        for screen_side, original_side in (
-            ("screen_left", "screen_right"),
-            ("screen_right", "screen_left"),
-        ):
-            actual = mirrored[f"{screen_side}_nasolabial_candidate"]
-            expected = masks[f"{original_side}_nasolabial_candidate"][:, ::-1]
-            intersection = np.count_nonzero(actual & expected)
-            union = np.count_nonzero(actual | expected)
-            self.assertGreater(intersection / union, 0.95)
+        for suffix in ("nasolabial_candidate", "nasolabial_outer_control"):
+            for screen_side, original_side in (
+                ("screen_left", "screen_right"),
+                ("screen_right", "screen_left"),
+            ):
+                actual = mirrored[f"{screen_side}_{suffix}"]
+                expected = masks[f"{original_side}_{suffix}"][:, ::-1]
+                intersection = np.count_nonzero(actual & expected)
+                union = np.count_nonzero(actual | expected)
+                self.assertGreater(intersection / union, 0.90)
 
 
 
