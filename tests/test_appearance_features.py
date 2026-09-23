@@ -59,8 +59,8 @@ class AppearanceFeatureTests(unittest.TestCase):
     def test_constant_color_produces_zero_contrasts_dispersion_and_highlights(self):
         image, _, masks, _ = fixture()
         rows = measure_features(image, masks)
-        self.assertEqual(len(rows), 23)
-        self.assertEqual(len({row["id"] for row in rows}), 23)
+        self.assertEqual(len(rows), 29)
+        self.assertEqual(len({row["id"] for row in rows}), 29)
         for row in rows:
             with self.subTest(feature=row["id"]):
                 self.assertEqual(row["status"], "ok")
@@ -215,6 +215,26 @@ class AppearanceFeatureTests(unittest.TestCase):
             self.assertEqual(changed[key]["status"], "ok")
             self.assertGreater(changed[key]["value"], baseline[key]["value"])
             self.assertIn("乾燥", changed[key]["note"])
+
+
+    def test_control_roi_highpass_metric_increases_for_added_fine_texture(self):
+        image, _, masks, _ = fixture()
+        baseline = rows_by_id(image, masks)
+        textured = image.copy()
+        region = masks["left_cheek"]
+        ys, xs = np.where(region)
+        for y, x in zip(ys, xs):
+            offset = -35 if (x + y) % 2 else 35
+            textured[y, x] = np.clip(
+                textured[y, x].astype(np.int16) + offset, 0, 255
+            ).astype(np.uint8)
+        changed = rows_by_id(textured, masks)
+        for suffix in ("highpass_median_pct", "highpass_p90_pct"):
+            key = f"left_cheek_{suffix}"
+            self.assertEqual(baseline[key]["status"], "ok")
+            self.assertEqual(changed[key]["status"], "ok")
+            self.assertGreater(changed[key]["value"], baseline[key]["value"])
+            self.assertIn("対照", changed[key]["note"])
 
 
 if __name__ == "__main__":

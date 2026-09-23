@@ -287,6 +287,26 @@ def measure_features(image_bgr: np.ndarray, masks: dict[str, np.ndarray]) -> lis
             "局所的に強く見える細線や粒状感の候補で、乾燥・シワの診断ではない。",
             minimum)
 
+    for name, label in (("left_cheek", "画面左頬"), ("right_cheek", "画面右頬"), ("forehead", "額")):
+        count = int(selected[name].sum())
+        minimum = MIN_TARGET_PIXELS["skin"]
+        median_l = float(np.median(lightness[selected[name]])) if count else 0.0
+        def texture_stat(percentile, n=name, base_l=median_l):
+            if base_l <= 1e-6:
+                raise ValueError(f"{n}: median L* is too small for normalized texture measurement")
+            vals = highpass_abs[selected[n]]
+            return 100.0 * np.percentile(vals, percentile) / base_l
+        add(f"{name}_highpass_median_pct", name, f"{label}の細かな質感コントラスト（中央値・対照）", "局所L*比 %",
+            lambda n=name, base_l=median_l: texture_stat(50, n, base_l),
+            f"Gaussian blur σ={TEXTURE_BLUR_SIGMA:.1f}px を引いた |L*残差| の中央値を領域L*中央値で正規化。"
+            "眉下ROIと同じ式で撮影条件由来の高周波変化を確認する対照指標。乾燥・シワの診断ではない。",
+            minimum)
+        add(f"{name}_highpass_p90_pct", name, f"{label}の細かな質感コントラスト（p90・対照）", "局所L*比 %",
+            lambda n=name, base_l=median_l: texture_stat(90, n, base_l),
+            f"Gaussian blur σ={TEXTURE_BLUR_SIGMA:.1f}px を引いた |L*残差| の90百分位を領域L*中央値で正規化。"
+            "眉下ROIと同じ式で撮影条件由来の局所的な細線・粒状感を確認する対照指標。乾燥・シワの診断ではない。",
+            minimum)
+
     add("lips_relative_a", "lips", "唇と周囲皮膚のa*差", "a*",
         lambda: np.median(values["lips"][:, 1]) - np.median(values["lip_skin"][:, 1]),
         "唇a*中央値 − 周囲皮膚a*中央値。口腔内・口の境界線は除外。正負に良し悪しを割り当てない。",
