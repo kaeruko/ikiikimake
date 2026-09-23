@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "video_path": "C:\\Users\\mail\\work\\ikiikimake\\makeup0923.mp4",
+  "video_sha256": "edbbe9eee48672296f813284ec118dab2c6c72dc03819660f49e00cc88e23956",
+  "region_candidate_run": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\region_pair_candidates\\7fd28a2c9b73b23c",
+  "selections": {
+    "eye_texture": {
+      "rank": 1,
+      "score": 0.9303127057259103,
+      "region_gate": {
+        "region": "eye_texture",
+        "max_face_scale_ratio": 1.03,
+        "max_hand_overlap_ratio": 0.01,
+        "before_hand_overlap_ratio": 0.0,
+        "after_hand_overlap_ratio": 0.0
+      },
+      "before": {
+        "frame_id": "frame_0000240991ms",
+        "timestamp_seconds": 240.99075,
+        "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\frames\\frame_0000240991ms.png",
+        "image_sha256": "306b53ea48fcd052fb5a468fc0b57701a752ab0efc97eb5baaec03f2c7765c78",
+        "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\rois\\frame_0000240991ms",
+        "roi_masks_sha256": "596d6401c9c7f4ececf01d961a7d38128d174a40313e7f2dabce769648166652",
+        "roi_points_sha256": "a55cf7a82f9c88273364f1bdeba3642283552ab87f9b83fd8272fe1da0e42d15",
+        "roi_overlay_sha256": "809b7d1ab4dce4a6f06cb7530153c3ef086d47961cc4e2ee7d7f2129853b6f8a"
+      },
+      "after": {
+        "frame_id": "frame_0001403485ms",
+        "timestamp_seconds": 1403.4854166666667,
+        "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\frames\\frame_0001403485ms.png",
+        "image_sha256": "5c786175de8d8fb652e6ae1ecbdaecbc686b1689796afa84e213572c6dd3a0d3",
+        "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\rois\\frame_0001403485ms",
+        "roi_masks_sha256": "1bcbba96cc5496d313f0cf0cad467f1e9e8d2106df3a67a492c9dcb4246ed14a",
+        "roi_points_sha256": "798d4de5d3754dc324b6f486f233c5b46559630398c1dd11fa22a16eec1100ba",
+        "roi_overlay_sha256": "f8314963602911299476ee3ac0a878dcc0bdc08fe38728b11374324357f89452"
+      }
+    }
+  }
+}
