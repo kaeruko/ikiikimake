@@ -61,6 +61,14 @@ def parser():
     benchmark.add_argument("--device", default="auto")
     benchmark.add_argument("--landmark-model", type=Path, default=Path("models/face_landmarker.task"))
     benchmark.add_argument("--perceptual", action="store_true", help="Compute LPIPS/FID using optional packages and their pretrained weights")
+    extract = commands.add_parser("extract", help="Extract canonical RGBA makeup patches from one reference image")
+    extract.add_argument("--reference", type=Path, required=True)
+    extract.add_argument("--output", type=Path, required=True, help="Output .npz file for extracted RGBA patches")
+    extract.add_argument("--checkpoints", type=Path, required=True)
+    extract.add_argument("--geometry", type=Path)
+    extract.add_argument("--landmark-model", type=Path, default=Path("models/face_landmarker.task"))
+    extract.add_argument("--device", default="auto")
+    extract.add_argument("--regions", nargs="+", choices=("eye", "lip", "cheek"), default=["eye", "lip", "cheek"])
     for name in ("transfer", "video"):
         command = commands.add_parser(name, help="Apply one extracted style to an image" if name == "transfer" else "Reuse one style throughout a video")
         command.add_argument("--reference", type=Path, required=True)
@@ -108,6 +116,11 @@ def main(argv=None):
         result = benchmark(args.data, args.checkpoints, args.output, split=args.split,
                            max_pairs=args.max_pairs, seed=args.seed, device=args.device,
                            landmark_model=args.landmark_model, perceptual=args.perceptual)
+    elif args.command == "extract":
+        from .inference import run_extract
+        result = run_extract(args.reference, args.output, args.checkpoints,
+                             geometry_path=args.geometry, landmark_model=args.landmark_model,
+                             device=args.device, regions=args.regions)
     else:
         from .inference import run_image, run_video
         kwargs = {key: getattr(args, key) for key in ("reference", "target", "output", "checkpoints",
