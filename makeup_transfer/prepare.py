@@ -171,8 +171,9 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
     """Write float16 regional NPZ pairs and train-only canonical geometry/priors.
 
     ``max_images`` bounds original synthetic source images. Real-makeup inputs
-    are opt-in and separately bounded by the same number when supplied.
-    Failures are recorded in the manifest rather than silently used as faces.
+    are opt-in; ``max_real_makeup`` can bound them independently and otherwise
+    follows ``max_images`` for backwards-compatible smoke tests. Failures are
+    recorded in the manifest rather than silently used as faces.
     """
     if variants < 1 or image_size < 32 or canvas_size < 32:
         raise ValueError("variants must be positive and image/canvas sizes >= 32")
