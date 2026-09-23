@@ -189,6 +189,19 @@ class MakeupDataTests(unittest.TestCase):
         self.assertEqual(source_split(ids, seed=8), source_split(ids[::-1], seed=8))
         self.assertEqual(set(source_split(ids, seed=8).values()), {"train", "val", "test"})
 
+    def test_prepare_rejects_same_bytes_in_synthetic_and_real_roles(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, real = root / "source", root / "real"
+            source.mkdir()
+            real.mkdir()
+            encoded = cv2.imencode(".png", np.full((64, 64, 3), 128, np.uint8))[1].tobytes()
+            (source / "face.png").write_bytes(encoded)
+            (real / "same_face.png").write_bytes(encoded)
+            with self.assertRaisesRegex(ValueError, "both synthetic and real_eye"):
+                prepare_dataset(source, root / "prepared", variants=1, image_size=32, canvas_size=64,
+                                model_path=root / "missing.task", real_makeup_dir=real)
+
     def test_prepare_has_no_source_or_prior_leakage(self):
         class Detector:
             def __init__(self, *_):
