@@ -165,8 +165,9 @@ def _warp_rgba(rgba, maps):
 def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
                     max_images: int | None = None, variants: int = 3, seed: int = 42,
                     image_size: int = 256, model_path: str | Path | None = None,
-                    real_makeup_dir: str | Path | None = None, sources=None,
-                    canvas_size: int = 512, overwrite: bool = False) -> dict:
+                    real_makeup_dir: str | Path | None = None,
+                    max_real_makeup: int | None = None, real_preview_count: int = 8,
+                    sources=None, canvas_size: int = 512, overwrite: bool = False) -> dict:
     """Write float16 regional NPZ pairs and train-only canonical geometry/priors.
 
     ``max_images`` bounds original synthetic source images. Real-makeup inputs
@@ -177,6 +178,10 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
         raise ValueError("variants must be positive and image/canvas sizes >= 32")
     if max_images is not None and max_images < 1:
         raise ValueError("max_images must be positive")
+    if max_real_makeup is not None and max_real_makeup < 1:
+        raise ValueError("max_real_makeup must be positive")
+    if real_preview_count < 0:
+        raise ValueError("real_preview_count must be nonnegative")
     output = Path(output_dir).absolute()
     if (output / "manifest.json").exists() and not overwrite:
         raise FileExistsError(f"Prepared data already exists at {output}; use overwrite=True to replace the manifest")
@@ -184,6 +189,8 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
     output.mkdir(parents=True, exist_ok=True)
     (output / "samples").mkdir(exist_ok=True)
     (output / "previews").mkdir(exist_ok=True)
+    if real_makeup_dir and real_preview_count:
+        (output / "real_eye_previews").mkdir(exist_ok=True)
     paths = inventory_images(dataset_root, sources=sources)
     if not paths:
         raise ValueError("No source images found")
@@ -192,8 +199,11 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
         indices = sorted(rng.choice(len(paths), max_images, replace=False))
         paths = [paths[index] for index in indices]
     real_paths = inventory_images(real_makeup_dir) if real_makeup_dir else []
-    if max_images is not None and len(real_paths) > max_images:
-        indices = sorted(rng.choice(len(real_paths), max_images, replace=False))
+    if real_makeup_dir and not real_paths:
+        raise ValueError(f"No real makeup images found in {Path(real_makeup_dir).absolute()}")
+    real_limit = max_images if max_real_makeup is None else max_real_makeup
+    if real_limit is not None and len(real_paths) > real_limit:
+        indices = sorted(rng.choice(len(real_paths), real_limit, replace=False))
         real_paths = [real_paths[index] for index in indices]
     sources_by_id, skipped, duplicates = {}, [], []
     for path, kind in [(p, "synthetic") for p in paths] + [(p, "real_eye") for p in real_paths]:
@@ -235,6 +245,7 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
     alpha_counts = dict.fromkeys(REGIONS, 0)
     records, source_records = [], []
     preview_count = 0
+    real_preview_written = 0
     for source_index, item in enumerate(detected):
         source_records.append({"source": str(item["path"]), "id": item["id"], "split": item["split"], "kind": item["kind"]})
         image = read_rgb(item["path"])
@@ -265,6 +276,16 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
                 condition = _remap(synthetic, to_canonical)
                 templates = {"eye": eye_kmeans_pseudo(condition, region_mask(geometry, "eye"), seed=variant_seed)}
                 used_regions = ("eye",)
+                if real_preview_written < real_preview_count:
+                    pseudo = templates["eye"]
+                    alpha = np.clip(pseudo[..., 3:4], 0, 1)
+                    alpha_rgb = np.repeat(alpha, 3, axis=2)
+                    accent = np.array([1.0, 0.1, 0.8], np.float32)[None, None]
+                    highlighted = np.clip(condition * (1 - 0.65 * alpha) + accent * (0.65 * alpha), 0, 1)
+                    montage = np.concatenate((condition, alpha_rgb, highlighted), axis=1)
+                    _save_rgb(output / "real_eye_previews" /
+                              f"{item['id'][:16]}_canonical_alpha_overlay.png", montage)
+                    real_preview_written += 1
             for region in used_regions:
                 target = crop_region(templates[region], geometry, region, image_size)
                 relative = f"samples/{item['id']}_{variant:02d}_{region}.npz"
@@ -287,6 +308,22 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
         relative = f"average_alpha_{region}.npy"
         np.save(output / relative, (alpha_sums[region] / max(alpha_counts[region], 1)).astype(np.float32))
         average_alpha[region] = relative
+    summary = {
+        "unique_sources": len(sources_by_id),
+        "detected_sources": len(detected),
+        "detected_synthetic_sources": sum(item["kind"] == "synthetic" for item in detected),
+        "detected_real_makeup_sources": sum(item["kind"] == "real_eye" for item in detected),
+        "records": len(records),
+        "records_by_kind": {
+            kind: sum(record["kind"] == kind for record in records)
+            for kind in ("synthetic", "real_eye")
+        },
+        "records_by_region": {
+            region: sum(record["region"] == region for record in records)
+            for region in REGIONS
+        },
+        "real_eye_previews": real_preview_written,
+    }
     manifest = {
         "schema_version": 1, "paper": "https://arxiv.org/html/2509.02445v2",
         "dataset_root": str(Path(dataset_root).absolute()), "seed": seed,
@@ -298,12 +335,14 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
         "average_alpha_training_counts": alpha_counts,
         "canonical_training_sources": [item["id"] for item in detected if item["split"] == "train" and item["kind"] == "synthetic"],
         "records": records, "sources": source_records, "skipped": skipped, "duplicates": duplicates,
+        "summary": summary,
         "notes": ["Split unit is SHA-256 of original image bytes; all variants share its split.",
                   "Different photographs of the same person are not identity-deduplicated.",
                   "Canonical geometry and average alpha use synthetic TRAINING sources only.",
                   "Source faces were not verified makeup-free or occlusion-free.",
                   "Procedural templates and MediaPipe geometric masks substitute for unavailable paper assets.",
-                  "Real eye pseudo labels have no alpha-channel supervision."],
+                  "Real makeup images supervise the eye model only, matching the paper's k-means pseudo-label path.",
+                  "Real eye pseudo labels use their estimated alpha to weight RGB reconstruction but do not supervise alpha L1."],
     }
     # This includes artifact bytes and generation provenance, so a renderer
     # change cannot be mistaken for the same training data solely because the
