@@ -202,6 +202,10 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
     real_paths = inventory_images(real_makeup_dir) if real_makeup_dir else []
     if real_makeup_dir and not real_paths:
         raise ValueError(f"No real makeup images found in {Path(real_makeup_dir).absolute()}")
+    # If the real-makeup folder lives under dataset_root, do not silently use
+    # those exact files as synthetic natural faces as well.
+    real_locations = {os.path.normcase(str(path.resolve())) for path in real_paths}
+    paths = [path for path in paths if os.path.normcase(str(path.resolve())) not in real_locations]
     real_limit = max_images if max_real_makeup is None else max_real_makeup
     if real_limit is not None and len(real_paths) > real_limit:
         indices = sorted(rng.choice(len(real_paths), real_limit, replace=False))
@@ -214,7 +218,13 @@ def prepare_dataset(dataset_root: str | Path, output_dir: str | Path,
             skipped.append({"source": str(path), "reason": str(error)})
             continue
         if identity in sources_by_id:
-            duplicates.append({"source": str(path), "same_as": str(sources_by_id[identity]["path"])})
+            previous = sources_by_id[identity]
+            if previous["kind"] != kind:
+                raise ValueError(
+                    f"Same image bytes were supplied as both {previous['kind']} and {kind}: "
+                    f"{previous['path']} vs {path}"
+                )
+            duplicates.append({"source": str(path), "same_as": str(previous["path"])})
             continue
         sources_by_id[identity] = {"path": path, "kind": kind}
     # A single identity has one split even when its image occurs in both roots.
