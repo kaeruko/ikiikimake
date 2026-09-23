@@ -356,9 +356,15 @@ def run_extract(
     regions: Sequence[str] = REGIONS,
 ) -> dict:
     """Extract canonical RGBA makeup patches from one real reference image."""
-    output = _output_path(output, reference)
+    output = Path(output)
     if output.suffix.lower() != ".npz":
         raise ValueError("Extract output must use a .npz suffix.")
+    preview_paths = [output.with_name(f"{output.stem}.{region}.png") for region in _regions(regions)]
+    metadata_path = output.with_suffix(output.suffix + ".json")
+    existing = [path for path in (output, metadata_path, *preview_paths) if path.exists()]
+    if existing:
+        raise FileExistsError("Extract output artifacts already exist: " + ", ".join(map(str, existing)))
+    output = _output_path(output, reference)
     geometry = _resolve_geometry(checkpoints, geometry_path, regions)
     reference_rgb = _read_rgb(reference)
     with FaceDetector(landmark_model) as detector:
