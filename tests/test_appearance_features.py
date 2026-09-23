@@ -9,7 +9,8 @@ import numpy as np
 
 from analysis.appearance_features import (
     BASE_NAMES, BROW_INDICES, FACE_OVAL_INDICES, INNER_LIP_INDICES,
-    LOWER_EYE_INDICES, OUTER_LIP_INDICES, UPPER_EYE_INDICES,
+    LOWER_EYE_INDICES, MOUTH_CORNER_INDICES, NOSE_WING_INDICES,
+    OUTER_LIP_INDICES, UPPER_EYE_INDICES,
     build_feature_masks, measure_features, measure_gvr_inspired_features,
 )
 
@@ -29,6 +30,8 @@ def synthetic_landmarks(scale=1.0):
         curve = np.sin(np.linspace(0, np.pi, 9))
         points[list(UPPER_EYE_INDICES[i])] = np.column_stack((eye_x, 158 - 9 * curve))
         points[list(LOWER_EYE_INDICES[i])] = np.column_stack((eye_x, 158 + 7 * curve))
+    points[NOSE_WING_INDICES[0]] = (160, 225)
+    points[NOSE_WING_INDICES[1]] = (240, 225)
     # Lip topology traverses the bottom from left to right, then the top back.
     for indices, rx, ry in ((OUTER_LIP_INDICES, 52, 22), (INNER_LIP_INDICES, 32, 8)):
         angles = np.linspace(np.pi, -np.pi, len(indices), endpoint=False)
@@ -289,6 +292,37 @@ class AppearanceFeatureTests(unittest.TestCase):
         image, _, masks, _ = fixture()
         with self.assertRaisesRegex(ValueError, "zero total intensity"):
             measure_gvr_inspired_features(image, masks)
+
+
+    def test_nasolabial_candidate_masks_are_nonempty_face_local_and_mirror(self):
+        image, points, masks, base = fixture()
+        for side in ("screen_left", "screen_right"):
+            name = f"{side}_nasolabial_candidate"
+            self.assertIn(name, masks)
+            self.assertGreater(np.count_nonzero(masks[name]), 100)
+
+        left_x = np.nonzero(masks["screen_left_nasolabial_candidate"])[1].mean()
+        right_x = np.nonzero(masks["screen_right_nasolabial_candidate"])[1].mean()
+        self.assertLess(left_x, right_x)
+
+        mirrored_points = points.copy()
+        mirrored_points[:, 0] = image.shape[1] - 1 - points[:, 0]
+        mirrored_base = {
+            "left_cheek": base["right_cheek"][:, ::-1],
+            "right_cheek": base["left_cheek"][:, ::-1],
+            "forehead": base["forehead"][:, ::-1],
+        }
+        mirrored = build_feature_masks(image.shape, mirrored_points, mirrored_base)
+        for screen_side, original_side in (
+            ("screen_left", "screen_right"),
+            ("screen_right", "screen_left"),
+        ):
+            actual = mirrored[f"{screen_side}_nasolabial_candidate"]
+            expected = masks[f"{original_side}_nasolabial_candidate"][:, ::-1]
+            intersection = np.count_nonzero(actual & expected)
+            union = np.count_nonzero(actual | expected)
+            self.assertGreater(intersection / union, 0.95)
+
 
 
 if __name__ == "__main__":

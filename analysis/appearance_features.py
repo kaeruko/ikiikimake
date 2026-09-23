@@ -26,6 +26,8 @@ LOWER_EYE_INDICES = (
     (33, 7, 163, 144, 145, 153, 154, 155, 133),
     (263, 249, 390, 373, 374, 380, 381, 382, 362),
 )
+NOSE_WING_INDICES = (98, 327)
+MOUTH_CORNER_INDICES = (61, 291)
 OUTER_LIP_INDICES = (61, 146, 91, 181, 84, 17, 314, 405, 321, 375, 291,
                      409, 270, 269, 267, 0, 37, 39, 40, 185)
 INNER_LIP_INDICES = (78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308,
@@ -86,6 +88,34 @@ def _dilate(mask: np.ndarray, radius: int) -> np.ndarray:
 def _strip_mask(line: np.ndarray, direction: np.ndarray, near: float, far: float,
                 shape: tuple[int, int], name: str) -> np.ndarray:
     polygon = np.vstack((line + direction * near, (line + direction * far)[::-1]))
+    return _polygon_mask(polygon, shape, name)
+
+
+def _segment_band_mask(
+    start: np.ndarray,
+    end: np.ndarray,
+    start_fraction: float,
+    end_fraction: float,
+    half_width: float,
+    shape: tuple[int, int],
+    name: str,
+) -> np.ndarray:
+    if not (0.0 <= start_fraction < end_fraction <= 1.0):
+        raise ValueError(f"{name}: invalid segment fractions")
+    vector = np.asarray(end, dtype=float) - np.asarray(start, dtype=float)
+    length = float(np.linalg.norm(vector))
+    if length < 1.0:
+        raise ValueError(f"{name}: anchor segment is degenerate")
+    direction = vector / length
+    normal = np.array((-direction[1], direction[0]), dtype=float)
+    p0 = np.asarray(start, dtype=float) + vector * start_fraction
+    p1 = np.asarray(start, dtype=float) + vector * end_fraction
+    polygon = np.vstack((
+        p0 + normal * half_width,
+        p1 + normal * half_width,
+        p1 - normal * half_width,
+        p0 - normal * half_width,
+    ))
     return _polygon_mask(polygon, shape, name)
 
 
@@ -178,7 +208,9 @@ def build_feature_masks(
     uses .040–.068 widths above that contour, excluding eyebrows and all targets.
     Brow skin uses a strip .010–.040 widths above the top brow contour. Lower-eye
     skin uses a .012–.055-width strip below the lower-eye contour, outside the eye
-    aperture. Lip skin is an external .012–.035-width ring. Mouth interior has an additional exclusion
+    aperture. Nasolabial candidates are broad straight bands from the nose-wing
+    landmarks toward the mouth corners; they are review ROIs, not wrinkle masks.
+    Lip skin is an external .012–.035-width ring. Mouth interior has an additional exclusion
     margin; the outer lip loses one boundary pixel. All measurements keep native
     pixel counts, so empty/thin masks remain unavailable rather than being enlarged.
     """
@@ -262,6 +294,27 @@ def build_feature_masks(
     seam = np.zeros(shape, np.uint8)
     cv2.polylines(seam, [np.rint(points[list(INNER_LIP_INDICES)]).astype(np.int32)], True, 1, 1)
     mouth_guard = _dilate(mouth | seam.astype(bool), margin)
+
+    nose_order = sorted(
+        range(2),
+        key=lambda i: points[NOSE_WING_INDICES[i], 0],
+    )
+    mouth_order = sorted(
+        range(2),
+        key=lambda i: points[MOUTH_CORNER_INDICES[i], 0],
+    )
+    for side, nose_i, mouth_i in zip(SIDE_NAMES, nose_order, mouth_order):
+        candidate = _segment_band_mask(
+            points[NOSE_WING_INDICES[nose_i]],
+            points[MOUTH_CORNER_INDICES[mouth_i]],
+            0.10,
+            0.86,
+            0.030 * face_width,
+            shape,
+            f"{side} nasolabial candidate",
+        )
+        masks[f"{side}_nasolabial_candidate"] = candidate & face_mask & ~mouth_guard
+
     eroded_lips = cv2.erode(outer_lips.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
     masks["lips"] = eroded_lips & ~mouth_guard & face_mask
     inner_radius = max(1, round(face_width * 0.012))
