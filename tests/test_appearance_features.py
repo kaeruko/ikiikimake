@@ -186,5 +186,36 @@ class AppearanceFeatureTests(unittest.TestCase):
             self.assertLess(abs(np.nonzero(actual)[1].mean() - np.nonzero(expected)[1].mean()), 0.2)
 
 
+    def test_lower_eye_texture_masks_avoid_eye_aperture(self):
+        image, points, masks, _ = fixture()
+        for i, side in enumerate(("screen_left", "screen_right")):
+            eye = np.zeros(image.shape[:2], np.uint8)
+            polygon = np.vstack((points[list(UPPER_EYE_INDICES[i])],
+                                 points[list(LOWER_EYE_INDICES[i])][-2:0:-1]))
+            cv2.fillPoly(eye, [np.rint(polygon).astype(np.int32)], 1)
+            region = masks[f"{side}_lower_eye_skin"]
+            self.assertGreater(np.count_nonzero(region), 100)
+            self.assertFalse(np.any(region & eye.astype(bool)))
+
+    def test_lower_eye_highpass_metric_increases_for_added_fine_texture(self):
+        image, _, masks, _ = fixture()
+        baseline = rows_by_id(image, masks)
+        textured = image.copy()
+        region = masks["screen_left_lower_eye_skin"]
+        ys, xs = np.where(region)
+        for y, x in zip(ys, xs):
+            if (x + y) % 2:
+                textured[y, x] = np.clip(textured[y, x].astype(np.int16) - 35, 0, 255).astype(np.uint8)
+            else:
+                textured[y, x] = np.clip(textured[y, x].astype(np.int16) + 35, 0, 255).astype(np.uint8)
+        changed = rows_by_id(textured, masks)
+        for suffix in ("highpass_median_pct", "highpass_p90_pct"):
+            key = f"screen_left_lower_eye_skin_{suffix}"
+            self.assertEqual(baseline[key]["status"], "ok")
+            self.assertEqual(changed[key]["status"], "ok")
+            self.assertGreater(changed[key]["value"], baseline[key]["value"])
+            self.assertIn("乾燥", changed[key]["note"])
+
+
 if __name__ == "__main__":
     unittest.main()
