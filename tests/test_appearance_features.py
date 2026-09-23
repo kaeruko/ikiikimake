@@ -59,8 +59,8 @@ class AppearanceFeatureTests(unittest.TestCase):
     def test_constant_color_produces_zero_contrasts_dispersion_and_highlights(self):
         image, _, masks, _ = fixture()
         rows = measure_features(image, masks)
-        self.assertEqual(len(rows), 19)
-        self.assertEqual(len({row["id"] for row in rows}), 19)
+        self.assertEqual(len(rows), 23)
+        self.assertEqual(len({row["id"] for row in rows}), 23)
         for row in rows:
             with self.subTest(feature=row["id"]):
                 self.assertEqual(row["status"], "ok")

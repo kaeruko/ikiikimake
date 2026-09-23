@@ -23,14 +23,14 @@ from analysis.analyze_cheek_lab import load_image, load_masks
 from analysis.appearance_features import build_feature_masks, measure_features
 
 
-ANALYSIS_VERSION = "selected-region-appearance-v1"
+ANALYSIS_VERSION = "selected-region-appearance-v2"
 
 REGION_METRIC_IDS = {
     "eye_texture": (
-        "screen_left_lower_eye_skin_highpass_median_pct",
-        "screen_left_lower_eye_skin_highpass_p90_pct",
-        "screen_right_lower_eye_skin_highpass_median_pct",
-        "screen_right_lower_eye_skin_highpass_p90_pct",
+        "screen_left_upper_lid_skin_highpass_median_pct",
+        "screen_left_upper_lid_skin_highpass_p90_pct",
+        "screen_right_upper_lid_skin_highpass_median_pct",
+        "screen_right_upper_lid_skin_highpass_p90_pct",
     ),
     "lips": (
         "lips_relative_a",
@@ -51,13 +51,13 @@ REGION_METRIC_IDS = {
 }
 
 REGION_MASK_NAMES = {
-    "eye_texture": ("screen_left_lower_eye_skin", "screen_right_lower_eye_skin"),
+    "eye_texture": ("screen_left_upper_lid_skin", "screen_right_upper_lid_skin"),
     "lips": ("lips",),
     "cheeks": ("left_cheek", "right_cheek"),
 }
 
 REGION_LABELS = {
-    "eye_texture": "目の下の質感",
+    "eye_texture": "眉下の皮膚の質感",
     "lips": "唇",
     "cheeks": "頬",
 }
@@ -203,7 +203,7 @@ table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;b
 @media(max-width:800px){{.pair{{grid-template-columns:1fr}}}}
 </style><body><h1>承認済み部位別 before / after の記述解析</h1>
 <p class="notice">この結果は画像上の記述的特徴です。乾燥・シワの診断、メイク効果の因果推定、美しさの採点ではありません。
-目の下の高周波指標にはピント・照明・圧縮・まつげ・メイク境界などが混入し得ます。</p>
+眉下の皮膚の高周波指標にはピント・照明・圧縮・眉毛・メイク境界などが混入し得ます。</p>
 {"".join(sections)}
 </body></html>"""
 
