@@ -99,6 +99,8 @@ def _segment_band_mask(
     half_width: float,
     shape: tuple[int, int],
     name: str,
+    lateral_offset: float = 0.0,
+    outward_hint: np.ndarray | None = None,
 ) -> np.ndarray:
     if not (0.0 <= start_fraction < end_fraction <= 1.0):
         raise ValueError(f"{name}: invalid segment fractions")
@@ -108,8 +110,17 @@ def _segment_band_mask(
         raise ValueError(f"{name}: anchor segment is degenerate")
     direction = vector / length
     normal = np.array((-direction[1], direction[0]), dtype=float)
+    if outward_hint is not None:
+        hint = np.asarray(outward_hint, dtype=float)
+        if hint.shape != (2,) or not np.isfinite(hint).all() or float(np.linalg.norm(hint)) < 1.0:
+            raise ValueError(f"{name}: outward hint is invalid")
+        if float(np.dot(normal, hint)) < 0.0:
+            normal = -normal
     p0 = np.asarray(start, dtype=float) + vector * start_fraction
     p1 = np.asarray(start, dtype=float) + vector * end_fraction
+    shift = normal * lateral_offset
+    p0 = p0 + shift
+    p1 = p1 + shift
     polygon = np.vstack((
         p0 + normal * half_width,
         p1 + normal * half_width,
@@ -209,7 +220,8 @@ def build_feature_masks(
     Brow skin uses a strip .010–.040 widths above the top brow contour. Lower-eye
     skin uses a .012–.055-width strip below the lower-eye contour, outside the eye
     aperture. Nasolabial candidates are broad straight bands from the nose-wing
-    landmarks toward the mouth corners; they are review ROIs, not wrinkle masks.
+    landmarks toward the mouth corners, shortened before the mouth corner and
+    shifted slightly toward the cheek; they are review ROIs, not wrinkle masks.
     Lip skin is an external .012–.035-width ring. Mouth interior has an additional exclusion
     margin; the outer lip loses one boundary pixel. All measurements keep native
     pixel counts, so empty/thin masks remain unavailable rather than being enlarged.
@@ -303,15 +315,28 @@ def build_feature_masks(
         range(2),
         key=lambda i: points[MOUTH_CORNER_INDICES[i], 0],
     )
-    for side, nose_i, mouth_i in zip(SIDE_NAMES, nose_order, mouth_order):
+    for side, nose_i, mouth_i, cheek_name in (
+        ("screen_left", nose_order[0], mouth_order[0], "left_cheek"),
+        ("screen_right", nose_order[1], mouth_order[1], "right_cheek"),
+    ):
+        nose_point = points[NOSE_WING_INDICES[nose_i]]
+        mouth_point = points[MOUTH_CORNER_INDICES[mouth_i]]
+        cheek_y, cheek_x = np.nonzero(masks[cheek_name])
+        if len(cheek_x) == 0:
+            raise ValueError(f"{cheek_name}: base cheek mask is empty")
+        cheek_center = np.array([cheek_x.mean(), cheek_y.mean()], dtype=float)
+        line_midpoint = nose_point + (mouth_point - nose_point) * 0.36
+        outward_hint = cheek_center - line_midpoint
         candidate = _segment_band_mask(
-            points[NOSE_WING_INDICES[nose_i]],
-            points[MOUTH_CORNER_INDICES[mouth_i]],
-            0.10,
-            0.86,
-            0.030 * face_width,
+            nose_point,
+            mouth_point,
+            0.00,
+            0.72,
+            0.026 * face_width,
             shape,
             f"{side} nasolabial candidate",
+            lateral_offset=0.012 * face_width,
+            outward_hint=outward_hint,
         )
         masks[f"{side}_nasolabial_candidate"] = candidate & face_mask & ~mouth_guard
 
