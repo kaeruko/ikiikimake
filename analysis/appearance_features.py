@@ -43,6 +43,8 @@ SESC_INSPIRED_THRESHOLD_MULTIPLIER = 19.0 / 13.0
 SESC_INSPIRED_MAX_GRAY = 240.0
 GVR_INSPIRED_CLAHE_CLIP_LIMIT = 2.0
 GVR_INSPIRED_CLAHE_TILE_GRID = (8, 8)
+NASOLABIAL_MIN_CANDIDATE_PIXELS = 100
+NASOLABIAL_MIN_CONTROL_PIXELS = 50
 GVR_INSPIRED_REGIONS = (
     ("screen_left_upper_lid_skin", "画面左眉下の皮膚"),
     ("screen_right_upper_lid_skin", "画面右眉下の皮膚"),
@@ -216,6 +218,95 @@ def measure_gvr_inspired_features(
                 f"元画像の対象{count}画素（必要{minimum}画素以上）。"
             ),
         })
+    return rows
+
+
+
+def measure_nasolabial_crease_features(
+    image_bgr: np.ndarray,
+    masks: dict[str, np.ndarray],
+) -> list[dict]:
+    """Measure image-space nasolabial crease conspicuity against nearby skin.
+
+    This is not physical wrinkle depth. For each screen side, the median L* of
+    the cheekward control band is the local skin baseline. Candidate-band pixels
+    darker than that baseline are converted to positive relative darkness:
+    100 * max(control_median_L - candidate_L, 0) / control_median_L.
+    Median describes typical darkening; p90 describes the stronger dark tail.
+    """
+    image = np.asarray(image_bgr)
+    if image.ndim != 3 or image.shape[2] != 3 or image.dtype != np.uint8 or not image.size:
+        raise ValueError("Expected a nonempty uint8 BGR image")
+
+    lab = cv2.cvtColor(image.astype(np.float32) / 255.0, cv2.COLOR_BGR2LAB)
+    lightness = lab[:, :, 0].astype(np.float64)
+    rows = []
+
+    for side, label in (("screen_left", "画面左"), ("screen_right", "画面右")):
+        candidate_name = f"{side}_nasolabial_candidate"
+        control_name = f"{side}_nasolabial_outer_control"
+        if candidate_name not in masks:
+            raise ValueError(f"Missing nasolabial mask: {candidate_name}")
+        if control_name not in masks:
+            raise ValueError(f"Missing nasolabial mask: {control_name}")
+        candidate = _binary_mask(masks[candidate_name], image.shape[:2], candidate_name)
+        control = _binary_mask(masks[control_name], image.shape[:2], control_name)
+        if np.any(candidate & control):
+            raise ValueError(f"{side}: nasolabial candidate overlaps outer control")
+
+        candidate_count = int(candidate.sum())
+        control_count = int(control.sum())
+        status = (
+            "ok"
+            if candidate_count >= NASOLABIAL_MIN_CANDIDATE_PIXELS
+            and control_count >= NASOLABIAL_MIN_CONTROL_PIXELS
+            else "insufficient_pixels"
+        )
+
+        if status == "ok":
+            control_median_l = float(np.median(lightness[control]))
+            if not np.isfinite(control_median_l) or control_median_l <= 1e-6:
+                raise ValueError(f"{side}: nasolabial control median L* is too small")
+            darkness = (
+                100.0
+                * np.maximum(control_median_l - lightness[candidate], 0.0)
+                / control_median_l
+            )
+            median_value = float(np.median(darkness))
+            p90_value = float(np.percentile(darkness, 90))
+        else:
+            median_value = None
+            p90_value = None
+
+        common_note = (
+            "頬側の周囲皮膚対照帯のL*中央値を局所基準にし、候補帯の各画素について "
+            "100×max(対照L*中央値−候補L*, 0)/対照L*中央値 を計算。"
+            "物理的なシワ深さではなく、画像上で溝・陰影が周囲皮膚より暗く見える度合い。"
+            f" 候補{candidate_count}画素（必要{NASOLABIAL_MIN_CANDIDATE_PIXELS}以上）、"
+            f"対照{control_count}画素（必要{NASOLABIAL_MIN_CONTROL_PIXELS}以上）。"
+        )
+        rows.extend((
+            {
+                "id": f"{side}_nasolabial_crease_darkness_median_pct",
+                "region": candidate_name,
+                "label": f"{label}ほうれい線候補の周囲皮膚比・暗さコントラスト（中央値）",
+                "unit": "局所L*比 %",
+                "value": median_value,
+                "pixels": candidate_count,
+                "status": status,
+                "note": common_note,
+            },
+            {
+                "id": f"{side}_nasolabial_crease_darkness_p90_pct",
+                "region": candidate_name,
+                "label": f"{label}ほうれい線候補の周囲皮膚比・暗さコントラスト（p90）",
+                "unit": "局所L*比 %",
+                "value": p90_value,
+                "pixels": candidate_count,
+                "status": status,
+                "note": common_note,
+            },
+        ))
     return rows
 
 

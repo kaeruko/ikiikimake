@@ -12,6 +12,7 @@ from analysis.appearance_features import (
     LOWER_EYE_INDICES, MOUTH_CORNER_INDICES, NOSE_WING_INDICES,
     OUTER_LIP_INDICES, UPPER_EYE_INDICES,
     build_feature_masks, measure_features, measure_gvr_inspired_features,
+    measure_nasolabial_crease_features,
 )
 
 
@@ -339,6 +340,39 @@ class AppearanceFeatureTests(unittest.TestCase):
                 intersection = np.count_nonzero(actual & expected)
                 union = np.count_nonzero(actual | expected)
                 self.assertGreater(intersection / union, 0.90)
+
+
+
+    def test_nasolabial_crease_darkness_increases_when_candidate_is_darkened(self):
+        image, _, masks, _ = fixture()
+        baseline = {
+            row["id"]: row
+            for row in measure_nasolabial_crease_features(image, masks)
+        }
+        for side in ("screen_left", "screen_right"):
+            for suffix in ("median_pct", "p90_pct"):
+                key = f"{side}_nasolabial_crease_darkness_{suffix}"
+                self.assertEqual(baseline[key]["status"], "ok")
+                self.assertAlmostEqual(baseline[key]["value"], 0.0)
+
+        changed = image.copy()
+        changed[masks["screen_left_nasolabial_candidate"]] = (65, 65, 65)
+        rows = {
+            row["id"]: row
+            for row in measure_nasolabial_crease_features(changed, masks)
+        }
+        median_key = "screen_left_nasolabial_crease_darkness_median_pct"
+        p90_key = "screen_left_nasolabial_crease_darkness_p90_pct"
+        self.assertGreater(rows[median_key]["value"], 0.0)
+        self.assertGreaterEqual(rows[p90_key]["value"], rows[median_key]["value"])
+        self.assertIn("物理的なシワ深さではなく", rows[median_key]["note"])
+
+    def test_nasolabial_crease_measurement_rejects_overlapping_control(self):
+        image, _, masks, _ = fixture()
+        bad = deepcopy(masks)
+        bad["screen_left_nasolabial_outer_control"] |= bad["screen_left_nasolabial_candidate"]
+        with self.assertRaisesRegex(ValueError, "overlaps"):
+            measure_nasolabial_crease_features(image, bad)
 
 
 

@@ -20,10 +20,13 @@ import cv2
 import numpy as np
 
 from analysis.analyze_cheek_lab import load_image, load_masks
-from analysis.appearance_features import build_feature_masks, measure_features, measure_gvr_inspired_features
+from analysis.appearance_features import (
+    build_feature_masks, measure_features, measure_gvr_inspired_features,
+    measure_nasolabial_crease_features,
+)
 
 
-ANALYSIS_VERSION = "selected-region-appearance-v9"
+ANALYSIS_VERSION = "selected-region-appearance-v10"
 
 REGION_METRIC_IDS = {
     "eye_texture": (
@@ -47,6 +50,10 @@ REGION_METRIC_IDS = {
         "left_cheek_gvr_inspired_ratio",
         "right_cheek_gvr_inspired_ratio",
         "forehead_gvr_inspired_ratio",
+        "screen_left_nasolabial_crease_darkness_median_pct",
+        "screen_left_nasolabial_crease_darkness_p90_pct",
+        "screen_right_nasolabial_crease_darkness_median_pct",
+        "screen_right_nasolabial_crease_darkness_p90_pct",
     ),
     "lips": (
         "lips_relative_a",
@@ -73,7 +80,7 @@ REGION_MASK_NAMES = {
 }
 
 REGION_LABELS = {
-    "eye_texture": "眉下の皮膚の質感",
+    "eye_texture": "眉下の皮膚の質感・ほうれい線候補",
     "lips": "唇",
     "cheeks": "頬",
 }
@@ -138,10 +145,14 @@ def _load_phase(entry: dict, region: str) -> tuple[np.ndarray, dict[str, np.ndar
     masks = build_feature_masks(image.shape, points, base_masks)
     measured = {row["id"]: row for row in measure_features(image, masks)}
     if region == "eye_texture":
-        for row in measure_gvr_inspired_features(image, masks):
-            if row["id"] in measured:
-                raise RuntimeError(f"{region}: duplicate metric id: {row['id']}")
-            measured[row["id"]] = row
+        for extra_rows in (
+            measure_gvr_inspired_features(image, masks),
+            measure_nasolabial_crease_features(image, masks),
+        ):
+            for row in extra_rows:
+                if row["id"] in measured:
+                    raise RuntimeError(f"{region}: duplicate metric id: {row['id']}")
+                measured[row["id"]] = row
     needed = REGION_METRIC_IDS[region]
     absent = [identifier for identifier in needed if identifier not in measured]
     if absent:
@@ -230,7 +241,7 @@ table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;b
 @media(max-width:800px){{.pair{{grid-template-columns:1fr}}}}
 </style><body><h1>承認済み部位別 before / after の記述解析</h1>
 <p class="notice">この結果は画像上の記述的特徴です。乾燥・シワの診断、メイク効果の因果推定、美しさの採点ではありません。
-眉下の皮膚の高周波指標にはピント・照明・圧縮・眉毛・メイク境界などが混入し得ます。左右頬と額を同一フレームの対照ROIとして同じ式で測定します。SEsc-inspired bright-scaliness率は公開されたSEsc閾値定義を普通の動画grayへ適用した研究用近似で、Visioscan SEscそのものや乾燥診断ではありません。GVR-inspiredはWu et al. (2024)の可視光GVR処理を参考にしていますが、論文で未記載のCLAHEパラメータを固定し、EPISCANの標準化撮影も再現していないため、原著GVRそのものや皮膚水分量の診断値ではありません。</p>
+眉下の皮膚の高周波指標にはピント・照明・圧縮・眉毛・メイク境界などが混入し得ます。左右頬と額を同一フレームの対照ROIとして同じ式で測定します。SEsc-inspired bright-scaliness率は公開されたSEsc閾値定義を普通の動画grayへ適用した研究用近似で、Visioscan SEscそのものや乾燥診断ではありません。GVR-inspiredはWu et al. (2024)の可視光GVR処理を参考にしていますが、論文で未記載のCLAHEパラメータを固定し、EPISCANの標準化撮影も再現していないため、原著GVRそのものや皮膚水分量の診断値ではありません。ほうれい線候補の暗さコントラストは同じ固定ペア上で候補帯と頬側の周囲皮膚対照帯を比較した画像指標で、物理的なシワ深さではありません。</p>
 {"".join(sections)}
 </body></html>"""
 
