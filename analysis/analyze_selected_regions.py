@@ -259,23 +259,51 @@ def analyze_selected_regions(selected_path: Path, output_root: Path) -> dict:
     fingerprint = hashlib.sha256(
         json.dumps(fingerprint_spec, sort_keys=True).encode("utf-8")
     ).hexdigest()
-    output_dir = output_root / fingerprint[:16]
 
-    if output_dir.exists():
-        summary_path = output_dir / "summary.json"
-        report_path = output_dir / "report.html"
-        csv_path = output_dir / "feature_deltas.csv"
-        if not all(path.is_file() for path in (summary_path, report_path, csv_path)):
-            raise FileExistsError(f"Incomplete existing output: {output_dir}")
+    # Keep exactly one current result set. The fingerprint remains metadata for
+    # provenance/cache validation; it is no longer used as a directory name.
+    output_dir = output_root
+    if output_dir.exists() and not output_dir.is_dir():
+        raise NotADirectoryError(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    summary_path = output_dir / "summary.json"
+    report_path = output_dir / "report.html"
+    csv_path = output_dir / "feature_deltas.csv"
+
+    if summary_path.exists():
+        if not summary_path.is_file():
+            raise FileExistsError(f"summary.json is not a file: {summary_path}")
         saved = json.loads(summary_path.read_text(encoding="utf-8"))
-        if saved.get("fingerprint") != fingerprint or saved.get("fingerprint_spec") != fingerprint_spec:
-            raise RuntimeError(f"Existing output fingerprint mismatch: {output_dir}")
-        return saved
+        if saved.get("fingerprint") == fingerprint and saved.get("fingerprint_spec") == fingerprint_spec:
+            expected = [report_path, csv_path]
+            for region in selections:
+                expected.extend((
+                    output_dir / f"{region}_before.png",
+                    output_dir / f"{region}_after.png",
+                ))
+            missing_outputs = [str(path) for path in expected if not path.is_file()]
+            if missing_outputs:
+                raise FileExistsError(
+                    f"Cached selected-region output is incomplete: {missing_outputs}"
+                )
+            return saved
 
-    output_dir.mkdir(parents=True, exist_ok=False)
+    # A changed input/implementation intentionally replaces the previous latest
+    # result in place. Remove only runner-owned region images so selections that
+    # disappeared do not leave stale review artifacts.
+    for region in REGION_METRIC_IDS:
+        for phase in ("before", "after"):
+            path = output_dir / f"{region}_{phase}.png"
+            if path.exists():
+                if not path.is_file():
+                    raise FileExistsError(f"Expected generated file path: {path}")
+                path.unlink()
+
     summary = {
         "schema_version": 1,
         "version": ANALYSIS_VERSION,
+        "output_policy": "stable_latest",
         "fingerprint": fingerprint,
         "fingerprint_spec": fingerprint_spec,
         "selected_region_pairs_path": str(selected_path.resolve()),

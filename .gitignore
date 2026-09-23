@@ -25,6 +25,10 @@ outputs/**/frames.jsonl
 outputs/**/*.npz
 outputs/**/scan_manifest.json
 
+# Selected-region analysis keeps one stable latest result set in the root.
+# Ignore legacy/future fingerprint subdirectories so reports do not proliferate.
+outputs/**/selected_region_analysis/*/
+
 # Optional explicit review-export directory remains trackable.
 !review_exports/
 !review_exports/**
