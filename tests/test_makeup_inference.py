@@ -15,7 +15,7 @@ from makeup_transfer.geometry import (
 )
 from makeup_transfer.inference import (
     MakeupStyle, TemporalLandmarkSmoother, alpha_composite, extract_style,
-    render_style, run_video,
+    render_style, run_extract, run_video,
 )
 
 
@@ -116,6 +116,44 @@ class RenderingTests(unittest.TestCase):
             with self.assertRaisesRegex(FileNotFoundError, "Trained generator checkpoint"):
                 extract_style(self.background, folder, self.geometry, detector)
         detector.detect.assert_not_called()
+
+
+class ExtractCommandTests(unittest.TestCase):
+    def test_extract_saves_npz_checkerboard_previews_and_metadata(self):
+        geometry = MagicMock()
+        reference = np.full((32, 32, 3), 120, dtype=np.uint8)
+        eye = np.zeros((16, 16, 4), dtype=np.float32)
+        eye[..., 0] = 1.0
+        eye[..., 3] = 0.5
+        lip = np.zeros((16, 16, 4), dtype=np.float32)
+        lip[..., 2] = 1.0
+        lip[..., 3] = 0.25
+        style = MakeupStyle(geometry, {"eye": eye, "lip": lip}, {"generator_calls": 2})
+        detector = MagicMock()
+        detector.__enter__.return_value = detector
+
+        with tempfile.TemporaryDirectory() as folder, \
+                patch("makeup_transfer.inference._resolve_geometry", return_value=geometry), \
+                patch("makeup_transfer.inference._read_rgb", return_value=reference), \
+                patch("makeup_transfer.inference.FaceDetector", return_value=detector), \
+                patch("makeup_transfer.inference.extract_style", return_value=style) as extract:
+            output = Path(folder) / "real_reference_style.npz"
+            metadata = run_extract("reference.png", output, "checkpoints", regions=("eye", "lip"))
+            extract.assert_called_once()
+            self.assertTrue(output.is_file())
+            with np.load(output) as saved:
+                self.assertEqual(saved["eye_rgba"].shape, (16, 16, 4))
+                self.assertEqual(saved["lip_rgba"].shape, (16, 16, 4))
+            for path in metadata["preview_paths"].values():
+                image = cv2.imdecode(np.fromfile(path, dtype=np.uint8), cv2.IMREAD_COLOR)
+                self.assertEqual(image.shape[:2], (16, 16))
+            saved_metadata = json.loads(Path(metadata["metadata_path"]).read_text(encoding="utf-8"))
+            self.assertEqual(saved_metadata["mode"], "extract")
+            self.assertEqual(saved_metadata["regions"], ["eye", "lip"])
+
+        with tempfile.TemporaryDirectory() as folder:
+            with self.assertRaisesRegex(ValueError, "\\.npz suffix"):
+                run_extract("reference.png", Path(folder) / "bad.png", "checkpoints")
 
 
 class TemporalTests(unittest.TestCase):
