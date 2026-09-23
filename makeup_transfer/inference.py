@@ -291,6 +291,21 @@ def save_style(style: MakeupStyle, path: str | Path) -> Path:
     return path
 
 
+def _rgba_preview(rgba: np.ndarray, tile: int = 16) -> np.ndarray:
+    """Composite straight-alpha RGBA on a checkerboard for human review."""
+    rgba = np.asarray(rgba, dtype=np.float32)
+    if rgba.ndim != 3 or rgba.shape[2] != 4 or not np.isfinite(rgba).all():
+        raise ValueError("RGBA preview expects a finite H x W x 4 array.")
+    rgba = np.clip(rgba, 0, 1)
+    height, width = rgba.shape[:2]
+    yy, xx = np.mgrid[:height, :width]
+    checker = np.where(((xx // tile) + (yy // tile)) % 2 == 0, 0.88, 0.70).astype(np.float32)
+    background = np.repeat(checker[..., None], 3, axis=2)
+    alpha = rgba[..., 3:4]
+    composite = background * (1 - alpha) + rgba[..., :3] * alpha
+    return np.rint(np.clip(composite, 0, 1) * 255).astype(np.uint8)
+
+
 def _read_rgb(path: str | Path) -> np.ndarray:
     data = np.fromfile(Path(path), dtype=np.uint8)
     image = cv2.imdecode(data, cv2.IMREAD_COLOR)
@@ -328,6 +343,39 @@ def _write_metadata(output: Path, metadata: dict) -> dict:
     metadata["metadata_path"] = str(path.resolve())
     path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False, allow_nan=False), encoding="utf-8")
     return metadata
+
+
+def run_extract(
+    reference: str | Path,
+    output: str | Path,
+    checkpoints: str | Path,
+    *,
+    geometry_path: str | Path | None = None,
+    landmark_model: str | Path = "models/face_landmarker.task",
+    device: str = "auto",
+    regions: Sequence[str] = REGIONS,
+) -> dict:
+    """Extract canonical RGBA makeup patches from one real reference image."""
+    output = _output_path(output, reference)
+    if output.suffix.lower() != ".npz":
+        raise ValueError("Extract output must use a .npz suffix.")
+    geometry = _resolve_geometry(checkpoints, geometry_path, regions)
+    reference_rgb = _read_rgb(reference)
+    with FaceDetector(landmark_model) as detector:
+        style = extract_style(reference_rgb, checkpoints, geometry, detector, regions=regions, device=device)
+    style_path = save_style(style, output)
+    previews = {}
+    for region, patch in style.patches.items():
+        preview_path = output.with_name(f"{output.stem}.{region}.png")
+        _write_image(preview_path, _rgba_preview(patch))
+        previews[region] = str(preview_path.resolve())
+    return _write_metadata(output, {
+        "mode": "extract", "reference": str(Path(reference).resolve()),
+        "output": str(style_path.resolve()), "regions": list(style.patches),
+        "style": dict(style.metadata), "style_extractions": 1,
+        "preview_paths": previews,
+        "note": "Preview PNGs show extracted RGBA on a checkerboard; source-face pixels are not copied to the target until rendering.",
+    })
 
 
 def run_image(
