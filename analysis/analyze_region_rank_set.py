@@ -10,6 +10,7 @@ import csv
 import hashlib
 import html
 import json
+import math
 from pathlib import Path
 from typing import Iterable
 
@@ -21,9 +22,10 @@ from analysis.analyze_selected_regions import (
     _save_png,
     sha256_file,
 )
+from analysis.match_video_regions import REGION_RULES, rank_region_pairs
 
 
-RANK_SET_VERSION = "candidate-rank-set-v1"
+RANK_SET_VERSION = "candidate-rank-set-v2"
 
 EYE_TEXTURE_FOCUS_IDS = (
     "screen_left_upper_lid_skin_highpass_median_pct",
@@ -218,6 +220,10 @@ table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;b
 <p class="notice">これは候補rankの探索的比較です。rankを承認済みペアへ昇格する処理ではありません。
 画像上の記述指標であり、乾燥・シワの診断、物理的なシワ深さ、メイク効果の因果推定ではありません。
 各候補は必ず画像を目視し、表情・照明・ピント・圧縮・手や道具の影響を確認してください。</p>
+<p>候補再生成: diversity {summary["candidate_generation"]["diversity_seconds"]:.1f}秒 ／
+最大 {summary["candidate_generation"]["top_k"]}件 ／
+品質条件通過 {summary["candidate_generation"]["eligible_before_diversity"]}組。
+顔サイズ・手重なりの閾値は変更していません。</p>
 {focus_section}
 {''.join(sections)}
 </body></html>"""
@@ -228,10 +234,23 @@ def analyze_region_rank_set(
     region: str,
     ranks: Iterable[int],
     output_root: Path,
+    candidate_top_k: int = 20,
+    diversity_seconds: float = 5.0,
 ) -> dict:
     selected_path = Path(selected_path)
     output_root = Path(output_root)
     ranks = _normalize_ranks(ranks)
+    if isinstance(candidate_top_k, bool) or not isinstance(candidate_top_k, int) or candidate_top_k < 1:
+        raise ValueError("candidate_top_k must be a positive integer")
+    if candidate_top_k < max(ranks):
+        raise ValueError(
+            f"candidate_top_k={candidate_top_k} is smaller than requested max rank {max(ranks)}"
+        )
+    if isinstance(diversity_seconds, bool) or not isinstance(diversity_seconds, (int, float)):
+        raise TypeError("diversity_seconds must be a finite nonnegative number")
+    diversity_seconds = float(diversity_seconds)
+    if not math.isfinite(diversity_seconds) or diversity_seconds < 0:
+        raise ValueError("diversity_seconds must be a finite nonnegative number")
 
     if not selected_path.is_file():
         raise FileNotFoundError(selected_path)
@@ -246,14 +265,17 @@ def analyze_region_rank_set(
     candidate_run_raw = selected.get("region_candidate_run")
     if not isinstance(candidate_run_raw, str) or not candidate_run_raw:
         raise ValueError("selected_region_pairs.json has no region_candidate_run")
-    matching_path = Path(candidate_run_raw) / "region_matching.json"
+    candidate_run = Path(candidate_run_raw)
+    matching_path = candidate_run / "region_matching.json"
+    occlusion_path = candidate_run / "region_occlusion.json"
     scan_manifest_path = selected_path.parent / "scan_manifest.json"
-    for path in (matching_path, scan_manifest_path):
+    for path in (matching_path, occlusion_path, scan_manifest_path):
         if not path.is_file():
             raise FileNotFoundError(path)
 
     manifest = json.loads(scan_manifest_path.read_text(encoding="utf-8"))
-    matching = json.loads(matching_path.read_text(encoding="utf-8"))
+    original_matching = json.loads(matching_path.read_text(encoding="utf-8"))
+    occlusion = json.loads(occlusion_path.read_text(encoding="utf-8"))
     video_info = manifest.get("video")
     if not isinstance(video_info, dict):
         raise ValueError("scan_manifest.json has no video object")
@@ -278,15 +300,51 @@ def analyze_region_rank_set(
             raise ValueError(f"scan_manifest has duplicate frame_id: {frame_id}")
         by_id[frame_id] = record
 
-    regions = matching.get("regions")
-    if not isinstance(regions, dict) or region not in regions:
+    original_regions = original_matching.get("regions")
+    if not isinstance(original_regions, dict) or region not in original_regions:
         raise ValueError(f"region_matching.json has no region: {region}")
-    ranked_pairs = regions[region].get("ranked_pairs")
+
+    current_rule = REGION_RULES[region]
+    expected_rule = {
+        "mask_names": list(current_rule.mask_names),
+        "max_face_scale_ratio": current_rule.max_face_scale_ratio,
+        "max_hand_overlap_ratio": current_rule.max_hand_overlap_ratio,
+    }
+    saved_rule = occlusion.get("rules", {}).get(region) if isinstance(occlusion, dict) else None
+    if saved_rule != expected_rule:
+        raise RuntimeError(
+            f"{region}: saved region_occlusion rule differs from current rule; "
+            f"saved={saved_rule!r} current={expected_rule!r}"
+        )
+
+    config = manifest.get("config")
+    if not isinstance(config, dict):
+        raise ValueError("scan_manifest.json has no config object")
+    try:
+        split_seconds = float(config["split_seconds"])
+        min_gap_seconds = float(config["min_gap_seconds"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError("scan_manifest config lacks valid split/min-gap seconds") from exc
+
+    regenerated_matching = rank_region_pairs(
+        records,
+        split_seconds,
+        min_gap_seconds,
+        occlusion,
+        top_k=candidate_top_k,
+        diversity_seconds=diversity_seconds,
+    )
+    regenerated_regions = regenerated_matching.get("regions")
+    if not isinstance(regenerated_regions, dict) or region not in regenerated_regions:
+        raise RuntimeError(f"regenerated matching has no region: {region}")
+    ranked_pairs = regenerated_regions[region].get("ranked_pairs")
     if not isinstance(ranked_pairs, list):
-        raise ValueError(f"{region}: ranked_pairs is not a list")
+        raise RuntimeError(f"{region}: regenerated ranked_pairs is not a list")
     if max(ranks) > len(ranked_pairs):
         raise ValueError(
-            f"{region}: requested rank {max(ranks)}, but only {len(ranked_pairs)} candidates exist"
+            f"{region}: requested rank {max(ranks)}, but regenerated settings "
+            f"top_k={candidate_top_k}, diversity_seconds={diversity_seconds:g} "
+            f"produced only {len(ranked_pairs)} candidates"
         )
 
     implementation_path = Path(__file__)
@@ -297,6 +355,9 @@ def analyze_region_rank_set(
         "selected_region_pairs_sha256": sha256_file(selected_path),
         "scan_manifest_sha256": sha256_file(scan_manifest_path),
         "region_matching_sha256": sha256_file(matching_path),
+        "region_occlusion_sha256": sha256_file(occlusion_path),
+        "candidate_top_k": candidate_top_k,
+        "diversity_seconds": diversity_seconds,
         "implementation_sha256": sha256_file(implementation_path),
         "selected_region_analysis_sha256": sha256_file(
             implementation_path.with_name("analyze_selected_regions.py")
@@ -353,6 +414,14 @@ def analyze_region_rank_set(
         "selected_region_pairs_path": str(selected_path.resolve()),
         "scan_manifest_path": str(scan_manifest_path.resolve()),
         "region_matching_path": str(matching_path.resolve()),
+        "region_occlusion_path": str(occlusion_path.resolve()),
+        "candidate_generation": {
+            "top_k": candidate_top_k,
+            "diversity_seconds": diversity_seconds,
+            "eligible_before_diversity": regenerated_regions[region].get("eligible_before_diversity"),
+            "diversity_skipped": regenerated_regions[region].get("diversity_skipped"),
+            "generated_candidates": len(ranked_pairs),
+        },
         "output_dir": str(output_root.resolve()),
         "pairs": [],
     }
