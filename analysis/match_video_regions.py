@@ -27,7 +27,7 @@ from analysis.extract_face_rois import RoiConfig, hand_coverage
 from analysis.match_video_rois import _frame_features, _pair
 
 
-REGION_MATCH_VERSION = "region-specific-v1"
+REGION_MATCH_VERSION = "region-specific-v2-endpoint-diversity"
 
 
 @dataclass(frozen=True)
@@ -236,7 +236,13 @@ def _all_geometry_pairs(records: list[dict], split_seconds: float,
 def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
                         rules: dict[str, RegionRule] | None = None,
                         top_k: int = 10, diversity_seconds: float = 15.0) -> dict:
-    """Apply region-specific scale/hand gates to precomputed geometry pairs."""
+    """Apply region-specific gates and require diversity at each pair endpoint.
+
+    With diversity_seconds > 0, a candidate is rejected when either its before
+    timestamp or its after timestamp is too close to the corresponding endpoint
+    of an already selected pair. This prevents one frame from being counted
+    repeatedly against many different frames.
+    """
     rules = REGION_RULES if rules is None else rules
     if isinstance(top_k, bool) or not isinstance(top_k, int) or top_k < 1:
         raise ValueError("top_k must be a positive integer")
@@ -285,7 +291,7 @@ def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
         for pair in eligible:
             if diversity_seconds > 0 and any(
                 abs(pair["before_time"] - prior["before_time"]) < diversity_seconds
-                and abs(pair["after_time"] - prior["after_time"]) < diversity_seconds
+                or abs(pair["after_time"] - prior["after_time"]) < diversity_seconds
                 for prior in selected
             ):
                 diversity_skipped += 1
@@ -307,6 +313,7 @@ def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
         "version": REGION_MATCH_VERSION,
         "top_k": top_k,
         "diversity_seconds": diversity_seconds,
+        "diversity_mode": "independent_endpoints",
         "regions": results,
     }
 
