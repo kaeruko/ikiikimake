@@ -210,13 +210,13 @@ def _report_html(summary: dict) -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>複数 candidate rank 再現性確認</title>
 <style>
-body{{font:16px/1.7 system-ui,sans-serif;max-width:1400px;margin:28px auto;padding:0 22px;color:#25322d}}
-section{{border:1px solid #d6dfda;border-radius:10px;padding:18px;margin:22px 0}}
+html,body{{background:#ffffff;color:#25322d}}body{{font:16px/1.7 system-ui,sans-serif;max-width:1400px;margin:28px auto;padding:0 22px}}
+.report-root{{background:#ffffff;color:#25322d;padding:2px 0 28px}}section{{background:#ffffff;border:1px solid #cfd8d3;border-radius:10px;padding:18px;margin:22px 0}}
 .pair{{display:grid;grid-template-columns:1fr 1fr;gap:14px}}img{{max-width:100%;height:auto}}
-table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;border-bottom:1px solid #d7ded9;text-align:left;vertical-align:top}}
-.scroll{{overflow-x:auto}}.notice{{background:#fff2c8;padding:14px;border-left:5px solid #d79b20}}
+table{{border-collapse:collapse;width:100%;margin-top:16px;background:#ffffff;color:#25322d}}th,td{{padding:9px 10px;border-bottom:1px solid #d7ded9;text-align:left;vertical-align:top;color:#25322d}}th{{background:#f4f7f5;font-weight:700;position:sticky;top:0}}
+.scroll{{overflow-x:auto}}.notice{{background:#fff2c8;color:#3c3214;padding:14px;border-left:5px solid #d79b20}}.report-root h1,.report-root h2,.report-root p,.report-root td,.report-root th{{opacity:1}}
 @media(max-width:800px){{.pair{{grid-template-columns:1fr}}}}
-</style><body><h1>複数 before / after candidate rank の再現性確認</h1>
+</style><body><div class="report-root"><h1>複数 before / after candidate rank の再現性確認</h1>
 <p class="notice">これは候補rankの探索的比較です。rankを承認済みペアへ昇格する処理ではありません。
 画像上の記述指標であり、乾燥・シワの診断、物理的なシワ深さ、メイク効果の因果推定ではありません。
 各候補は必ず画像を目視し、表情・照明・ピント・圧縮・手や道具の影響を確認してください。</p>
@@ -226,7 +226,7 @@ table{{border-collapse:collapse;width:100%;margin-top:16px}}th,td{{padding:8px;b
 顔サイズ・手重なりの閾値は変更していません。</p>
 {focus_section}
 {''.join(sections)}
-</body></html>"""
+</div></body></html>"""
 
 
 def analyze_region_rank_set(
