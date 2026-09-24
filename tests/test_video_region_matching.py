@@ -84,19 +84,21 @@ class RegionPairFilteringTests(unittest.TestCase):
             result["regions"]["eye_texture"]["rejected"]["face_scale_ratio"], 1
         )
 
-    def test_diversity_rejects_reuse_or_nearby_before_and_after_endpoints(self):
+    def test_diversity_keeps_unique_endpoints_without_over_pruning(self):
         pairs = [
             pair("b1", "a1", 0.10, 1.00, 10, 100),
-            # before is far away, but the same after endpoint must not be reused.
+            # Exact endpoint reuse is always rejected.
             pair("b2", "a1", 0.11, 1.00, 40, 100),
-            # after is far away, but the same before endpoint must not be reused.
             pair("b1", "a2", 0.12, 1.00, 10, 150),
-            # Both endpoints are independently far enough from the first pair.
-            pair("b3", "a3", 0.13, 1.00, 40, 140),
+            # Both endpoints are close to the first pair, so joint pair diversity rejects it.
+            pair("b2", "a2", 0.13, 1.00, 12, 102),
+            # One endpoint may be close when the other endpoint is clearly different.
+            pair("b3", "a3", 0.14, 1.00, 12, 160),
+            pair("b4", "a4", 0.15, 1.00, 50, 102),
         ]
         frames = {
             frame_id: occlusion_entry()
-            for frame_id in ("b1", "a1", "b2", "a2", "b3", "a3")
+            for frame_id in ("b1", "a1", "b2", "a2", "b3", "a3", "b4", "a4")
         }
         result = filter_region_pairs(
             pairs, {"frames": frames}, top_k=10, diversity_seconds=15
@@ -104,11 +106,19 @@ class RegionPairFilteringTests(unittest.TestCase):
         selected = result["regions"]["eye_texture"]["ranked_pairs"]
         self.assertEqual(
             [(item["before_id"], item["after_id"]) for item in selected],
-            [("b1", "a1"), ("b3", "a3")],
+            [("b1", "a1"), ("b3", "a3"), ("b4", "a4")],
         )
-        self.assertEqual(result["diversity_mode"], "independent_endpoints")
         self.assertEqual(
-            result["regions"]["eye_texture"]["diversity_skipped"], 2
+            len({item["before_id"] for item in selected}), len(selected)
+        )
+        self.assertEqual(
+            len({item["after_id"] for item in selected}), len(selected)
+        )
+        self.assertEqual(
+            result["diversity_mode"], "unique_endpoints_joint_pair_time"
+        )
+        self.assertEqual(
+            result["regions"]["eye_texture"]["diversity_skipped"], 3
         )
 
 
