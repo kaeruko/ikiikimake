@@ -22,11 +22,11 @@ import numpy as np
 from analysis.analyze_cheek_lab import load_image, load_masks
 from analysis.appearance_features import (
     build_feature_masks, measure_features, measure_gvr_inspired_features,
-    measure_nasolabial_crease_features,
+    measure_nasolabial_crease_features, measure_skin_appearance_features,
 )
 
 
-ANALYSIS_VERSION = "selected-region-appearance-v10"
+ANALYSIS_VERSION = "selected-region-appearance-v11"
 
 REGION_METRIC_IDS = {
     "eye_texture": (
@@ -40,6 +40,21 @@ REGION_METRIC_IDS = {
         "right_cheek_highpass_p90_pct",
         "forehead_highpass_median_pct",
         "forehead_highpass_p90_pct",
+        "screen_left_upper_lid_skin_lowfreq_L_mad",
+        "screen_left_upper_lid_skin_lowfreq_ab_mad",
+        "screen_left_upper_lid_skin_fine_dark_line_p95_pct",
+        "screen_right_upper_lid_skin_lowfreq_L_mad",
+        "screen_right_upper_lid_skin_lowfreq_ab_mad",
+        "screen_right_upper_lid_skin_fine_dark_line_p95_pct",
+        "left_cheek_lowfreq_L_mad",
+        "left_cheek_lowfreq_ab_mad",
+        "left_cheek_fine_dark_line_p95_pct",
+        "right_cheek_lowfreq_L_mad",
+        "right_cheek_lowfreq_ab_mad",
+        "right_cheek_fine_dark_line_p95_pct",
+        "forehead_lowfreq_L_mad",
+        "forehead_lowfreq_ab_mad",
+        "forehead_fine_dark_line_p95_pct",
         "screen_left_upper_lid_skin_sesc_inspired_scaliness_pct",
         "screen_right_upper_lid_skin_sesc_inspired_scaliness_pct",
         "left_cheek_sesc_inspired_scaliness_pct",
@@ -146,6 +161,7 @@ def _load_phase(entry: dict, region: str) -> tuple[np.ndarray, dict[str, np.ndar
     measured = {row["id"]: row for row in measure_features(image, masks)}
     if region == "eye_texture":
         for extra_rows in (
+            measure_skin_appearance_features(image, masks),
             measure_gvr_inspired_features(image, masks),
             measure_nasolabial_crease_features(image, masks),
         ):
