@@ -27,7 +27,7 @@ from analysis.extract_face_rois import RoiConfig, hand_coverage
 from analysis.match_video_rois import _frame_features, _pair
 
 
-REGION_MATCH_VERSION = "region-specific-v4-matching-diagnostics"
+REGION_MATCH_VERSION = "region-specific-v5-after-gate-diagnostics"
 
 
 @dataclass(frozen=True)
@@ -233,6 +233,90 @@ def _all_geometry_pairs(records: list[dict], split_seconds: float,
     return pairs
 
 
+def _after_frame_gate_diagnostics(
+    geometry_pairs: list[dict],
+    frames: dict,
+    rule: RegionRule,
+    region: str,
+) -> dict:
+    """Explain why each geometrically matchable after frame passes or fails region gates."""
+    by_after: dict[str, list[dict]] = {}
+    for pair in geometry_pairs:
+        after_id = pair.get("after_id")
+        if not isinstance(after_id, str) or not after_id:
+            raise ValueError(f"candidate has invalid after_id: {after_id!r}")
+        by_after.setdefault(after_id, []).append(pair)
+
+    rows = []
+    counts = {
+        "usable": 0,
+        "no_scale_compatible_before": 0,
+        "after_hand_overlap": 0,
+        "before_hand_overlap_only": 0,
+    }
+
+    for after_id, pairs in sorted(
+        by_after.items(),
+        key=lambda item: min(float(pair["after_time"]) for pair in item[1]),
+    ):
+        if after_id not in frames:
+            raise ValueError(f"{region}: missing hand-occlusion result for after frame {after_id}")
+        after_entry = frames[after_id].get("regions", {}).get(region)
+        if not isinstance(after_entry, dict) or "hand_overlap_ratio" not in after_entry:
+            raise ValueError(f"{region}: missing overlap for after frame {after_id}")
+        after_overlap = float(after_entry["hand_overlap_ratio"])
+        if not math.isfinite(after_overlap) or not 0 <= after_overlap <= 1:
+            raise ValueError(f"{region}: invalid overlap for after frame {after_id}")
+
+        scale_ok = [
+            pair for pair in pairs
+            if float(pair["terms"]["face_scale_ratio"]) <= rule.max_face_scale_ratio
+        ]
+        hand_ok = []
+        for pair in scale_ok:
+            before_id = pair["before_id"]
+            if before_id not in frames:
+                raise ValueError(
+                    f"{region}: missing hand-occlusion result for before frame {before_id}"
+                )
+            before_entry = frames[before_id].get("regions", {}).get(region)
+            if not isinstance(before_entry, dict) or "hand_overlap_ratio" not in before_entry:
+                raise ValueError(f"{region}: missing overlap for before frame {before_id}")
+            before_overlap = float(before_entry["hand_overlap_ratio"])
+            if not math.isfinite(before_overlap) or not 0 <= before_overlap <= 1:
+                raise ValueError(f"{region}: invalid overlap for before frame {before_id}")
+            if (
+                before_overlap <= rule.max_hand_overlap_ratio
+                and after_overlap <= rule.max_hand_overlap_ratio
+            ):
+                hand_ok.append(pair)
+
+        if hand_ok:
+            status = "usable"
+        elif not scale_ok:
+            status = "no_scale_compatible_before"
+        elif after_overlap > rule.max_hand_overlap_ratio:
+            status = "after_hand_overlap"
+        else:
+            status = "before_hand_overlap_only"
+        counts[status] += 1
+
+        rows.append({
+            "after_id": after_id,
+            "after_time": float(pairs[0]["after_time"]),
+            "status": status,
+            "after_hand_overlap_ratio": after_overlap,
+            "geometry_pairs": len(pairs),
+            "scale_compatible_pairs": len(scale_ok),
+            "fully_eligible_pairs": len(hand_ok),
+        })
+
+    return {
+        "counts": counts,
+        "frames": rows,
+    }
+
+
 def _maximum_unique_endpoint_pairs(pairs: list[dict]) -> int:
     """Return maximum cardinality using each before/after frame at most once."""
     adjacency: dict[str, list[str]] = {}
@@ -343,6 +427,9 @@ def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
             selected.append(pair)
         eligible_before_ids = {pair["before_id"] for pair in eligible}
         eligible_after_ids = {pair["after_id"] for pair in eligible}
+        after_gate_diagnostics = _after_frame_gate_diagnostics(
+            geometry_pairs, frames, rule, region
+        )
         results[region] = {
             "label": REGION_LABELS[region],
             "rule": asdict(rule),
@@ -352,6 +439,7 @@ def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
             "eligible_unique_after_frames": len(eligible_after_ids),
             "maximum_unique_endpoint_pairs": _maximum_unique_endpoint_pairs(eligible),
             "selected_unique_endpoint_pairs": len(selected),
+            "after_gate_diagnostics": after_gate_diagnostics,
             "diversity_skipped": diversity_skipped,
             "rejected": rejected,
         }
