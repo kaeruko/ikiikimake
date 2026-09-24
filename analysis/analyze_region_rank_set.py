@@ -228,7 +228,11 @@ html,body{{background:#ffffff;color:#25322d}}body{{font:16px/1.7 system-ui,sans-
 <p>候補再生成: before / after の同一フレーム再利用は禁止 ／
 ペア全体が近い場合のみ diversity {summary["candidate_generation"]["diversity_seconds"]:.1f}秒で抑制 ／
 最大 {summary["candidate_generation"]["top_k"]}件 ／
-品質条件通過 {summary["candidate_generation"]["eligible_before_diversity"]}組。
+品質条件通過 {summary["candidate_generation"]["eligible_before_diversity"]}組 ／
+unique before {summary["candidate_generation"]["eligible_unique_before_frames"]}枚 ／
+unique after {summary["candidate_generation"]["eligible_unique_after_frames"]}枚 ／
+endpointのみの最大マッチング {summary["candidate_generation"]["maximum_unique_endpoint_pairs"]}組 ／
+貪欲法で選択 {summary["candidate_generation"]["selected_unique_endpoint_pairs"]}組。
 別フレームであれば片側の時刻が近い候補は許可します。顔サイズ・手重なりの閾値は変更していません。</p>
 {focus_section}
 {''.join(sections)}
@@ -352,10 +356,19 @@ def analyze_region_rank_set(
     if not isinstance(ranked_pairs, list):
         raise RuntimeError(f"{region}: regenerated ranked_pairs is not a list")
     if max(ranks) > len(ranked_pairs):
+        region_stats = regenerated_regions[region]
         raise ValueError(
             f"{region}: requested rank {max(ranks)}, but regenerated settings "
             f"top_k={candidate_top_k}, diversity_seconds={diversity_seconds:g} "
-            f"produced only {len(ranked_pairs)} candidates"
+            f"produced only {len(ranked_pairs)} candidates. "
+            f"Diagnostics: geometry_pairs={regenerated_matching.get('geometry_eligible_pairs')}, "
+            f"geometry_unique_before={regenerated_matching.get('geometry_unique_before_frames')}, "
+            f"geometry_unique_after={regenerated_matching.get('geometry_unique_after_frames')}, "
+            f"region_eligible_pairs={region_stats.get('eligible_before_diversity')}, "
+            f"region_unique_before={region_stats.get('eligible_unique_before_frames')}, "
+            f"region_unique_after={region_stats.get('eligible_unique_after_frames')}, "
+            f"maximum_unique_endpoint_pairs={region_stats.get('maximum_unique_endpoint_pairs')}, "
+            f"greedy_selected={region_stats.get('selected_unique_endpoint_pairs')}."
         )
 
     implementation_path = Path(__file__)
@@ -433,7 +446,14 @@ def analyze_region_rank_set(
             "top_k": candidate_top_k,
             "diversity_seconds": diversity_seconds,
             "diversity_mode": regenerated_matching.get("diversity_mode"),
+            "geometry_eligible_pairs": regenerated_matching.get("geometry_eligible_pairs"),
+            "geometry_unique_before_frames": regenerated_matching.get("geometry_unique_before_frames"),
+            "geometry_unique_after_frames": regenerated_matching.get("geometry_unique_after_frames"),
             "eligible_before_diversity": regenerated_regions[region].get("eligible_before_diversity"),
+            "eligible_unique_before_frames": regenerated_regions[region].get("eligible_unique_before_frames"),
+            "eligible_unique_after_frames": regenerated_regions[region].get("eligible_unique_after_frames"),
+            "maximum_unique_endpoint_pairs": regenerated_regions[region].get("maximum_unique_endpoint_pairs"),
+            "selected_unique_endpoint_pairs": regenerated_regions[region].get("selected_unique_endpoint_pairs"),
             "diversity_skipped": regenerated_regions[region].get("diversity_skipped"),
             "generated_candidates": len(ranked_pairs),
         },
