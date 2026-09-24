@@ -25,7 +25,7 @@ from analysis.analyze_selected_regions import (
 from analysis.match_video_regions import REGION_RULES, rank_region_pairs
 
 
-RANK_SET_VERSION = "candidate-rank-set-v3-endpoint-diversity"
+RANK_SET_VERSION = "candidate-rank-set-v2"
 
 EYE_TEXTURE_FOCUS_IDS = (
     "screen_left_upper_lid_skin_highpass_median_pct",
