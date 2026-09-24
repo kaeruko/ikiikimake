@@ -211,10 +211,15 @@ def _report_html(summary: dict) -> str:
 <title>複数 candidate rank 再現性確認</title>
 <style>
 html,body{{background:#ffffff;color:#25322d}}body{{font:16px/1.7 system-ui,sans-serif;max-width:1400px;margin:28px auto;padding:0 22px}}
-.report-root{{background:#ffffff;color:#25322d;padding:2px 0 28px}}section{{background:#ffffff;border:1px solid #cfd8d3;border-radius:10px;padding:18px;margin:22px 0}}
+.report-root{{background:#ffffff !important;color:#25322d !important;color-scheme:light !important;padding:18px 20px 28px !important}}
+.report-root,.report-root section,.report-root table,.report-root tbody,.report-root tr,.report-root td{{background-color:#ffffff !important;color:#25322d !important}}
+.report-root h1,.report-root h2,.report-root p,.report-root td,.report-root th{{color:#25322d !important;opacity:1 !important}}
+.report-root section{{border:1px solid #cfd8d3 !important;border-radius:10px;padding:18px;margin:22px 0}}
 .pair{{display:grid;grid-template-columns:1fr 1fr;gap:14px}}img{{max-width:100%;height:auto}}
-table{{border-collapse:collapse;width:100%;margin-top:16px;background:#ffffff;color:#25322d}}th,td{{padding:9px 10px;border-bottom:1px solid #d7ded9;text-align:left;vertical-align:top;color:#25322d}}th{{background:#f4f7f5;font-weight:700;position:sticky;top:0}}
-.scroll{{overflow-x:auto}}.notice{{background:#fff2c8;color:#3c3214;padding:14px;border-left:5px solid #d79b20}}.report-root h1,.report-root h2,.report-root p,.report-root td,.report-root th{{opacity:1}}
+.report-root table{{border-collapse:collapse;width:100%;margin-top:16px;background:#ffffff !important;color:#25322d !important}}
+.report-root th,.report-root td{{padding:9px 10px;border-bottom:1px solid #aebbb4 !important;text-align:left;vertical-align:top;color:#25322d !important}}
+.report-root th{{background:#eef3f0 !important;color:#17221d !important;font-weight:700;position:sticky;top:0}}
+.scroll{{overflow-x:auto}}.report-root .notice{{background:#fff2c8 !important;color:#3c3214 !important;padding:14px;border-left:5px solid #d79b20 !important}}
 @media(max-width:800px){{.pair{{grid-template-columns:1fr}}}}
 </style><body><div class="report-root"><h1>複数 before / after candidate rank の再現性確認</h1>
 <p class="notice">これは候補rankの探索的比較です。rankを承認済みペアへ昇格する処理ではありません。
