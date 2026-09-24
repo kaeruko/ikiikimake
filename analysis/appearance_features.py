@@ -43,6 +43,11 @@ SESC_INSPIRED_THRESHOLD_MULTIPLIER = 19.0 / 13.0
 SESC_INSPIRED_MAX_GRAY = 240.0
 GVR_INSPIRED_CLAHE_CLIP_LIMIT = 2.0
 GVR_INSPIRED_CLAHE_TILE_GRID = (8, 8)
+SKIN_UNEVENNESS_SIGMA_FRACTION = 0.08
+SKIN_FINE_LINE_KERNEL_FRACTION = 0.08
+SKIN_FINE_LINE_KERNEL_MIN = 5
+SKIN_FINE_LINE_KERNEL_MAX = 15
+SKIN_FINE_LINE_PERCENTILE = 95
 NASOLABIAL_MIN_CANDIDATE_PIXELS = 100
 NASOLABIAL_MIN_CONTROL_PIXELS = 50
 GVR_INSPIRED_REGIONS = (
@@ -51,6 +56,14 @@ GVR_INSPIRED_REGIONS = (
     ("left_cheek", "画面左頬・対照"),
     ("right_cheek", "画面右頬・対照"),
     ("forehead", "額・対照"),
+)
+
+SKIN_APPEARANCE_REGIONS = (
+    ("screen_left_upper_lid_skin", "画面左眉下の皮膚"),
+    ("screen_right_upper_lid_skin", "画面右眉下の皮膚"),
+    ("left_cheek", "画面左頬"),
+    ("right_cheek", "画面右頬"),
+    ("forehead", "額"),
 )
 
 
@@ -145,6 +158,173 @@ def _quadratic_bezier_band_mask(
     return _polygon_mask(polygon, shape, name)
 
 
+def _odd_kernel_size(value: float) -> int:
+    size = int(round(float(value)))
+    size = max(SKIN_FINE_LINE_KERNEL_MIN, min(SKIN_FINE_LINE_KERNEL_MAX, size))
+    if size % 2 == 0:
+        size += 1 if size < SKIN_FINE_LINE_KERNEL_MAX else -1
+    return size
+
+
+def measure_skin_appearance_features(
+    image_bgr: np.ndarray,
+    masks: dict[str, np.ndarray],
+    regions: tuple[tuple[str, str], ...] = SKIN_APPEARANCE_REGIONS,
+) -> list[dict]:
+    """Measure visible unevenness and fine dark-line appearance separately.
+
+    These are image-space appearance features for makeup before/after review.
+    They are not measurements of skin hydration, clinical dryness, or physical
+    wrinkle depth.
+
+    Low-frequency unevenness is measured after a mask-normalized Gaussian blur,
+    so broad L* and a*/b* variation is separated from fine texture. Fine dark
+    lines are measured with an L* black-hat transform inside an eroded ROI and
+    normalized by the local median L*. The black-hat tail may still respond to
+    pores, makeup boundaries, focus, lighting, and compression.
+    """
+    image = np.asarray(image_bgr)
+    if image.ndim != 3 or image.shape[2] != 3 or image.dtype != np.uint8 or not image.size:
+        raise ValueError("Expected a nonempty uint8 BGR image")
+    if not isinstance(regions, tuple) or not regions:
+        raise ValueError("regions must be a nonempty tuple of (mask_name, label) pairs")
+
+    lab = cv2.cvtColor(image.astype(np.float32) / 255.0, cv2.COLOR_BGR2LAB).astype(np.float64)
+    rows = []
+    for item in regions:
+        if (
+            not isinstance(item, tuple)
+            or len(item) != 2
+            or not isinstance(item[0], str)
+            or not item[0]
+            or not isinstance(item[1], str)
+            or not item[1]
+        ):
+            raise ValueError(f"invalid skin appearance region: {item!r}")
+        name, label = item
+        if name not in masks:
+            raise ValueError(f"Missing skin appearance mask: {name}")
+        mask = _binary_mask(masks[name], image.shape[:2], name)
+        count = int(mask.sum())
+        minimum = MIN_TARGET_PIXELS["skin"]
+
+        if count < minimum:
+            status = "insufficient_pixels"
+            lowfreq_l_mad = None
+            lowfreq_ab_mad = None
+            fine_line_p95 = None
+            sigma = None
+            kernel_size = None
+            valid_line_pixels = 0
+        else:
+            status = "ok"
+            roi_scale = float(np.sqrt(count))
+            sigma = max(1.0, SKIN_UNEVENNESS_SIGMA_FRACTION * roi_scale)
+            mask_float = mask.astype(np.float64)
+            weight = cv2.GaussianBlur(mask_float, (0, 0), sigmaX=sigma, sigmaY=sigma)
+            if not np.isfinite(weight).all() or np.any(weight[mask] <= 1e-9):
+                raise RuntimeError(f"{name}: invalid normalized-blur weights")
+
+            smoothed = []
+            for channel in range(3):
+                numerator = cv2.GaussianBlur(
+                    lab[:, :, channel] * mask_float,
+                    (0, 0),
+                    sigmaX=sigma,
+                    sigmaY=sigma,
+                )
+                channel_smooth = numerator / np.maximum(weight, 1e-12)
+                smoothed.append(channel_smooth)
+            smooth_l, smooth_a, smooth_b = smoothed
+
+            l_values = smooth_l[mask]
+            a_values = smooth_a[mask]
+            b_values = smooth_b[mask]
+            med_l = float(np.median(l_values))
+            med_a = float(np.median(a_values))
+            med_b = float(np.median(b_values))
+            lowfreq_l_mad = float(np.median(np.abs(l_values - med_l)))
+            lowfreq_ab_mad = float(np.median(np.hypot(a_values - med_a, b_values - med_b)))
+
+            local_median_l = float(np.median(lab[:, :, 0][mask]))
+            if not np.isfinite(local_median_l) or local_median_l <= 1e-6:
+                raise ValueError(f"{name}: local median L* is too small")
+            kernel_size = _odd_kernel_size(SKIN_FINE_LINE_KERNEL_FRACTION * roi_scale)
+            kernel = cv2.getStructuringElement(
+                cv2.MORPH_ELLIPSE, (kernel_size, kernel_size)
+            )
+            inner = cv2.erode(mask.astype(np.uint8), kernel).astype(bool)
+            valid_line_pixels = int(inner.sum())
+            if valid_line_pixels < minimum:
+                fine_line_p95 = None
+                status = "insufficient_line_pixels"
+            else:
+                filled_l = lab[:, :, 0].copy()
+                filled_l[~mask] = local_median_l
+                blackhat = cv2.morphologyEx(
+                    filled_l.astype(np.float32), cv2.MORPH_BLACKHAT, kernel
+                ).astype(np.float64)
+                fine_line_p95 = float(
+                    100.0
+                    * np.percentile(blackhat[inner], SKIN_FINE_LINE_PERCENTILE)
+                    / local_median_l
+                )
+
+        common_unevenness_note = (
+            "ROI内部だけを使う正規化Gaussian blurで低周波成分を作り、"
+            "そのL*またはa*/b*の中央値からのMADを計算。"
+            "色・明るさの広いムラを見る画像指標で、乾燥そのものではない。"
+            + (
+                f" sigma={sigma:.2f}px（ROI面積由来）。"
+                if sigma is not None else ""
+            )
+            + f" 対象{count}画素（必要{minimum}以上）。"
+        )
+        fine_line_note = (
+            "ROI外を局所L*中央値で埋め、ROI面積に応じた黒帽変換で細い暗線候補を抽出し、"
+            f"内部画素のp{SKIN_FINE_LINE_PERCENTILE}を局所L*中央値で正規化。"
+            "乾燥で目立つ細線の候補を見るための画像指標だが、毛穴・メイク境界・"
+            "ピント・照明・圧縮にも反応し得る。物理的なシワ深さではない。"
+            + (
+                f" kernel={kernel_size}px、内部{valid_line_pixels}画素。"
+                if kernel_size is not None else ""
+            )
+        )
+        rows.extend((
+            {
+                "id": f"{name}_lowfreq_L_mad",
+                "region": name,
+                "label": f"{label}の低周波明度ムラ（L* MAD）",
+                "unit": "L*",
+                "value": lowfreq_l_mad,
+                "pixels": count,
+                "status": status if status != "insufficient_line_pixels" else "ok",
+                "note": common_unevenness_note,
+            },
+            {
+                "id": f"{name}_lowfreq_ab_mad",
+                "region": name,
+                "label": f"{label}の低周波色ムラ（ab MAD）",
+                "unit": "Lab",
+                "value": lowfreq_ab_mad,
+                "pixels": count,
+                "status": status if status != "insufficient_line_pixels" else "ok",
+                "note": common_unevenness_note,
+            },
+            {
+                "id": f"{name}_fine_dark_line_p95_pct",
+                "region": name,
+                "label": f"{label}の細線候補・暗さコントラスト（p95）",
+                "unit": "局所L*比 %",
+                "value": fine_line_p95,
+                "pixels": valid_line_pixels,
+                "status": status,
+                "note": fine_line_note,
+            },
+        ))
+    return rows
+
+
 def measure_gvr_inspired_features(
     image_bgr: np.ndarray,
     masks: dict[str, np.ndarray],
@@ -203,7 +383,7 @@ def measure_gvr_inspired_features(
         rows.append({
             "id": f"{name}_gvr_inspired_ratio",
             "region": name,
-            "label": f"{label}のGVR-inspired皮膚水分反射比",
+            "label": f"{label}のGVR-inspired反射プロキシ",
             "unit": "ratio",
             "value": value,
             "pixels": count,
