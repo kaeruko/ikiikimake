@@ -25,7 +25,7 @@ from analysis.analyze_selected_regions import (
 from analysis.match_video_regions import REGION_RULES, rank_region_pairs
 
 
-RANK_SET_VERSION = "candidate-rank-set-v2"
+RANK_SET_VERSION = "candidate-rank-set-v3-endpoint-diversity"
 
 EYE_TEXTURE_FOCUS_IDS = (
     "screen_left_upper_lid_skin_highpass_median_pct",
@@ -225,10 +225,10 @@ html,body{{background:#ffffff;color:#25322d}}body{{font:16px/1.7 system-ui,sans-
 <p class="notice">これは候補rankの探索的比較です。rankを承認済みペアへ昇格する処理ではありません。
 画像上の記述指標であり、乾燥・シワの診断、物理的なシワ深さ、メイク効果の因果推定ではありません。
 各候補は必ず画像を目視し、表情・照明・ピント・圧縮・手や道具の影響を確認してください。</p>
-<p>候補再生成: diversity {summary["candidate_generation"]["diversity_seconds"]:.1f}秒 ／
+<p>候補再生成: before / after 各端点を独立に diversity {summary["candidate_generation"]["diversity_seconds"]:.1f}秒以上離す ／
 最大 {summary["candidate_generation"]["top_k"]}件 ／
 品質条件通過 {summary["candidate_generation"]["eligible_before_diversity"]}組。
-顔サイズ・手重なりの閾値は変更していません。</p>
+同一または近接した before / after フレームの再利用を避けます。顔サイズ・手重なりの閾値は変更していません。</p>
 {focus_section}
 {''.join(sections)}
 </div></body></html>"""
@@ -339,6 +339,11 @@ def analyze_region_rank_set(
         top_k=candidate_top_k,
         diversity_seconds=diversity_seconds,
     )
+    if regenerated_matching.get("diversity_mode") != "independent_endpoints":
+        raise RuntimeError(
+            "regenerated matching does not use independent endpoint diversity: "
+            f"{regenerated_matching.get('diversity_mode')!r}"
+        )
     regenerated_regions = regenerated_matching.get("regions")
     if not isinstance(regenerated_regions, dict) or region not in regenerated_regions:
         raise RuntimeError(f"regenerated matching has no region: {region}")
@@ -369,6 +374,9 @@ def analyze_region_rank_set(
         ),
         "appearance_features_sha256": sha256_file(
             implementation_path.with_name("appearance_features.py")
+        ),
+        "region_matching_implementation_sha256": sha256_file(
+            implementation_path.with_name("match_video_regions.py")
         ),
     }
     fingerprint = hashlib.sha256(
@@ -423,6 +431,7 @@ def analyze_region_rank_set(
         "candidate_generation": {
             "top_k": candidate_top_k,
             "diversity_seconds": diversity_seconds,
+            "diversity_mode": regenerated_matching.get("diversity_mode"),
             "eligible_before_diversity": regenerated_regions[region].get("eligible_before_diversity"),
             "diversity_skipped": regenerated_regions[region].get("diversity_skipped"),
             "generated_candidates": len(ranked_pairs),
