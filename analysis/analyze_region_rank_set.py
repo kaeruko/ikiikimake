@@ -357,6 +357,17 @@ def analyze_region_rank_set(
         raise RuntimeError(f"{region}: regenerated ranked_pairs is not a list")
     if max(ranks) > len(ranked_pairs):
         region_stats = regenerated_regions[region]
+        after_diag = region_stats.get("after_gate_diagnostics")
+        if not isinstance(after_diag, dict):
+            raise RuntimeError(f"{region}: after_gate_diagnostics is missing")
+        after_counts = after_diag.get("counts")
+        after_frames = after_diag.get("frames")
+        if not isinstance(after_counts, dict) or not isinstance(after_frames, list):
+            raise RuntimeError(f"{region}: after_gate_diagnostics is invalid")
+        after_frame_summary = ", ".join(
+            f"{float(row['after_time']):.2f}s:{row['status']}"
+            for row in after_frames
+        )
         raise ValueError(
             f"{region}: requested rank {max(ranks)}, but regenerated settings "
             f"top_k={candidate_top_k}, diversity_seconds={diversity_seconds:g} "
@@ -368,7 +379,9 @@ def analyze_region_rank_set(
             f"region_unique_before={region_stats.get('eligible_unique_before_frames')}, "
             f"region_unique_after={region_stats.get('eligible_unique_after_frames')}, "
             f"maximum_unique_endpoint_pairs={region_stats.get('maximum_unique_endpoint_pairs')}, "
-            f"greedy_selected={region_stats.get('selected_unique_endpoint_pairs')}."
+            f"greedy_selected={region_stats.get('selected_unique_endpoint_pairs')}, "
+            f"after_gate_counts={after_counts}. "
+            f"After frames: {after_frame_summary}"
         )
 
     implementation_path = Path(__file__)
@@ -454,6 +467,7 @@ def analyze_region_rank_set(
             "eligible_unique_after_frames": regenerated_regions[region].get("eligible_unique_after_frames"),
             "maximum_unique_endpoint_pairs": regenerated_regions[region].get("maximum_unique_endpoint_pairs"),
             "selected_unique_endpoint_pairs": regenerated_regions[region].get("selected_unique_endpoint_pairs"),
+            "after_gate_diagnostics": regenerated_regions[region].get("after_gate_diagnostics"),
             "diversity_skipped": regenerated_regions[region].get("diversity_skipped"),
             "generated_candidates": len(ranked_pairs),
         },
