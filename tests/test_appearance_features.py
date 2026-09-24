@@ -12,7 +12,7 @@ from analysis.appearance_features import (
     LOWER_EYE_INDICES, MOUTH_CORNER_INDICES, NOSE_WING_INDICES,
     OUTER_LIP_INDICES, UPPER_EYE_INDICES,
     build_feature_masks, measure_features, measure_gvr_inspired_features,
-    measure_nasolabial_crease_features,
+    measure_nasolabial_crease_features, measure_skin_appearance_features,
 )
 
 
@@ -373,6 +373,84 @@ class AppearanceFeatureTests(unittest.TestCase):
         bad["screen_left_nasolabial_outer_control"] |= bad["screen_left_nasolabial_candidate"]
         with self.assertRaisesRegex(ValueError, "overlaps"):
             measure_nasolabial_crease_features(image, bad)
+
+    def test_skin_appearance_constant_roi_has_zero_unevenness_and_lines(self):
+        image, _, masks, _ = fixture()
+        rows = {
+            row["id"]: row
+            for row in measure_skin_appearance_features(
+                image, masks, regions=(("left_cheek", "左頬"),)
+            )
+        }
+        self.assertEqual(set(rows), {
+            "left_cheek_lowfreq_L_mad",
+            "left_cheek_lowfreq_ab_mad",
+            "left_cheek_fine_dark_line_p95_pct",
+        })
+        for row in rows.values():
+            self.assertEqual(row["status"], "ok")
+            self.assertAlmostEqual(row["value"], 0.0)
+
+    def test_skin_appearance_low_frequency_unevenness_detects_broad_gradient(self):
+        image, _, masks, _ = fixture()
+        baseline = {
+            row["id"]: row
+            for row in measure_skin_appearance_features(
+                image, masks, regions=(("left_cheek", "左頬"),)
+            )
+        }
+        changed = image.copy()
+        ys, xs = np.where(masks["left_cheek"])
+        xmin, xmax = int(xs.min()), int(xs.max())
+        span = max(1, xmax - xmin)
+        for y, x in zip(ys, xs):
+            delta = int(round(50 * (x - xmin) / span)) - 25
+            changed[y, x] = np.clip(
+                changed[y, x].astype(np.int16) + delta, 0, 255
+            ).astype(np.uint8)
+        rows = {
+            row["id"]: row
+            for row in measure_skin_appearance_features(
+                changed, masks, regions=(("left_cheek", "左頬"),)
+            )
+        }
+        self.assertGreater(
+            rows["left_cheek_lowfreq_L_mad"]["value"],
+            baseline["left_cheek_lowfreq_L_mad"]["value"],
+        )
+        self.assertIn("乾燥そのものではない", rows["left_cheek_lowfreq_L_mad"]["note"])
+
+    def test_skin_appearance_fine_dark_line_metric_increases_for_dark_lines(self):
+        image, _, masks, _ = fixture()
+        baseline = {
+            row["id"]: row
+            for row in measure_skin_appearance_features(
+                image, masks, regions=(("left_cheek", "左頬"),)
+            )
+        }
+        changed = image.copy()
+        ys, xs = np.where(masks["left_cheek"])
+        xmin, xmax = int(xs.min()), int(xs.max())
+        ymin, ymax = int(ys.min()), int(ys.max())
+        for x in range(xmin + 6, xmax - 5, 8):
+            cv2.line(changed, (x, ymin + 6), (x, ymax - 6), (70, 70, 70), 2)
+        rows = {
+            row["id"]: row
+            for row in measure_skin_appearance_features(
+                changed, masks, regions=(("left_cheek", "左頬"),)
+            )
+        }
+        key = "left_cheek_fine_dark_line_p95_pct"
+        self.assertEqual(rows[key]["status"], "ok")
+        self.assertGreater(rows[key]["value"], baseline[key]["value"])
+        self.assertIn("物理的なシワ深さではない", rows[key]["note"])
+
+    def test_skin_appearance_missing_mask_fails_fast(self):
+        image, _, masks, _ = fixture()
+        with self.assertRaisesRegex(ValueError, "Missing skin appearance mask"):
+            measure_skin_appearance_features(
+                image, masks, regions=(("missing_skin", "missing"),)
+            )
 
 
 
