@@ -1,0 +1,13 @@
+{
+  "fingerprint": "9de1e2adc318d2f6437277bdb8c13f820fb78cd30b18f7249960ae05c8e791db",
+  "files": {
+    "feature_summary.json": "66ec91a797c1ff28b889c3a2153d311622788557347cf1e5f06f512a6aaf358a",
+    "feature_deltas.csv": "afa413878c969222fc5322a497fc56ba276cebc0b345421bbbf3dc0ca80932f2",
+    "appearance_rois.png": "4fcf9a3b413b535adf134b4f05db1190aadda90387ff54cce0d614568e7825c9",
+    "region_samples.png": "3dd7006490460e3fb208f42c81137bfd3b0e9015dd036dacd0770284d5c820ff",
+    "feature_changes.png": "fe0e0a7516e88d2c6d8997411cab8738088d42d1b80924ad2c8512631f613895",
+    "report.html": "f13c7ef8aa0b0586f3811f328021f0f73f518e20239a5e817f6b6b669415367f",
+    "before_feature_masks.npz": "8391835a80c057df447badc273979327c961b54e46a3e1e0fd4cc5d95b7e8d54",
+    "after_feature_masks.npz": "1fe293f7f33ba0dee2e9eaa5344e26a3f9b7d24cb4f5f037b1ea1f5d84e2140e"
+  }
+}
