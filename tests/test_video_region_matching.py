@@ -148,6 +148,42 @@ class RegionPairFilteringTests(unittest.TestCase):
         self.assertEqual(eye["maximum_unique_endpoint_pairs"], 2)
         self.assertEqual(eye["selected_unique_endpoint_pairs"], 1)
 
+    def test_after_gate_diagnostics_classify_scale_and_hand_failures(self):
+        pairs = [
+            pair("b1", "a1", 0.10, 1.00, 10, 100),  # usable
+            pair("b2", "a2", 0.11, 1.08, 20, 110),  # scale mismatch
+            pair("b3", "a3", 0.12, 1.00, 30, 120),  # after hand overlap
+            pair("b4", "a4", 0.13, 1.00, 40, 130),  # before hand overlap only
+        ]
+        frames = {
+            "b1": occlusion_entry(),
+            "a1": occlusion_entry(),
+            "b2": occlusion_entry(),
+            "a2": occlusion_entry(),
+            "b3": occlusion_entry(),
+            "a3": occlusion_entry(eye_texture=0.20),
+            "b4": occlusion_entry(eye_texture=0.20),
+            "a4": occlusion_entry(),
+        }
+        result = filter_region_pairs(
+            pairs, {"frames": frames}, top_k=10, diversity_seconds=0
+        )
+        diag = result["regions"]["eye_texture"]["after_gate_diagnostics"]
+        self.assertEqual(
+            diag["counts"],
+            {
+                "usable": 1,
+                "no_scale_compatible_before": 1,
+                "after_hand_overlap": 1,
+                "before_hand_overlap_only": 1,
+            },
+        )
+        by_id = {row["after_id"]: row for row in diag["frames"]}
+        self.assertEqual(by_id["a1"]["status"], "usable")
+        self.assertEqual(by_id["a2"]["status"], "no_scale_compatible_before")
+        self.assertEqual(by_id["a3"]["status"], "after_hand_overlap")
+        self.assertEqual(by_id["a4"]["status"], "before_hand_overlap_only")
+
 
 if __name__ == "__main__":
     unittest.main()
