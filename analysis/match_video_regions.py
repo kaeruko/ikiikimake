@@ -27,7 +27,7 @@ from analysis.extract_face_rois import RoiConfig, hand_coverage
 from analysis.match_video_rois import _frame_features, _pair
 
 
-REGION_MATCH_VERSION = "region-specific-v3-unique-endpoints"
+REGION_MATCH_VERSION = "region-specific-v4-matching-diagnostics"
 
 
 @dataclass(frozen=True)
@@ -233,6 +233,40 @@ def _all_geometry_pairs(records: list[dict], split_seconds: float,
     return pairs
 
 
+def _maximum_unique_endpoint_pairs(pairs: list[dict]) -> int:
+    """Return maximum cardinality using each before/after frame at most once."""
+    adjacency: dict[str, list[str]] = {}
+    for pair in pairs:
+        before_id = pair.get("before_id")
+        after_id = pair.get("after_id")
+        if not isinstance(before_id, str) or not before_id:
+            raise ValueError(f"candidate has invalid before_id: {before_id!r}")
+        if not isinstance(after_id, str) or not after_id:
+            raise ValueError(f"candidate has invalid after_id: {after_id!r}")
+        adjacency.setdefault(before_id, [])
+        if after_id not in adjacency[before_id]:
+            adjacency[before_id].append(after_id)
+
+    matched_before_by_after: dict[str, str] = {}
+
+    def augment(before_id: str, visited_after: set[str]) -> bool:
+        for after_id in adjacency.get(before_id, ()):
+            if after_id in visited_after:
+                continue
+            visited_after.add(after_id)
+            prior_before = matched_before_by_after.get(after_id)
+            if prior_before is None or augment(prior_before, visited_after):
+                matched_before_by_after[after_id] = before_id
+                return True
+        return False
+
+    matched = 0
+    for before_id in adjacency:
+        if augment(before_id, set()):
+            matched += 1
+    return matched
+
+
 def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
                         rules: dict[str, RegionRule] | None = None,
                         top_k: int = 10, diversity_seconds: float = 15.0) -> dict:
@@ -307,11 +341,17 @@ def filter_region_pairs(geometry_pairs: list[dict], occlusion: dict,
             if len(selected) >= top_k:
                 continue
             selected.append(pair)
+        eligible_before_ids = {pair["before_id"] for pair in eligible}
+        eligible_after_ids = {pair["after_id"] for pair in eligible}
         results[region] = {
             "label": REGION_LABELS[region],
             "rule": asdict(rule),
             "ranked_pairs": selected,
             "eligible_before_diversity": len(eligible),
+            "eligible_unique_before_frames": len(eligible_before_ids),
+            "eligible_unique_after_frames": len(eligible_after_ids),
+            "maximum_unique_endpoint_pairs": _maximum_unique_endpoint_pairs(eligible),
+            "selected_unique_endpoint_pairs": len(selected),
             "diversity_skipped": diversity_skipped,
             "rejected": rejected,
         }
@@ -336,6 +376,12 @@ def rank_region_pairs(records: list[dict], split_seconds: float,
         top_k=top_k, diversity_seconds=diversity_seconds,
     )
     result["geometry_eligible_pairs"] = len(geometry_pairs)
+    result["geometry_unique_before_frames"] = len(
+        {pair["before_id"] for pair in geometry_pairs}
+    )
+    result["geometry_unique_after_frames"] = len(
+        {pair["after_id"] for pair in geometry_pairs}
+    )
     result["settings"] = {
         "split_seconds": split_seconds,
         "min_gap_seconds": min_gap_seconds,
