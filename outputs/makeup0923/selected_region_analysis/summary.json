@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "version": "selected-region-appearance-v9",
+  "version": "selected-region-appearance-v10",
   "output_policy": "stable_latest",
-  "fingerprint": "167ffc9f21c3b647513e5d49f623bd4efd747fe156204b88804ed0f35ca55e70",
+  "fingerprint": "f450df7a5be6f87a5d081918d9e9e1d60d05d343489b967d478cca68d0492668",
   "fingerprint_spec": {
-    "version": "selected-region-appearance-v9",
+    "version": "selected-region-appearance-v10",
     "selected_region_pairs_sha256": "712ce76661e23f409f1c4cf1f71d716384f376d51d10c8c34294a7aed9dc2dc8",
-    "implementation_sha256": "11e8d96de570b28ac84f157c22b9e17139305dd332de66bad939b24ce5f52668",
-    "appearance_features_sha256": "36b02cc9421c1e890b7d9df1e87a67ae45d97db499bb585c4b2b53ab52de040d"
+    "implementation_sha256": "d6cac61a76bf8bf8f5120f396493407ce942d69a42e20cf52556c2e6d8f4fe85",
+    "appearance_features_sha256": "cfcb33b3a05d3168da4247b0f6cc34e22944d16cdfa33dd4891e93f10f1f0111"
   },
   "selected_region_pairs_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\selected_region_pairs.json",
   "output_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\makeup0923\\selected_region_analysis",
@@ -304,6 +304,58 @@
           "after_pixels": 6949,
           "status": "ok",
           "note": "Wu et al. (2024) の可視光GVRを参考に、HSI intensity I=(R+G+B)/3へCLAHEを適用し、I-CLAHE(I)の負値を0へクリップしたreflectance-like画像について、ROI平均 / 画像全体の画素和を計算。論文ではCLAHEパラメータが未記載のため、OpenCV clipLimit=2.0, tileGridSize=(8, 8)を固定した研究用近似。EPISCANの標準化撮影を再現しておらず、皮膚水分量や乾燥の診断値ではない。 元画像の対象6480画素（必要100画素以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_left_nasolabial_crease_darkness_median_pct",
+          "label": "画面左ほうれい線候補の周囲皮膚比・暗さコントラスト（中央値）",
+          "unit": "局所L*比 %",
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0,
+          "before_pixels": 1927,
+          "after_pixels": 1904,
+          "status": "ok",
+          "note": "頬側の周囲皮膚対照帯のL*中央値を局所基準にし、候補帯の各画素について 100×max(対照L*中央値−候補L*, 0)/対照L*中央値 を計算。物理的なシワ深さではなく、画像上で溝・陰影が周囲皮膚より暗く見える度合い。 候補1927画素（必要100以上）、対照2288画素（必要50以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_left_nasolabial_crease_darkness_p90_pct",
+          "label": "画面左ほうれい線候補の周囲皮膚比・暗さコントラスト（p90）",
+          "unit": "局所L*比 %",
+          "before": 5.066686536025632,
+          "after": 9.244011976047904,
+          "delta": 4.177325440022273,
+          "before_pixels": 1927,
+          "after_pixels": 1904,
+          "status": "ok",
+          "note": "頬側の周囲皮膚対照帯のL*中央値を局所基準にし、候補帯の各画素について 100×max(対照L*中央値−候補L*, 0)/対照L*中央値 を計算。物理的なシワ深さではなく、画像上で溝・陰影が周囲皮膚より暗く見える度合い。 候補1927画素（必要100以上）、対照2288画素（必要50以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_right_nasolabial_crease_darkness_median_pct",
+          "label": "画面右ほうれい線候補の周囲皮膚比・暗さコントラスト（中央値）",
+          "unit": "局所L*比 %",
+          "before": 0.0,
+          "after": 0.0,
+          "delta": 0.0,
+          "before_pixels": 1937,
+          "after_pixels": 1911,
+          "status": "ok",
+          "note": "頬側の周囲皮膚対照帯のL*中央値を局所基準にし、候補帯の各画素について 100×max(対照L*中央値−候補L*, 0)/対照L*中央値 を計算。物理的なシワ深さではなく、画像上で溝・陰影が周囲皮膚より暗く見える度合い。 候補1937画素（必要100以上）、対照2304画素（必要50以上）。"
+        },
+        {
+          "region": "eye_texture",
+          "id": "screen_right_nasolabial_crease_darkness_p90_pct",
+          "label": "画面右ほうれい線候補の周囲皮膚比・暗さコントラスト（p90）",
+          "unit": "局所L*比 %",
+          "before": 10.189761694616063,
+          "after": 2.8187114461960245,
+          "delta": -7.371050248420039,
+          "before_pixels": 1937,
+          "after_pixels": 1911,
+          "status": "ok",
+          "note": "頬側の周囲皮膚対照帯のL*中央値を局所基準にし、候補帯の各画素について 100×max(対照L*中央値−候補L*, 0)/対照L*中央値 を計算。物理的なシワ深さではなく、画像上で溝・陰影が周囲皮膚より暗く見える度合い。 候補1937画素（必要100以上）、対照2304画素（必要50以上）。"
         }
       ]
     }
