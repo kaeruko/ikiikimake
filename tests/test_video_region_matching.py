@@ -121,6 +121,33 @@ class RegionPairFilteringTests(unittest.TestCase):
             result["regions"]["eye_texture"]["diversity_skipped"], 3
         )
 
+    def test_matching_diagnostics_distinguish_greedy_from_maximum_capacity(self):
+        pairs = [
+            pair("b1", "a1", 0.10, 1.00, 10, 100),
+            pair("b1", "a2", 0.11, 1.00, 10, 110),
+            pair("b2", "a1", 0.12, 1.00, 20, 100),
+        ]
+        frames = {
+            frame_id: occlusion_entry()
+            for frame_id in ("b1", "b2", "a1", "a2")
+        }
+        result = filter_region_pairs(
+            pairs, {"frames": frames}, top_k=10, diversity_seconds=0
+        )
+        eye = result["regions"]["eye_texture"]
+
+        # Greedy score order picks b1-a1 first and can only keep one pair.
+        self.assertEqual(
+            [(item["before_id"], item["after_id"]) for item in eye["ranked_pairs"]],
+            [("b1", "a1")],
+        )
+        # But the bipartite graph can form b1-a2 plus b2-a1.
+        self.assertEqual(eye["eligible_before_diversity"], 3)
+        self.assertEqual(eye["eligible_unique_before_frames"], 2)
+        self.assertEqual(eye["eligible_unique_after_frames"], 2)
+        self.assertEqual(eye["maximum_unique_endpoint_pairs"], 2)
+        self.assertEqual(eye["selected_unique_endpoint_pairs"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
