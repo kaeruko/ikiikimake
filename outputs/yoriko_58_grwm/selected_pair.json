@@ -1,0 +1,26 @@
+{
+  "video_path": "C:\\Users\\mail\\work\\ikiikimake\\【58歳】マイナス10歳 今日のスキンケア〜フルメイク｜GRWM [MmHbRTDy6Qs].webm",
+  "video_sha256": "83c9dd922be1fab0d1c103f37129dbb4cb97b5f63f547b1475efaf96bc86af55",
+  "rank": 1,
+  "score": 0.8114032156293499,
+  "before": {
+    "frame_id": "frame_0000159007ms",
+    "timestamp_seconds": 159.007,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\yoriko_58_grwm\\frames\\frame_0000159007ms.png",
+    "image_sha256": "dc5e5701e2f143794e92ae06b3453979cbaefc0c047e6344f5962636b3b06f28",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\yoriko_58_grwm\\rois\\frame_0000159007ms",
+    "roi_masks_sha256": "e0c2afb5d4b9939e5ce792d7c3c9f00b820b9f3be501033ca6f47b14c4f7ad26",
+    "roi_points_sha256": "ef646b189dd267ac5f3472761898dafd0e8791602fef69b3356f79bb874aea7a",
+    "roi_overlay_sha256": "9ae64725e8798409de4b64b5c54b0cea6eda84f2eddcf8815d985854a3bb02f5"
+  },
+  "after": {
+    "frame_id": "frame_0001526707ms",
+    "timestamp_seconds": 1526.707,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\yoriko_58_grwm\\frames\\frame_0001526707ms.png",
+    "image_sha256": "6fc0a69b13fda7a3c8457c8ad67b8ffb677ccb908aa67c29ee9f71b92079b363",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\yoriko_58_grwm\\rois\\frame_0001526707ms",
+    "roi_masks_sha256": "b7f43d6ffc696ed625ae8bc0fc4a8bf2b874bea5a4a748fd67425b6b9f405ee5",
+    "roi_points_sha256": "b17dbbc0e4dcb6c1492f60cf9e47ec971c68a101adaaad60161b5f3a7061c0bb",
+    "roi_overlay_sha256": "cdfaf6d2c72075164dd03ca43c8f8f13042ed738f2c4398bfd2d9aab9151cb75"
+  }
+}

@@ -4,9 +4,13 @@ __pycache__/
 
 # Local source videos and large datasets
 *.mp4
+*.webm
 datasets/
 cheek01_frames/
 cheek01_candidates/
+
+# Local diagnostic previews
+.cache/
 
 # Local ML models / checkpoints
 models/*.task

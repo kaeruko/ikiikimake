@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "method": "geometry-only-v1",
+  "notice": "Geometry-only ranking; lower is more similar, not higher confidence. RGB, Lab, forehead brightness and cosmetic color changes are not used for ranking or pair gates. Frame status/errors retain extraction hand/clipping checks. Landmark shape cannot establish that two frames show the same person. Treatment timing, identity and unobstructed ROI placement require human review. Limits and score weights are experimental.",
+  "settings": {
+    "split_seconds": 440.7305,
+    "before_rule": "timestamp < split_seconds",
+    "after_rule": "timestamp >= split_seconds",
+    "min_gap_seconds": 400.0,
+    "top_k": 10,
+    "diversity_seconds": 15.0,
+    "pose_gap_limits_degrees": {
+      "yaw": 10.0,
+      "pitch": 10.0,
+      "roll": 12.0
+    },
+    "max_face_scale_ratio": 1.5,
+    "max_eye_aperture_gap_face_width": 0.04,
+    "max_mouth_opening_gap_face_width": 0.08,
+    "roi_shape_score_scale": 0.05,
+    "shape_rms_definition": "RMS distance after centering, unit RMS radius normalization, and proper rotation",
+    "expression_units": "pixel distances divided by face width in pixels",
+    "color_used_for_ranking": false,
+    "forehead_L_used_for_pair_gate": false,
+    "reflection_alignment_allowed": false,
+    "reject_mirrored_landmark_order_change": true,
+    "thresholds_validated": false
+  },
+  "ranked_pairs": [
+    {
+      "before_id": "frame_0000264004ms",
+      "after_id": "frame_0000749789ms",
+      "before_time": 264.004,
+      "after_time": 749.789,
+      "score": 1.727566998602601,
+      "terms": {
+        "yaw_gap_degrees": 4.786036354742084,
+        "pitch_gap_degrees": 1.0150588645610368,
+        "roll_gap_degrees": 2.1788277466212564,
+        "face_scale_ratio": 1.1273162831359682,
+        "log_face_scale_ratio": 0.11983983733196032,
+        "roi_procrustes_rms": 0.01925138778755891,
+        "eye_aperture_gap": 0.0038033582931762955,
+        "mouth_opening_gap": 0.015217230317132527,
+        "contributions": {
+          "yaw": 0.47860363547420837,
+          "pitch": 0.10150588645610367,
+          "roll": 0.1815689788851047,
+          "face_scale": 0.2955614057424421,
+          "roi_shape": 0.38502775575117815,
+          "eye_aperture": 0.09508395732940739,
+          "mouth_opening": 0.19021537896415658
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 485.78499999999997,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.05914487209094777,
+            0.06079889768827392
+          ],
+          "mouth_opening": 0.08960672993383373
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.05854279584961905,
+            0.056995539395097626
+          ],
+          "mouth_opening": 0.10482396025096626
+        },
+        "screen_eye_aperture_gaps": [
+          0.0006020762413287209,
+          0.0038033582931762955
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    }
+  ],
+  "stats": {
+    "total_frames": 61,
+    "accepted_frames": 19,
+    "rejected_frames": [
+      {
+        "record_index": 1,
+        "frame_id": "frame_0000265005ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 4,
+        "frame_id": "frame_0000268008ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 5,
+        "frame_id": "frame_0000269009ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 6,
+        "frame_id": "frame_0000270010ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 7,
+        "frame_id": "frame_0000271011ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 10,
+        "frame_id": "frame_0000274014ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 11,
+        "frame_id": "frame_0000275015ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 15,
+        "frame_id": "frame_0000279019ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 16,
+        "frame_id": "frame_0000744017ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 17,
+        "frame_id": "frame_0000745018ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 19,
+        "frame_id": "frame_0000747020ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 20,
+        "frame_id": "frame_0000748021ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 21,
+        "frame_id": "frame_0000749022ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 23,
+        "frame_id": "frame_0000750991ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 25,
+        "frame_id": "frame_0000752993ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 26,
+        "frame_id": "frame_0000753994ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 27,
+        "frame_id": "frame_0000754995ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 28,
+        "frame_id": "frame_0000755996ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 31,
+        "frame_id": "frame_0000758999ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 32,
+        "frame_id": "frame_0000760000ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 33,
+        "frame_id": "frame_0000761001ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 36,
+        "frame_id": "frame_0000764004ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 37,
+        "frame_id": "frame_0000765005ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 38,
+        "frame_id": "frame_0000766006ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 39,
+        "frame_id": "frame_0000767007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 40,
+        "frame_id": "frame_0000768008ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 41,
+        "frame_id": "frame_0000769009ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 42,
+        "frame_id": "frame_0000770010ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 43,
+        "frame_id": "frame_0000771011ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 44,
+        "frame_id": "frame_0000772012ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 45,
+        "frame_id": "frame_0000773013ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 46,
+        "frame_id": "frame_0000774014ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 47,
+        "frame_id": "frame_0000775015ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 48,
+        "frame_id": "frame_0000776016ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 49,
+        "frame_id": "frame_0000777017ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 50,
+        "frame_id": "frame_0000778018ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 51,
+        "frame_id": "frame_0000779019ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 52,
+        "frame_id": "frame_0000264271ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 53,
+        "frame_id": "frame_0000264505ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 54,
+        "frame_id": "frame_0000264772ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 59,
+        "frame_id": "frame_0000750523ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 60,
+        "frame_id": "frame_0000750790ms",
+        "reason": "ROI report status is not needs_review"
+      }
+    ],
+    "rejected_frame_count": 42,
+    "before_frames": 8,
+    "after_frames": 11,
+    "candidate_pairs": 88,
+    "rejected_pairs": 57,
+    "pair_rejection_counts": {
+      "eye_aperture_gap": 41,
+      "face_scale_ratio": 1,
+      "mouth_opening_gap": 22,
+      "pitch_gap": 8,
+      "yaw_gap": 23
+    },
+    "eligible_pairs": 31,
+    "diversity_skipped_pairs": 30,
+    "top_k_omitted_pairs": 0,
+    "selected_pairs": 1
+  }
+}

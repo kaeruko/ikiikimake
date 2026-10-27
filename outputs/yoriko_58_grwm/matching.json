@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "method": "geometry-only-v1",
+  "notice": "Geometry-only ranking; lower is more similar, not higher confidence. RGB, Lab, forehead brightness and cosmetic color changes are not used for ranking or pair gates. Frame status/errors retain extraction hand/clipping checks. Landmark shape cannot establish that two frames show the same person. Treatment timing, identity and unobstructed ROI placement require human review. Limits and score weights are experimental.",
+  "settings": {
+    "split_seconds": 802.4405,
+    "before_rule": "timestamp < split_seconds",
+    "after_rule": "timestamp >= split_seconds",
+    "min_gap_seconds": 1000.0,
+    "top_k": 10,
+    "diversity_seconds": 15.0,
+    "pose_gap_limits_degrees": {
+      "yaw": 10.0,
+      "pitch": 10.0,
+      "roll": 12.0
+    },
+    "max_face_scale_ratio": 1.5,
+    "max_eye_aperture_gap_face_width": 0.04,
+    "max_mouth_opening_gap_face_width": 0.08,
+    "roi_shape_score_scale": 0.05,
+    "shape_rms_definition": "RMS distance after centering, unit RMS radius normalization, and proper rotation",
+    "expression_units": "pixel distances divided by face width in pixels",
+    "color_used_for_ranking": false,
+    "forehead_L_used_for_pair_gate": false,
+    "reflection_alignment_allowed": false,
+    "reject_mirrored_landmark_order_change": true,
+    "thresholds_validated": false
+  },
+  "ranked_pairs": [
+    {
+      "before_id": "frame_0000159007ms",
+      "after_id": "frame_0001526707ms",
+      "before_time": 159.007,
+      "after_time": 1526.707,
+      "score": 0.8114032156293499,
+      "terms": {
+        "yaw_gap_degrees": 1.3041712200032123,
+        "pitch_gap_degrees": 0.07858142457816086,
+        "roll_gap_degrees": 1.5614773952635135,
+        "face_scale_ratio": 1.0271524226359174,
+        "log_face_scale_ratio": 0.026790335353530943,
+        "roi_procrustes_rms": 0.013588167648027508,
+        "eye_aperture_gap": 0.004441758223599324,
+        "mouth_opening_gap": 0.007529954360646466,
+        "contributions": {
+          "yaw": 0.13041712200032124,
+          "pitch": 0.007858142457816086,
+          "roll": 0.13012311627195947,
+          "face_scale": 0.06607309684063908,
+          "roi_shape": 0.27176335296055015,
+          "eye_aperture": 0.11104395558998309,
+          "mouth_opening": 0.09412442950808082
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1367.7,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06599413419824288,
+            0.06735296288198128
+          ],
+          "mouth_opening": 0.027013197069336563
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.06359334893618472,
+            0.06291120465838196
+          ],
+          "mouth_opening": 0.019483242708690097
+        },
+        "screen_eye_aperture_gaps": [
+          0.0024007852620581555,
+          0.004441758223599324
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000157507ms",
+      "after_id": "frame_0001551807ms",
+      "before_time": 157.507,
+      "after_time": 1551.807,
+      "score": 0.8218827032658338,
+      "terms": {
+        "yaw_gap_degrees": 0.2450791484908028,
+        "pitch_gap_degrees": 0.787341628670351,
+        "roll_gap_degrees": 2.4576261164122415,
+        "face_scale_ratio": 1.0205098997325077,
+        "log_face_scale_ratio": 0.02030240408548908,
+        "roi_procrustes_rms": 0.013422846353893235,
+        "eye_aperture_gap": 0.007501895351816444,
+        "mouth_opening_gap": 0.0006209799054519009,
+        "contributions": {
+          "yaw": 0.02450791484908028,
+          "pitch": 0.07873416286703509,
+          "roll": 0.2048021763676868,
+          "face_scale": 0.05007188949060713,
+          "roi_shape": 0.26845692707786467,
+          "eye_aperture": 0.18754738379541108,
+          "mouth_opening": 0.007762248818148761
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1394.3,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.013787741341292998,
+            0.014625308651520088
+          ],
+          "mouth_opening": 0.0007694803647356009
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.021289636693109442,
+            0.017736859513196927
+          ],
+          "mouth_opening": 0.0013904602701875018
+        },
+        "screen_eye_aperture_gaps": [
+          0.007501895351816444,
+          0.0031115508616768386
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000159407ms",
+      "after_id": "frame_0001511007ms",
+      "before_time": 159.407,
+      "after_time": 1511.007,
+      "score": 1.212365181821415,
+      "terms": {
+        "yaw_gap_degrees": 0.596265799815215,
+        "pitch_gap_degrees": 0.6314019788193512,
+        "roll_gap_degrees": 6.0508932836839335,
+        "face_scale_ratio": 1.0067974630881866,
+        "log_face_scale_ratio": 0.006774464498521563,
+        "roi_procrustes_rms": 0.014218042015693308,
+        "eye_aperture_gap": 0.0017347672804952363,
+        "mouth_opening_gap": 0.019273551152768013,
+        "contributions": {
+          "yaw": 0.0596265799815215,
+          "pitch": 0.06314019788193512,
+          "roll": 0.5042411069736611,
+          "face_scale": 0.016707885248449947,
+          "roi_shape": 0.28436084031386616,
+          "eye_aperture": 0.04336918201238091,
+          "mouth_opening": 0.24091938940960017
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1351.6000000000001,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06044663388372019,
+            0.06106612519984894
+          ],
+          "mouth_opening": 0.03921783310700728
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.06218140116421542,
+            0.061007321075932174
+          ],
+          "mouth_opening": 0.05849138425977529
+        },
+        "screen_eye_aperture_gaps": [
+          0.0017347672804952363,
+          5.8804123916768314e-05
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    }
+  ],
+  "stats": {
+    "total_frames": 154,
+    "accepted_frames": 153,
+    "rejected_frames": [
+      {
+        "record_index": 103,
+        "frame_id": "frame_0001541507ms",
+        "reason": "ROI report status is not needs_review"
+      }
+    ],
+    "rejected_frame_count": 1,
+    "before_frames": 42,
+    "after_frames": 111,
+    "candidate_pairs": 4662,
+    "rejected_pairs": 2341,
+    "pair_rejection_counts": {
+      "eye_aperture_gap": 1296,
+      "face_scale_ratio": 9,
+      "mouth_opening_gap": 195,
+      "pitch_gap": 1115,
+      "roll_gap": 319,
+      "yaw_gap": 783
+    },
+    "eligible_pairs": 2321,
+    "diversity_skipped_pairs": 2318,
+    "top_k_omitted_pairs": 0,
+    "selected_pairs": 3
+  }
+}

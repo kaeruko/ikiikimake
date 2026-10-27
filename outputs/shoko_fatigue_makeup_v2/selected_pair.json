@@ -1,0 +1,26 @@
+{
+  "video_path": "C:\\Users\\mail\\work\\ikiikimake\\【プチプラ秋メイク】お疲れ顔を一掃するメイクテクニック [AJkuWUcTSMc].webm",
+  "video_sha256": "c31341198970527da0793cb7fbea6d06f93da97bacc34d80cdd37e8a1b0131af",
+  "rank": 1,
+  "score": 1.727566998602601,
+  "before": {
+    "frame_id": "frame_0000264004ms",
+    "timestamp_seconds": 264.004,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\shoko_fatigue_makeup_v2\\frames\\frame_0000264004ms.png",
+    "image_sha256": "e545afd711de23a0b83938161e193f854f552432bade2446d0d3b69700ee753b",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\shoko_fatigue_makeup_v2\\rois\\frame_0000264004ms",
+    "roi_masks_sha256": "9dcb0a3ceb6138a9d9c23bd85fd1e6a6181074ae126ded417bacb8e436bafb8b",
+    "roi_points_sha256": "930f42f10183500b5d9a1ce05239b0d150908d31f2c9536ad449cd681bdedb5e",
+    "roi_overlay_sha256": "5c83fd7d9ad99a3afc18d74f95d6664b76d1e1a90c2be50c62f3bb0816c7e656"
+  },
+  "after": {
+    "frame_id": "frame_0000749789ms",
+    "timestamp_seconds": 749.789,
+    "image_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\shoko_fatigue_makeup_v2\\frames\\frame_0000749789ms.png",
+    "image_sha256": "5bb8cf0a12b893ea6e5ed581d92eb66ae8490fab47f2668032e85d294c5e2bb4",
+    "roi_dir": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\shoko_fatigue_makeup_v2\\rois\\frame_0000749789ms",
+    "roi_masks_sha256": "b6165a39b0b643b405008bd13d3901f2030e26552bf72498297dd8a9e4148ac1",
+    "roi_points_sha256": "dbefc7ac29efd845abad90c3eccbe357cb8c59a6543c55d5d422359060683bb1",
+    "roi_overlay_sha256": "e42800cefa1b226f3f1d16eeea7854915ad233b383f16596844e7394414e933e"
+  }
+}
