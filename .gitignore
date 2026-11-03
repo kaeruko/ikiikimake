@@ -4,6 +4,7 @@ __pycache__/
 
 # Local source videos and large datasets
 *.mp4
+*.mkv
 *.webm
 datasets/
 cheek01_frames/

@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>動画の before / after ROI 候補</title><style>
+:root{color-scheme:light}body{font:16px/1.65 system-ui,sans-serif;margin:0;background:#f3f5f4;color:#20302a}
+main{max-width:1440px;margin:auto;padding:24px}h1{font-size:1.8rem}h2{font-size:1.35rem}h3{font-size:1.05rem}
+a{color:#11624e}.notice{background:#fff0c6;border-left:5px solid #d49e27;padding:16px}
+.metrics{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0}.metric{flex:1;min-width:150px;background:white;padding:16px;border-radius:8px}
+.metric strong{display:block;font-size:1.9rem}.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+article{background:white;border:1px solid #d8e1dc;border-radius:10px;padding:20px;margin:20px 0}
+img{max-width:100%;height:auto;border-radius:4px}.hero{display:block;max-height:640px;margin:auto}.pair img{width:100%;object-fit:contain;background:#202522}
+.small{font-size:.9rem;color:#50655b}.distance{font-size:.85rem;font-weight:normal;margin-left:12px}
+table{border-collapse:collapse;width:100%;background:white}th,td{text-align:left;padding:10px;border:1px solid #d8e1dc;vertical-align:top}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#e9efeb;padding:12px;font-size:.85rem}details{margin:16px 0}summary{cursor:pointer;font-weight:600}
+.scroll{overflow:auto}@media(max-width:760px){main{padding:14px}.pair{grid-template-columns:1fr}}
+</style></head><body><main><h1>動画から抽出した before / after ROI 候補</h1>
+<p class="notice">ここに示すのは、時間帯と顔の幾何条件から選んだ比較候補です。before / after は仮の時系列ラベルで、
+メイク開始前・完成後や同一人物であることを保証しません。自動チェック通過後も、手・髪・道具・影・表情・領域の位置を目視してください。
+この処理では ROI の承認・Lab 解析・メイクの採点は行っていません。</p>
+<div class="metrics"><div class="metric">抽出画像<strong>35</strong></div>
+<div class="metric">自動チェック通過・要目視<strong>24</strong></div>
+<div class="metric">自動チェックで停止<strong>11</strong></div>
+<div class="metric">表示中の候補ペア<strong>10</strong></div></div>
+<p>候補順位は顔向き・サイズなどの幾何条件を使い、肌色の改善量では選んでいません。額にもメイクが加わる可能性があるため、額の変化を露出補正とは扱いません。</p><h2>候補を選んだ範囲・前提</h2><ul><li>65歳の毎日メイク。冒頭3分と終盤20:00-22:50を暫定before/after候補として粗探索。</li></ul><p>今回の選択範囲（以下の範囲内で候補を比較）：</p><pre>{
+  &quot;before&quot;: [
+    0.0,
+    180.0
+  ],
+  &quot;after&quot;: [
+    1200.0,
+    1370.0
+  ]
+}</pre>
+<h2>今回の選択範囲内の先頭候補</h2><p>ROI の位置と時刻</p><a href="best_pair_roi_overlay.png"><img class="hero" src="best_pair_roi_overlay.png" alt="先頭候補の ROI 重ね合わせと時刻"></a><p>元画像の全景</p><a href="best_pair.png"><img class="hero" src="best_pair.png" alt="先頭候補の全景と時刻"></a><p>顔の拡大表示</p><a href="best_pair_faces.png"><img class="hero" src="best_pair_faces.png" alt="先頭候補の顔を拡大した画像"></a><p class="small">顔画像は見やすい寸法に拡大・縮小した表示用画像です。色補正は行っていません。今後の解析には、リンク先の元画像と元解像度のマスクを使用します。</p><h2>比較候補（上位 10 組）</h2>
+<p>ROI の色：画面左頬＝緑、画面右頬＝青、額＝黄。左右は画像上の位置です。</p><article><h2>候補 1 <span class="distance">幾何差 1.4917</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 02:40.01</h3><a href="rois/frame_0000160007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000160007ms/roi_overlay.png" alt="before frame_0000160007ms の ROI 候補"></a><p class="small">フレーム frame_0000160007ms / yaw 5.81° · pitch 10.53° · roll 2.21°</p><p><a href="frames/frame_0000160007ms.png">元画像 PNG</a> · <a href="rois/frame_0000160007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000160007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:00.01</h3><a href="rois/frame_0001200007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001200007ms/roi_overlay.png" alt="after frame_0001200007ms の ROI 候補"></a><p class="small">フレーム frame_0001200007ms / yaw 4.77° · pitch 8.89° · roll 1.20°</p><p><a href="frames/frame_0001200007ms.png">元画像 PNG</a> · <a href="rois/frame_0001200007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001200007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 1.034015643590874,
+    &quot;pitch_gap_degrees&quot;: 1.6459996683640483,
+    &quot;roll_gap_degrees&quot;: 1.0027264240166718,
+    &quot;face_scale_ratio&quot;: 1.1802654061694695,
+    &quot;log_face_scale_ratio&quot;: 0.16573933366935514,
+    &quot;roi_procrustes_rms&quot;: 0.01073502153083844,
+    &quot;eye_aperture_gap&quot;: 0.019242763671856233,
+    &quot;mouth_opening_gap&quot;: 0.002846440994437689,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.1034015643590874,
+      &quot;pitch&quot;: 0.16459996683640482,
+      &quot;roll&quot;: 0.08356053533472264,
+      &quot;face_scale&quot;: 0.40876349248069327,
+      &quot;roi_shape&quot;: 0.2147004306167688,
+      &quot;eye_aperture&quot;: 0.48106909179640583,
+      &quot;mouth_opening&quot;: 0.03558051243047111
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1040.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.07976503519904767,
+        0.07991716303614453
+      ],
+      &quot;mouth_opening&quot;: 0.007306016760590488
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0990077988709039,
+        0.09680334400437801
+      ],
+      &quot;mouth_opening&quot;: 0.0044595757661527995
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.019242763671856233,
+      0.01688618096823348
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 2 <span class="distance">幾何差 2.4767</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 01:00.01</h3><a href="rois/frame_0000060007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000060007ms/roi_overlay.png" alt="before frame_0000060007ms の ROI 候補"></a><p class="small">フレーム frame_0000060007ms / yaw 4.25° · pitch 7.86° · roll 0.33°</p><p><a href="frames/frame_0000060007ms.png">元画像 PNG</a> · <a href="rois/frame_0000060007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000060007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:50.01</h3><a href="rois/frame_0001250007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001250007ms/roi_overlay.png" alt="after frame_0001250007ms の ROI 候補"></a><p class="small">フレーム frame_0001250007ms / yaw -1.16° · pitch 8.66° · roll 1.01°</p><p><a href="frames/frame_0001250007ms.png">元画像 PNG</a> · <a href="rois/frame_0001250007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001250007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 5.408888341870693,
+    &quot;pitch_gap_degrees&quot;: 0.8005238603898244,
+    &quot;roll_gap_degrees&quot;: 0.6747858406021909,
+    &quot;face_scale_ratio&quot;: 1.4195852016224457,
+    &quot;log_face_scale_ratio&quot;: 0.3503647174067961,
+    &quot;roi_procrustes_rms&quot;: 0.037562836327110036,
+    &quot;eye_aperture_gap&quot;: 0.0054913209735262675,
+    &quot;mouth_opening_gap&quot;: 0.0037524279632400598,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.5408888341870692,
+      &quot;pitch&quot;: 0.08005238603898243,
+      &quot;roll&quot;: 0.056232153383515913,
+      &quot;face_scale&quot;: 0.8641057156349212,
+      &quot;roi_shape&quot;: 0.7512567265422007,
+      &quot;eye_aperture&quot;: 0.13728302433815667,
+      &quot;mouth_opening&quot;: 0.04690534954050075
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1190.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.07146479398019977,
+        0.07209119521896579
+      ],
+      &quot;mouth_opening&quot;: 0.05034468716713326
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0718561592915238,
+        0.07758251619249205
+      ],
+      &quot;mouth_opening&quot;: 0.0465922592038932
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.00039136531132402674,
+      0.0054913209735262675
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 3 <span class="distance">幾何差 2.5455</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 01:10.01</h3><a href="rois/frame_0000070007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000070007ms/roi_overlay.png" alt="before frame_0000070007ms の ROI 候補"></a><p class="small">フレーム frame_0000070007ms / yaw -10.07° · pitch 16.20° · roll -0.54°</p><p><a href="frames/frame_0000070007ms.png">元画像 PNG</a> · <a href="rois/frame_0000070007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000070007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:30.01</h3><a href="rois/frame_0001230007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001230007ms/roi_overlay.png" alt="after frame_0001230007ms の ROI 候補"></a><p class="small">フレーム frame_0001230007ms / yaw -10.25° · pitch 11.00° · roll 0.51°</p><p><a href="frames/frame_0001230007ms.png">元画像 PNG</a> · <a href="rois/frame_0001230007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001230007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 0.1774048754238695,
+    &quot;pitch_gap_degrees&quot;: 5.197892921741998,
+    &quot;roll_gap_degrees&quot;: 1.0509085719924856,
+    &quot;face_scale_ratio&quot;: 1.4207383978899144,
+    &quot;log_face_scale_ratio&quot;: 0.35117673497481694,
+    &quot;roi_procrustes_rms&quot;: 0.027017213692320734,
+    &quot;eye_aperture_gap&quot;: 0.0022001977716478993,
+    &quot;mouth_opening_gap&quot;: 0.03671170392881498,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.01774048754238695,
+      &quot;pitch&quot;: 0.5197892921741998,
+      &quot;roll&quot;: 0.08757571433270712,
+      &quot;face_scale&quot;: 0.8661083973744416,
+      &quot;roi_shape&quot;: 0.5403442738464146,
+      &quot;eye_aperture&quot;: 0.05500494429119748,
+      &quot;mouth_opening&quot;: 0.45889629911018726
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1160.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0759090931922638,
+        0.08004167338088673
+      ],
+      &quot;mouth_opening&quot;: 0.049359404677011255
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0737088954206159,
+        0.08014449181776684
+      ],
+      &quot;mouth_opening&quot;: 0.012647700748196274
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.0022001977716478993,
+      0.00010281843688010606
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 4 <span class="distance">幾何差 2.6652</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 00:20.01</h3><a href="rois/frame_0000020007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000020007ms/roi_overlay.png" alt="before frame_0000020007ms の ROI 候補"></a><p class="small">フレーム frame_0000020007ms / yaw -13.76° · pitch 14.57° · roll -0.16°</p><p><a href="frames/frame_0000020007ms.png">元画像 PNG</a> · <a href="rois/frame_0000020007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000020007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:30.01</h3><a href="rois/frame_0001230007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001230007ms/roi_overlay.png" alt="after frame_0001230007ms の ROI 候補"></a><p class="small">フレーム frame_0001230007ms / yaw -10.25° · pitch 11.00° · roll 0.51°</p><p><a href="frames/frame_0001230007ms.png">元画像 PNG</a> · <a href="rois/frame_0001230007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001230007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 3.5068861642961444,
+    &quot;pitch_gap_degrees&quot;: 3.561209878342309,
+    &quot;roll_gap_degrees&quot;: 0.6712352586517902,
+    &quot;face_scale_ratio&quot;: 1.3197310611904614,
+    &quot;log_face_scale_ratio&quot;: 0.27742797431777816,
+    &quot;roi_procrustes_rms&quot;: 0.04009122463945195,
+    &quot;eye_aperture_gap&quot;: 0.011099521103413543,
+    &quot;mouth_opening_gap&quot;: 0.011112297595349846,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.35068861642961446,
+      &quot;pitch&quot;: 0.3561209878342309,
+      &quot;roll&quot;: 0.05593627155431585,
+      &quot;face_scale&quot;: 0.684221573620016,
+      &quot;roi_shape&quot;: 0.801824492789039,
+      &quot;eye_aperture&quot;: 0.2774880275853386,
+      &quot;mouth_opening&quot;: 0.13890371994187306
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1210.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.06523628839591723,
+        0.0690449707143533
+      ],
+      &quot;mouth_opening&quot;: 0.001535403152846427
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0737088954206159,
+        0.08014449181776684
+      ],
+      &quot;mouth_opening&quot;: 0.012647700748196274
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.008472607024698667,
+      0.011099521103413543
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 5 <span class="distance">幾何差 2.9477</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 00:30.01</h3><a href="rois/frame_0000030007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000030007ms/roi_overlay.png" alt="before frame_0000030007ms の ROI 候補"></a><p class="small">フレーム frame_0000030007ms / yaw -7.23° · pitch 13.08° · roll -1.20°</p><p><a href="frames/frame_0000030007ms.png">元画像 PNG</a> · <a href="rois/frame_0000030007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000030007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:50.01</h3><a href="rois/frame_0001250007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001250007ms/roi_overlay.png" alt="after frame_0001250007ms の ROI 候補"></a><p class="small">フレーム frame_0001250007ms / yaw -1.16° · pitch 8.66° · roll 1.01°</p><p><a href="frames/frame_0001250007ms.png">元画像 PNG</a> · <a href="rois/frame_0001250007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001250007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 6.071943619652847,
+    &quot;pitch_gap_degrees&quot;: 4.415581626630672,
+    &quot;roll_gap_degrees&quot;: 2.212727340174747,
+    &quot;face_scale_ratio&quot;: 1.3253933579387043,
+    &quot;log_face_scale_ratio&quot;: 0.2817092892958474,
+    &quot;roi_procrustes_rms&quot;: 0.02650301740782078,
+    &quot;eye_aperture_gap&quot;: 0.007088981101992117,
+    &quot;mouth_opening_gap&quot;: 0.02499621962134562,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.6071943619652848,
+      &quot;pitch&quot;: 0.44155816266306724,
+      &quot;roll&quot;: 0.18439394501456227,
+      &quot;face_scale&quot;: 0.6947805955739522,
+      &quot;roi_shape&quot;: 0.5300603481564156,
+      &quot;eye_aperture&quot;: 0.17722452754980292,
+      &quot;mouth_opening&quot;: 0.31245274526682026
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1220.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.07040984783639215,
+        0.07049353509049994
+      ],
+      &quot;mouth_opening&quot;: 0.07158847882523882
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0718561592915238,
+        0.07758251619249205
+      ],
+      &quot;mouth_opening&quot;: 0.0465922592038932
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.0014463114551316464,
+      0.007088981101992117
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 6 <span class="distance">幾何差 3.1557</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 01:30.01</h3><a href="rois/frame_0000090007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000090007ms/roi_overlay.png" alt="before frame_0000090007ms の ROI 候補"></a><p class="small">フレーム frame_0000090007ms / yaw 8.70° · pitch 3.05° · roll -0.95°</p><p><a href="frames/frame_0000090007ms.png">元画像 PNG</a> · <a href="rois/frame_0000090007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000090007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:00.01</h3><a href="rois/frame_0001200007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001200007ms/roi_overlay.png" alt="after frame_0001200007ms の ROI 候補"></a><p class="small">フレーム frame_0001200007ms / yaw 4.77° · pitch 8.89° · roll 1.20°</p><p><a href="frames/frame_0001200007ms.png">元画像 PNG</a> · <a href="rois/frame_0001200007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001200007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 3.923965227506116,
+    &quot;pitch_gap_degrees&quot;: 5.834475872234817,
+    &quot;roll_gap_degrees&quot;: 2.1556459449899075,
+    &quot;face_scale_ratio&quot;: 1.1687772996903454,
+    &quot;log_face_scale_ratio&quot;: 0.15595815937179025,
+    &quot;roi_procrustes_rms&quot;: 0.021262600168997822,
+    &quot;eye_aperture_gap&quot;: 0.012201141420228767,
+    &quot;mouth_opening_gap&quot;: 0.07082614663982426,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.3923965227506116,
+      &quot;pitch&quot;: 0.5834475872234817,
+      &quot;roll&quot;: 0.17963716208249228,
+      &quot;face_scale&quot;: 0.3846401484445016,
+      &quot;roi_shape&quot;: 0.42525200337995644,
+      &quot;eye_aperture&quot;: 0.3050285355057192,
+      &quot;mouth_opening&quot;: 0.8853268329978031
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1110.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.08829986825126092,
+        0.08460220258414924
+      ],
+      &quot;mouth_opening&quot;: 0.07528572240597706
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0990077988709039,
+        0.09680334400437801
+      ],
+      &quot;mouth_opening&quot;: 0.0044595757661527995
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.01070793061964298,
+      0.012201141420228767
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 7 <span class="distance">幾何差 3.2260</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 01:00.01</h3><a href="rois/frame_0000060007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000060007ms/roi_overlay.png" alt="before frame_0000060007ms の ROI 候補"></a><p class="small">フレーム frame_0000060007ms / yaw 4.25° · pitch 7.86° · roll 0.33°</p><p><a href="frames/frame_0000060007ms.png">元画像 PNG</a> · <a href="rois/frame_0000060007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000060007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:00.01</h3><a href="rois/frame_0001200007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001200007ms/roi_overlay.png" alt="after frame_0001200007ms の ROI 候補"></a><p class="small">フレーム frame_0001200007ms / yaw 4.77° · pitch 8.89° · roll 1.20°</p><p><a href="frames/frame_0001200007ms.png">元画像 PNG</a> · <a href="rois/frame_0001200007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001200007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 0.5261573716640404,
+    &quot;pitch_gap_degrees&quot;: 1.0238527213027515,
+    &quot;roll_gap_degrees&quot;: 0.8695756098041769,
+    &quot;face_scale_ratio&quot;: 1.3641433182983507,
+    &quot;log_face_scale_ratio&quot;: 0.31052662596782693,
+    &quot;roi_procrustes_rms&quot;: 0.04852810838036221,
+    &quot;eye_aperture_gap&quot;: 0.02754300489070413,
+    &quot;mouth_opening_gap&quot;: 0.045885111400980456,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.05261573716640404,
+      &quot;pitch&quot;: 0.10238527213027515,
+      &quot;roll&quot;: 0.07246463415034808,
+      &quot;face_scale&quot;: 0.7658528927845227,
+      &quot;roi_shape&quot;: 0.9705621676072441,
+      &quot;eye_aperture&quot;: 0.6885751222676033,
+      &quot;mouth_opening&quot;: 0.5735638925122557
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1140.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.07146479398019977,
+        0.07209119521896579
+      ],
+      &quot;mouth_opening&quot;: 0.05034468716713326
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0990077988709039,
+        0.09680334400437801
+      ],
+      &quot;mouth_opening&quot;: 0.0044595757661527995
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.02754300489070413,
+      0.024712148785412225
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 8 <span class="distance">幾何差 3.4888</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 02:00.01</h3><a href="rois/frame_0000120007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000120007ms/roi_overlay.png" alt="before frame_0000120007ms の ROI 候補"></a><p class="small">フレーム frame_0000120007ms / yaw 5.90° · pitch 6.42° · roll 1.73°</p><p><a href="frames/frame_0000120007ms.png">元画像 PNG</a> · <a href="rois/frame_0000120007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000120007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:50.01</h3><a href="rois/frame_0001250007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001250007ms/roi_overlay.png" alt="after frame_0001250007ms の ROI 候補"></a><p class="small">フレーム frame_0001250007ms / yaw -1.16° · pitch 8.66° · roll 1.01°</p><p><a href="frames/frame_0001250007ms.png">元画像 PNG</a> · <a href="rois/frame_0001250007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001250007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 7.06283294925917,
+    &quot;pitch_gap_degrees&quot;: 2.2376210211522567,
+    &quot;roll_gap_degrees&quot;: 0.7194498013223138,
+    &quot;face_scale_ratio&quot;: 1.4117461955161255,
+    &quot;log_face_scale_ratio&quot;: 0.3448273746963618,
+    &quot;roi_procrustes_rms&quot;: 0.07017530612121003,
+    &quot;eye_aperture_gap&quot;: 0.006496845493248943,
+    &quot;mouth_opening_gap&quot;: 0.006594881231757027,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.706283294925917,
+      &quot;pitch&quot;: 0.22376210211522568,
+      &quot;roll&quot;: 0.05995415011019282,
+      &quot;face_scale&quot;: 0.8504489481358123,
+      &quot;roi_shape&quot;: 1.4035061224242007,
+      &quot;eye_aperture&quot;: 0.16242113733122357,
+      &quot;mouth_opening&quot;: 0.08243601539696284
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1130.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.07495232960517065,
+        0.07108567069924311
+      ],
+      &quot;mouth_opening&quot;: 0.053187140435650225
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0718561592915238,
+        0.07758251619249205
+      ],
+      &quot;mouth_opening&quot;: 0.0465922592038932
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.003096170313646854,
+      0.006496845493248943
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 9 <span class="distance">幾何差 4.0482</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 00:40.01</h3><a href="rois/frame_0000040007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000040007ms/roi_overlay.png" alt="before frame_0000040007ms の ROI 候補"></a><p class="small">フレーム frame_0000040007ms / yaw 17.60° · pitch 0.91° · roll -0.95°</p><p><a href="frames/frame_0000040007ms.png">元画像 PNG</a> · <a href="rois/frame_0000040007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000040007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:10.01</h3><a href="rois/frame_0001210007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001210007ms/roi_overlay.png" alt="after frame_0001210007ms の ROI 候補"></a><p class="small">フレーム frame_0001210007ms / yaw 19.37° · pitch -2.98° · roll 0.39°</p><p><a href="frames/frame_0001210007ms.png">元画像 PNG</a> · <a href="rois/frame_0001210007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001210007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 1.7676081484470458,
+    &quot;pitch_gap_degrees&quot;: 3.896435871153574,
+    &quot;roll_gap_degrees&quot;: 1.3324280847666279,
+    &quot;face_scale_ratio&quot;: 1.4741986505244886,
+    &quot;log_face_scale_ratio&quot;: 0.38811455437749515,
+    &quot;roi_procrustes_rms&quot;: 0.05030672299918875,
+    &quot;eye_aperture_gap&quot;: 0.02418441219048295,
+    &quot;mouth_opening_gap&quot;: 0.06422665919923051,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.17676081484470457,
+      &quot;pitch&quot;: 0.3896435871153574,
+      &quot;roll&quot;: 0.11103567373055233,
+      &quot;face_scale&quot;: 0.9572082692599021,
+      &quot;roi_shape&quot;: 1.006134459983775,
+      &quot;eye_aperture&quot;: 0.6046103047620738,
+      &quot;mouth_opening&quot;: 0.8028332399903814
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1170.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.08979422183812219,
+        0.08354349392739437
+      ],
+      &quot;mouth_opening&quot;: 0.07795359623588288
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.11397863402860514,
+        0.09392920698919144
+      ],
+      &quot;mouth_opening&quot;: 0.013726937036652375
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.02418441219048295,
+      0.010385713061797072
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article><article><h2>候補 10 <span class="distance">幾何差 4.3714</span></h2><p class="small">値が小さいほど撮影条件の差が小さい候補です。品質・本人一致・メイク効果の確率ではありません。</p><div class="pair"><section><h3>before候補 02:00.01</h3><a href="rois/frame_0000120007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0000120007ms/roi_overlay.png" alt="before frame_0000120007ms の ROI 候補"></a><p class="small">フレーム frame_0000120007ms / yaw 5.90° · pitch 6.42° · roll 1.73°</p><p><a href="frames/frame_0000120007ms.png">元画像 PNG</a> · <a href="rois/frame_0000120007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000120007ms/roi_points.json">領域・診断 JSON</a></p></section><section><h3>after候補 20:00.01</h3><a href="rois/frame_0001200007ms/roi_overlay.png"><img loading="lazy" src="rois/frame_0001200007ms/roi_overlay.png" alt="after frame_0001200007ms の ROI 候補"></a><p class="small">フレーム frame_0001200007ms / yaw 4.77° · pitch 8.89° · roll 1.20°</p><p><a href="frames/frame_0001200007ms.png">元画像 PNG</a> · <a href="rois/frame_0001200007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001200007ms/roi_points.json">領域・診断 JSON</a></p></section></div><details><summary>比較条件の内訳</summary><pre>{
+  &quot;terms&quot;: {
+    &quot;yaw_gap_degrees&quot;: 1.127787235724437,
+    &quot;pitch_gap_degrees&quot;: 2.460949882065184,
+    &quot;roll_gap_degrees&quot;: 0.5246600321203279,
+    &quot;face_scale_ratio&quot;: 1.371717999806968,
+    &quot;log_face_scale_ratio&quot;: 0.3160639686782612,
+    &quot;roi_procrustes_rms&quot;: 0.0968638684235827,
+    &quot;eye_aperture_gap&quot;: 0.0257176733051349,
+    &quot;mouth_opening_gap&quot;: 0.048727564669497424,
+    &quot;contributions&quot;: {
+      &quot;yaw&quot;: 0.1127787235724437,
+      &quot;pitch&quot;: 0.24609498820651837,
+      &quot;roll&quot;: 0.04372166934336066,
+      &quot;face_scale&quot;: 0.7795096602836317,
+      &quot;roi_shape&quot;: 1.937277368471654,
+      &quot;eye_aperture&quot;: 0.6429418326283725,
+      &quot;mouth_opening&quot;: 0.6090945583687177
+    }
+  },
+  &quot;diagnostics&quot;: {
+    &quot;time_gap_seconds&quot;: 1080.0,
+    &quot;before_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.07495232960517065,
+        0.07108567069924311
+      ],
+      &quot;mouth_opening&quot;: 0.053187140435650225
+    },
+    &quot;after_expression&quot;: {
+      &quot;screen_eye_apertures&quot;: [
+        0.0990077988709039,
+        0.09680334400437801
+      ],
+      &quot;mouth_opening&quot;: 0.0044595757661527995
+    },
+    &quot;screen_eye_aperture_gaps&quot;: [
+      0.02405546926573325,
+      0.0257176733051349
+    ],
+    &quot;mirrored_landmark_order_changed&quot;: false,
+    &quot;alignment_allows_reflection&quot;: false,
+    &quot;needs_human_review&quot;: true,
+    &quot;identity_verified&quot;: false
+  }
+}</pre></details></article>
+<h2>抽出結果と停止理由</h2><table><thead><tr><th>自動チェックで停止した理由</th><th>画像数</th></tr></thead><tbody><tr><td>顔が1人に確定しない</td><td>7</td></tr><tr><td>顔向き・傾きが制限外</td><td>3</td></tr><tr><td>手が領域に重なる疑い</td><td>1</td></tr></tbody></table><p class="small">1枚に複数の理由があるため、理由別の合計は停止画像数と一致しない場合があります。</p><h2>今回の条件</h2><table><tr><th>動画</th><td>【65歳毎日メイク】🩷✨新たに取り入れたお勧めコスメ💄で綺麗に見えるメイク研究中♪✨【老け顔⇨元気顔へ】 [f6hiNiD3vx0].mkv</td></tr><tr><th>長さ</th><td>22:57.40</td></tr><tr><th>元動画の寸法・フレームレート</th><td>1920 × 1080 / 30.00 fps</td></tr><tr><th>抽出間隔</th><td>10.00 秒</td></tr><tr><th>仮の before / after 境界</th><td>11:28.70</td></tr><tr><th>ペアの最小時間間隔</th><td>900.00 秒</td></tr><tr><th>before 抽出範囲（秒）</th><td>[0.0, 180.0]</td></tr><tr><th>after 抽出範囲（秒）</th><td>[1200.0, 1370.0]</td></tr></table><p><a href="scan_manifest.json">全フレーム記録 JSON</a> · <a href="matching.json">ペア比較記録 JSON</a> · <a href="frames.csv">全フレーム CSV</a></p>
+<details><summary>ペア選択の集計</summary><pre>{
+  &quot;total_frames&quot;: 35,
+  &quot;accepted_frames&quot;: 24,
+  &quot;rejected_frames&quot;: [
+    {
+      &quot;record_index&quot;: 1,
+      &quot;frame_id&quot;: &quot;frame_0000010007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 13,
+      &quot;frame_id&quot;: &quot;frame_0000130007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 24,
+      &quot;frame_id&quot;: &quot;frame_0001260007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 25,
+      &quot;frame_id&quot;: &quot;frame_0001270007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 28,
+      &quot;frame_id&quot;: &quot;frame_0001300007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 29,
+      &quot;frame_id&quot;: &quot;frame_0001310007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 30,
+      &quot;frame_id&quot;: &quot;frame_0001320007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 31,
+      &quot;frame_id&quot;: &quot;frame_0001330007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 32,
+      &quot;frame_id&quot;: &quot;frame_0001340007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 33,
+      &quot;frame_id&quot;: &quot;frame_0001350007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    },
+    {
+      &quot;record_index&quot;: 34,
+      &quot;frame_id&quot;: &quot;frame_0001360007ms&quot;,
+      &quot;reason&quot;: &quot;ROI report status is not needs_review&quot;
+    }
+  ],
+  &quot;rejected_frame_count&quot;: 11,
+  &quot;before_frames&quot;: 16,
+  &quot;after_frames&quot;: 8,
+  &quot;candidate_pairs&quot;: 128,
+  &quot;rejected_pairs&quot;: 113,
+  &quot;pair_rejection_counts&quot;: {
+    &quot;eye_aperture_gap&quot;: 16,
+    &quot;face_scale_ratio&quot;: 92,
+    &quot;pitch_gap&quot;: 23,
+    &quot;roll_gap&quot;: 8,
+    &quot;yaw_gap&quot;: 58
+  },
+  &quot;eligible_pairs&quot;: 15,
+  &quot;diversity_skipped_pairs&quot;: 5,
+  &quot;top_k_omitted_pairs&quot;: 0,
+  &quot;selected_pairs&quot;: 10
+}</pre></details>
+<details><summary>全 35 フレームの時刻・状態・ファイル</summary><div class="scroll"><table><thead>
+<tr><th>フレーム</th><th>時刻</th><th>状態</th><th>停止理由</th><th>ファイル</th></tr></thead><tbody><tr><td>frame_0000000007ms</td><td>00:00.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000000007ms.png">元画像 PNG</a> · <a href="rois/frame_0000000007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000000007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000010007ms</td><td>00:10.01</td><td>停止</td><td>face yaw too large: -27.2 deg (limit 25)</td><td><a href="frames/frame_0000010007ms.png">元画像 PNG</a> · <a href="rois/frame_0000010007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000010007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000020007ms</td><td>00:20.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000020007ms.png">元画像 PNG</a> · <a href="rois/frame_0000020007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000020007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000030007ms</td><td>00:30.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000030007ms.png">元画像 PNG</a> · <a href="rois/frame_0000030007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000030007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000040007ms</td><td>00:40.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000040007ms.png">元画像 PNG</a> · <a href="rois/frame_0000040007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000040007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000050007ms</td><td>00:50.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000050007ms.png">元画像 PNG</a> · <a href="rois/frame_0000050007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000050007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000060007ms</td><td>01:00.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000060007ms.png">元画像 PNG</a> · <a href="rois/frame_0000060007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000060007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000070007ms</td><td>01:10.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000070007ms.png">元画像 PNG</a> · <a href="rois/frame_0000070007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000070007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000080007ms</td><td>01:20.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000080007ms.png">元画像 PNG</a> · <a href="rois/frame_0000080007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000080007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000090007ms</td><td>01:30.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000090007ms.png">元画像 PNG</a> · <a href="rois/frame_0000090007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000090007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000100007ms</td><td>01:40.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000100007ms.png">元画像 PNG</a> · <a href="rois/frame_0000100007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000100007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000110007ms</td><td>01:50.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000110007ms.png">元画像 PNG</a> · <a href="rois/frame_0000110007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000110007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000120007ms</td><td>02:00.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000120007ms.png">元画像 PNG</a> · <a href="rois/frame_0000120007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000120007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000130007ms</td><td>02:10.01</td><td>停止</td><td>right_cheek: suspected hand occlusion 46.0% (limit 2.0%)</td><td><a href="frames/frame_0000130007ms.png">元画像 PNG</a> · <a href="rois/frame_0000130007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000130007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000140007ms</td><td>02:20.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000140007ms.png">元画像 PNG</a> · <a href="rois/frame_0000140007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000140007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000150007ms</td><td>02:30.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000150007ms.png">元画像 PNG</a> · <a href="rois/frame_0000150007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000150007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000160007ms</td><td>02:40.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000160007ms.png">元画像 PNG</a> · <a href="rois/frame_0000160007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000160007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0000170007ms</td><td>02:50.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0000170007ms.png">元画像 PNG</a> · <a href="rois/frame_0000170007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0000170007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001200007ms</td><td>20:00.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001200007ms.png">元画像 PNG</a> · <a href="rois/frame_0001200007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001200007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001210007ms</td><td>20:10.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001210007ms.png">元画像 PNG</a> · <a href="rois/frame_0001210007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001210007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001220007ms</td><td>20:20.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001220007ms.png">元画像 PNG</a> · <a href="rois/frame_0001220007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001220007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001230007ms</td><td>20:30.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001230007ms.png">元画像 PNG</a> · <a href="rois/frame_0001230007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001230007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001240007ms</td><td>20:40.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001240007ms.png">元画像 PNG</a> · <a href="rois/frame_0001240007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001240007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001250007ms</td><td>20:50.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001250007ms.png">元画像 PNG</a> · <a href="rois/frame_0001250007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001250007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001260007ms</td><td>21:00.01</td><td>停止</td><td>face yaw too large: 39.2 deg (limit 25)</td><td><a href="frames/frame_0001260007ms.png">元画像 PNG</a> · <a href="rois/frame_0001260007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001260007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001270007ms</td><td>21:10.01</td><td>停止</td><td>face yaw too large: 33.8 deg (limit 25)</td><td><a href="frames/frame_0001270007ms.png">元画像 PNG</a> · <a href="rois/frame_0001270007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001270007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001280007ms</td><td>21:20.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001280007ms.png">元画像 PNG</a> · <a href="rois/frame_0001280007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001280007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001290007ms</td><td>21:30.01</td><td>自動チェック通過・要目視</td><td></td><td><a href="frames/frame_0001290007ms.png">元画像 PNG</a> · <a href="rois/frame_0001290007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001290007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001300007ms</td><td>21:40.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001300007ms.png">元画像 PNG</a> · <a href="rois/frame_0001300007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001300007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001310007ms</td><td>21:50.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001310007ms.png">元画像 PNG</a> · <a href="rois/frame_0001310007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001310007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001320007ms</td><td>22:00.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001320007ms.png">元画像 PNG</a> · <a href="rois/frame_0001320007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001320007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001330007ms</td><td>22:10.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001330007ms.png">元画像 PNG</a> · <a href="rois/frame_0001330007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001330007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001340007ms</td><td>22:20.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001340007ms.png">元画像 PNG</a> · <a href="rois/frame_0001340007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001340007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001350007ms</td><td>22:30.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001350007ms.png">元画像 PNG</a> · <a href="rois/frame_0001350007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001350007ms/roi_points.json">領域・診断 JSON</a></td></tr><tr><td>frame_0001360007ms</td><td>22:40.01</td><td>停止</td><td>Expected exactly one face passing confidence thresholds, found 0</td><td><a href="frames/frame_0001360007ms.png">元画像 PNG</a> · <a href="rois/frame_0001360007ms/roi_overlay.png">ROI 重ね合わせ</a> · <a href="rois/frame_0001360007ms/roi_points.json">領域・診断 JSON</a></td></tr></tbody></table></div></details>
+</main></body></html>

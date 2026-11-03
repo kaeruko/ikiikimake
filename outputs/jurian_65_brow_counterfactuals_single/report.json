@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "method": "registered-real-brow-darkening-residual-v1",
+  "interpretation": "Exploratory makeup-layer counterfactual. It moves the extracted brow-darkening residual, not the person's eyebrow anatomy.",
+  "sources": {
+    "before": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\frames\\frame_0000160007ms.png",
+      "sha256": "432298a1881e567b0dcd77d0d487a9ee399510bd7e5b42777cb8709ab3a2a739",
+      "roi_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\rois\\frame_0000160007ms\\roi_points.json",
+      "roi_sha256": "1061a1c4909c004c8860c9b2ef9688dd2589ea980a91ca3651f0dcbc89e9d647",
+      "roi_status": "needs_review"
+    },
+    "after": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\frames\\frame_0001200007ms.png",
+      "sha256": "ee27381a2693c799135fe8eae3a5208bd88614c78e2df7ec6fdcf02cd2f9c8c6",
+      "roi_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\rois\\frame_0001200007ms\\roi_points.json",
+      "roi_sha256": "25c6c3139e86387335ed3e3bbb9f79d680b37143316656592dcc68ce89c248b3",
+      "roi_status": "needs_review"
+    }
+  },
+  "registration": {
+    "after_to_before_affine": [
+      [
+        0.8426249128813421,
+        0.006023223770676136,
+        183.69785690433883
+      ],
+      [
+        -0.006023223770676136,
+        0.8426249128813421,
+        85.27669860167684
+      ]
+    ],
+    "control_points": 25,
+    "ransac_inliers": 21,
+    "median_control_error_px": 1.588920122233184,
+    "p90_control_error_px": 4.185988498969206
+  },
+  "extraction": {
+    "face_width_px": 356.1917495727539,
+    "band_radius_px": 4,
+    "reference_pixels": 9878,
+    "darkening_noise_median_L": 0.50048828125,
+    "darkening_noise_mad_L": 1.25732421875,
+    "darkening_threshold_L": 6.09281494140625,
+    "detected_pixels": 4248,
+    "support_pixels": 6036,
+    "original_brow_erase_pixels": 7789,
+    "original_brow_erase_radius_px": 3,
+    "kept_components": 2,
+    "colour_match": {
+      "lab_channels": [
+        {
+          "gain": 0.8984848484848484,
+          "offset": 7.690437316894531
+        },
+        {
+          "gain": 0.8501026694045175,
+          "offset": 1.09375
+        },
+        {
+          "gain": 1.208230352205504,
+          "offset": -1.7348499298095703
+        }
+      ]
+    },
+    "inpaint_method": "OpenCV Telea",
+    "inpaint_radius_px": 4
+  },
+  "conditions": [
+    {
+      "dy_px": -12,
+      "direction": "higher",
+      "file": "brow_height_-12px.png",
+      "support_pixels": 11418,
+      "changed_pixels": 11260,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": -6,
+      "direction": "higher",
+      "file": "brow_height_-6px.png",
+      "support_pixels": 10066,
+      "changed_pixels": 9975,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": 0,
+      "direction": "registered height",
+      "file": "brow_height_+0px.png",
+      "support_pixels": 8810,
+      "changed_pixels": 8765,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": 6,
+      "direction": "lower",
+      "file": "brow_height_+6px.png",
+      "support_pixels": 8207,
+      "changed_pixels": 8129,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": 12,
+      "direction": "lower",
+      "file": "brow_height_+12px.png",
+      "support_pixels": 8828,
+      "changed_pixels": 8749,
+      "outside_support_max_abs_delta": 0
+    }
+  ],
+  "artifacts": {
+    "aligned_after.png": "b09a5402ed6e63e465f4bb0a9f1c79b8db777f2d08755001efeb4df9ff8f388d",
+    "brow_height_+0px.png": "47adb037b5c25c61b7d16ac9990385ad1bcc755f9e257da011758d8d58da65d2",
+    "brow_height_+12px.png": "baaa3d082c86c4f640cc298873bbbb932f73b737c8b6c1ed0c813f686bbcb457",
+    "brow_height_+6px.png": "5f6f30ef8adb30fc5171e66bcc7f380eca85c1f3bbd13182370e1a5f414b9faf",
+    "brow_height_-12px.png": "c71b830c991209ffc5c681a050938b3351ba0d8ebe3d710419961e938044fe0b",
+    "brow_height_-6px.png": "2532659660fe0860e8a00fb8a422e58d681e7ad792e84b3fcaec2b989da5ca7b",
+    "contact_sheet.png": "14d0aede9fd00ac980a7da369620f6e09dd3dcff88237395ecb0ee405f58843a",
+    "extracted_residual_overlay.png": "5b292ce0ba9907f403f308abece39d01d1c6d6cb47fa48b5e07f2d23187837a6",
+    "original_brow_removed.png": "37fb3b3b15a48108061ad03309ce7a9afc820a1a551c5bf8f366a0eedafb271e"
+  }
+}

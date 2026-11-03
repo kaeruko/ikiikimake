@@ -1,0 +1,38 @@
+{
+  "video": {
+    "path": "C:\\Users\\mail\\work\\ikiikimake\\【老け顔にバイバイ】 #50代メイク  #若見えメイク #short.mp4",
+    "sha256": "5e01b06628c733c5c05dca065afe646362bc14a6467d8b788491af89ccb9865b",
+    "duration_seconds": 19.574422,
+    "fps": 30.0,
+    "width": 360,
+    "height": 640
+  },
+  "sample_interval_seconds": 0.25,
+  "extraction_signature": {
+    "roi_version": "mediapipe-cheek-forehead-v1",
+    "config": {
+      "min_face_detection_confidence": 0.6,
+      "min_face_presence_confidence": 0.6,
+      "min_hand_detection_confidence": 0.35,
+      "min_hand_presence_confidence": 0.35,
+      "max_yaw_degrees": 25.0,
+      "max_pitch_degrees": 25.0,
+      "max_roll_degrees": 20.0,
+      "min_face_width_px": 120.0,
+      "min_roi_pixels": 100,
+      "polygon_scale": 0.88,
+      "hand_margin_face_fraction": 0.025,
+      "max_hand_overlap_ratio": 0.02,
+      "max_clipped_pixel_ratio": 0.1
+    },
+    "mediapipe_version": "1.0.1",
+    "models": {
+      "face_landmarker.task": {
+        "sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff"
+      },
+      "hand_landmarker.task": {
+        "sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1"
+      }
+    }
+  }
+}

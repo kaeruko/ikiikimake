@@ -1,0 +1,618 @@
+{
+  "schema_version": 1,
+  "method": "geometry-only-v1",
+  "notice": "Geometry-only ranking; lower is more similar, not higher confidence. RGB, Lab, forehead brightness and cosmetic color changes are not used for ranking or pair gates. Frame status/errors retain extraction hand/clipping checks. Landmark shape cannot establish that two frames show the same person. Treatment timing, identity and unobstructed ROI placement require human review. Limits and score weights are experimental.",
+  "settings": {
+    "split_seconds": 688.7,
+    "before_rule": "timestamp < split_seconds",
+    "after_rule": "timestamp >= split_seconds",
+    "min_gap_seconds": 900.0,
+    "top_k": 12,
+    "diversity_seconds": 15.0,
+    "pose_gap_limits_degrees": {
+      "yaw": 10.0,
+      "pitch": 10.0,
+      "roll": 12.0
+    },
+    "max_face_scale_ratio": 1.5,
+    "max_eye_aperture_gap_face_width": 0.04,
+    "max_mouth_opening_gap_face_width": 0.08,
+    "roi_shape_score_scale": 0.05,
+    "shape_rms_definition": "RMS distance after centering, unit RMS radius normalization, and proper rotation",
+    "expression_units": "pixel distances divided by face width in pixels",
+    "color_used_for_ranking": false,
+    "forehead_L_used_for_pair_gate": false,
+    "reflection_alignment_allowed": false,
+    "reject_mirrored_landmark_order_change": true,
+    "thresholds_validated": false
+  },
+  "ranked_pairs": [
+    {
+      "before_id": "frame_0000160007ms",
+      "after_id": "frame_0001200007ms",
+      "before_time": 160.007,
+      "after_time": 1200.007,
+      "score": 1.4916755938545538,
+      "terms": {
+        "yaw_gap_degrees": 1.034015643590874,
+        "pitch_gap_degrees": 1.6459996683640483,
+        "roll_gap_degrees": 1.0027264240166718,
+        "face_scale_ratio": 1.1802654061694695,
+        "log_face_scale_ratio": 0.16573933366935514,
+        "roi_procrustes_rms": 0.01073502153083844,
+        "eye_aperture_gap": 0.019242763671856233,
+        "mouth_opening_gap": 0.002846440994437689,
+        "contributions": {
+          "yaw": 0.1034015643590874,
+          "pitch": 0.16459996683640482,
+          "roll": 0.08356053533472264,
+          "face_scale": 0.40876349248069327,
+          "roi_shape": 0.2147004306167688,
+          "eye_aperture": 0.48106909179640583,
+          "mouth_opening": 0.03558051243047111
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1040.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07976503519904767,
+            0.07991716303614453
+          ],
+          "mouth_opening": 0.007306016760590488
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0990077988709039,
+            0.09680334400437801
+          ],
+          "mouth_opening": 0.0044595757661527995
+        },
+        "screen_eye_aperture_gaps": [
+          0.019242763671856233,
+          0.01688618096823348
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000060007ms",
+      "after_id": "frame_0001250007ms",
+      "before_time": 60.007,
+      "after_time": 1250.007,
+      "score": 2.476724189665347,
+      "terms": {
+        "yaw_gap_degrees": 5.408888341870693,
+        "pitch_gap_degrees": 0.8005238603898244,
+        "roll_gap_degrees": 0.6747858406021909,
+        "face_scale_ratio": 1.4195852016224457,
+        "log_face_scale_ratio": 0.3503647174067961,
+        "roi_procrustes_rms": 0.037562836327110036,
+        "eye_aperture_gap": 0.0054913209735262675,
+        "mouth_opening_gap": 0.0037524279632400598,
+        "contributions": {
+          "yaw": 0.5408888341870692,
+          "pitch": 0.08005238603898243,
+          "roll": 0.056232153383515913,
+          "face_scale": 0.8641057156349212,
+          "roi_shape": 0.7512567265422007,
+          "eye_aperture": 0.13728302433815667,
+          "mouth_opening": 0.04690534954050075
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1190.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07146479398019977,
+            0.07209119521896579
+          ],
+          "mouth_opening": 0.05034468716713326
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0718561592915238,
+            0.07758251619249205
+          ],
+          "mouth_opening": 0.0465922592038932
+        },
+        "screen_eye_aperture_gaps": [
+          0.00039136531132402674,
+          0.0054913209735262675
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000070007ms",
+      "after_id": "frame_0001230007ms",
+      "before_time": 70.007,
+      "after_time": 1230.007,
+      "score": 2.5454594086715345,
+      "terms": {
+        "yaw_gap_degrees": 0.1774048754238695,
+        "pitch_gap_degrees": 5.197892921741998,
+        "roll_gap_degrees": 1.0509085719924856,
+        "face_scale_ratio": 1.4207383978899144,
+        "log_face_scale_ratio": 0.35117673497481694,
+        "roi_procrustes_rms": 0.027017213692320734,
+        "eye_aperture_gap": 0.0022001977716478993,
+        "mouth_opening_gap": 0.03671170392881498,
+        "contributions": {
+          "yaw": 0.01774048754238695,
+          "pitch": 0.5197892921741998,
+          "roll": 0.08757571433270712,
+          "face_scale": 0.8661083973744416,
+          "roi_shape": 0.5403442738464146,
+          "eye_aperture": 0.05500494429119748,
+          "mouth_opening": 0.45889629911018726
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1160.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.0759090931922638,
+            0.08004167338088673
+          ],
+          "mouth_opening": 0.049359404677011255
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0737088954206159,
+            0.08014449181776684
+          ],
+          "mouth_opening": 0.012647700748196274
+        },
+        "screen_eye_aperture_gaps": [
+          0.0022001977716478993,
+          0.00010281843688010606
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000020007ms",
+      "after_id": "frame_0001230007ms",
+      "before_time": 20.007,
+      "after_time": 1230.007,
+      "score": 2.6651836897544277,
+      "terms": {
+        "yaw_gap_degrees": 3.5068861642961444,
+        "pitch_gap_degrees": 3.561209878342309,
+        "roll_gap_degrees": 0.6712352586517902,
+        "face_scale_ratio": 1.3197310611904614,
+        "log_face_scale_ratio": 0.27742797431777816,
+        "roi_procrustes_rms": 0.04009122463945195,
+        "eye_aperture_gap": 0.011099521103413543,
+        "mouth_opening_gap": 0.011112297595349846,
+        "contributions": {
+          "yaw": 0.35068861642961446,
+          "pitch": 0.3561209878342309,
+          "roll": 0.05593627155431585,
+          "face_scale": 0.684221573620016,
+          "roi_shape": 0.801824492789039,
+          "eye_aperture": 0.2774880275853386,
+          "mouth_opening": 0.13890371994187306
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1210.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.06523628839591723,
+            0.0690449707143533
+          ],
+          "mouth_opening": 0.001535403152846427
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0737088954206159,
+            0.08014449181776684
+          ],
+          "mouth_opening": 0.012647700748196274
+        },
+        "screen_eye_aperture_gaps": [
+          0.008472607024698667,
+          0.011099521103413543
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000030007ms",
+      "after_id": "frame_0001250007ms",
+      "before_time": 30.007,
+      "after_time": 1250.007,
+      "score": 2.9476646861899054,
+      "terms": {
+        "yaw_gap_degrees": 6.071943619652847,
+        "pitch_gap_degrees": 4.415581626630672,
+        "roll_gap_degrees": 2.212727340174747,
+        "face_scale_ratio": 1.3253933579387043,
+        "log_face_scale_ratio": 0.2817092892958474,
+        "roi_procrustes_rms": 0.02650301740782078,
+        "eye_aperture_gap": 0.007088981101992117,
+        "mouth_opening_gap": 0.02499621962134562,
+        "contributions": {
+          "yaw": 0.6071943619652848,
+          "pitch": 0.44155816266306724,
+          "roll": 0.18439394501456227,
+          "face_scale": 0.6947805955739522,
+          "roi_shape": 0.5300603481564156,
+          "eye_aperture": 0.17722452754980292,
+          "mouth_opening": 0.31245274526682026
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1220.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07040984783639215,
+            0.07049353509049994
+          ],
+          "mouth_opening": 0.07158847882523882
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0718561592915238,
+            0.07758251619249205
+          ],
+          "mouth_opening": 0.0465922592038932
+        },
+        "screen_eye_aperture_gaps": [
+          0.0014463114551316464,
+          0.007088981101992117
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000090007ms",
+      "after_id": "frame_0001200007ms",
+      "before_time": 90.007,
+      "after_time": 1200.007,
+      "score": 3.155728792384566,
+      "terms": {
+        "yaw_gap_degrees": 3.923965227506116,
+        "pitch_gap_degrees": 5.834475872234817,
+        "roll_gap_degrees": 2.1556459449899075,
+        "face_scale_ratio": 1.1687772996903454,
+        "log_face_scale_ratio": 0.15595815937179025,
+        "roi_procrustes_rms": 0.021262600168997822,
+        "eye_aperture_gap": 0.012201141420228767,
+        "mouth_opening_gap": 0.07082614663982426,
+        "contributions": {
+          "yaw": 0.3923965227506116,
+          "pitch": 0.5834475872234817,
+          "roll": 0.17963716208249228,
+          "face_scale": 0.3846401484445016,
+          "roi_shape": 0.42525200337995644,
+          "eye_aperture": 0.3050285355057192,
+          "mouth_opening": 0.8853268329978031
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1110.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.08829986825126092,
+            0.08460220258414924
+          ],
+          "mouth_opening": 0.07528572240597706
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0990077988709039,
+            0.09680334400437801
+          ],
+          "mouth_opening": 0.0044595757661527995
+        },
+        "screen_eye_aperture_gaps": [
+          0.01070793061964298,
+          0.012201141420228767
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000060007ms",
+      "after_id": "frame_0001200007ms",
+      "before_time": 60.007,
+      "after_time": 1200.007,
+      "score": 3.226019718618653,
+      "terms": {
+        "yaw_gap_degrees": 0.5261573716640404,
+        "pitch_gap_degrees": 1.0238527213027515,
+        "roll_gap_degrees": 0.8695756098041769,
+        "face_scale_ratio": 1.3641433182983507,
+        "log_face_scale_ratio": 0.31052662596782693,
+        "roi_procrustes_rms": 0.04852810838036221,
+        "eye_aperture_gap": 0.02754300489070413,
+        "mouth_opening_gap": 0.045885111400980456,
+        "contributions": {
+          "yaw": 0.05261573716640404,
+          "pitch": 0.10238527213027515,
+          "roll": 0.07246463415034808,
+          "face_scale": 0.7658528927845227,
+          "roi_shape": 0.9705621676072441,
+          "eye_aperture": 0.6885751222676033,
+          "mouth_opening": 0.5735638925122557
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1140.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07146479398019977,
+            0.07209119521896579
+          ],
+          "mouth_opening": 0.05034468716713326
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0990077988709039,
+            0.09680334400437801
+          ],
+          "mouth_opening": 0.0044595757661527995
+        },
+        "screen_eye_aperture_gaps": [
+          0.02754300489070413,
+          0.024712148785412225
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000120007ms",
+      "after_id": "frame_0001250007ms",
+      "before_time": 120.007,
+      "after_time": 1250.007,
+      "score": 3.488811770439535,
+      "terms": {
+        "yaw_gap_degrees": 7.06283294925917,
+        "pitch_gap_degrees": 2.2376210211522567,
+        "roll_gap_degrees": 0.7194498013223138,
+        "face_scale_ratio": 1.4117461955161255,
+        "log_face_scale_ratio": 0.3448273746963618,
+        "roi_procrustes_rms": 0.07017530612121003,
+        "eye_aperture_gap": 0.006496845493248943,
+        "mouth_opening_gap": 0.006594881231757027,
+        "contributions": {
+          "yaw": 0.706283294925917,
+          "pitch": 0.22376210211522568,
+          "roll": 0.05995415011019282,
+          "face_scale": 0.8504489481358123,
+          "roi_shape": 1.4035061224242007,
+          "eye_aperture": 0.16242113733122357,
+          "mouth_opening": 0.08243601539696284
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1130.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07495232960517065,
+            0.07108567069924311
+          ],
+          "mouth_opening": 0.053187140435650225
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0718561592915238,
+            0.07758251619249205
+          ],
+          "mouth_opening": 0.0465922592038932
+        },
+        "screen_eye_aperture_gaps": [
+          0.003096170313646854,
+          0.006496845493248943
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000040007ms",
+      "after_id": "frame_0001210007ms",
+      "before_time": 40.007,
+      "after_time": 1210.007,
+      "score": 4.048226349686747,
+      "terms": {
+        "yaw_gap_degrees": 1.7676081484470458,
+        "pitch_gap_degrees": 3.896435871153574,
+        "roll_gap_degrees": 1.3324280847666279,
+        "face_scale_ratio": 1.4741986505244886,
+        "log_face_scale_ratio": 0.38811455437749515,
+        "roi_procrustes_rms": 0.05030672299918875,
+        "eye_aperture_gap": 0.02418441219048295,
+        "mouth_opening_gap": 0.06422665919923051,
+        "contributions": {
+          "yaw": 0.17676081484470457,
+          "pitch": 0.3896435871153574,
+          "roll": 0.11103567373055233,
+          "face_scale": 0.9572082692599021,
+          "roi_shape": 1.006134459983775,
+          "eye_aperture": 0.6046103047620738,
+          "mouth_opening": 0.8028332399903814
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1170.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.08979422183812219,
+            0.08354349392739437
+          ],
+          "mouth_opening": 0.07795359623588288
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.11397863402860514,
+            0.09392920698919144
+          ],
+          "mouth_opening": 0.013726937036652375
+        },
+        "screen_eye_aperture_gaps": [
+          0.02418441219048295,
+          0.010385713061797072
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    },
+    {
+      "before_id": "frame_0000120007ms",
+      "after_id": "frame_0001200007ms",
+      "before_time": 120.007,
+      "after_time": 1200.007,
+      "score": 4.371418800874698,
+      "terms": {
+        "yaw_gap_degrees": 1.127787235724437,
+        "pitch_gap_degrees": 2.460949882065184,
+        "roll_gap_degrees": 0.5246600321203279,
+        "face_scale_ratio": 1.371717999806968,
+        "log_face_scale_ratio": 0.3160639686782612,
+        "roi_procrustes_rms": 0.0968638684235827,
+        "eye_aperture_gap": 0.0257176733051349,
+        "mouth_opening_gap": 0.048727564669497424,
+        "contributions": {
+          "yaw": 0.1127787235724437,
+          "pitch": 0.24609498820651837,
+          "roll": 0.04372166934336066,
+          "face_scale": 0.7795096602836317,
+          "roi_shape": 1.937277368471654,
+          "eye_aperture": 0.6429418326283725,
+          "mouth_opening": 0.6090945583687177
+        }
+      },
+      "diagnostics": {
+        "time_gap_seconds": 1080.0,
+        "before_expression": {
+          "screen_eye_apertures": [
+            0.07495232960517065,
+            0.07108567069924311
+          ],
+          "mouth_opening": 0.053187140435650225
+        },
+        "after_expression": {
+          "screen_eye_apertures": [
+            0.0990077988709039,
+            0.09680334400437801
+          ],
+          "mouth_opening": 0.0044595757661527995
+        },
+        "screen_eye_aperture_gaps": [
+          0.02405546926573325,
+          0.0257176733051349
+        ],
+        "mirrored_landmark_order_changed": false,
+        "alignment_allows_reflection": false,
+        "needs_human_review": true,
+        "identity_verified": false
+      }
+    }
+  ],
+  "stats": {
+    "total_frames": 35,
+    "accepted_frames": 24,
+    "rejected_frames": [
+      {
+        "record_index": 1,
+        "frame_id": "frame_0000010007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 13,
+        "frame_id": "frame_0000130007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 24,
+        "frame_id": "frame_0001260007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 25,
+        "frame_id": "frame_0001270007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 28,
+        "frame_id": "frame_0001300007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 29,
+        "frame_id": "frame_0001310007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 30,
+        "frame_id": "frame_0001320007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 31,
+        "frame_id": "frame_0001330007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 32,
+        "frame_id": "frame_0001340007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 33,
+        "frame_id": "frame_0001350007ms",
+        "reason": "ROI report status is not needs_review"
+      },
+      {
+        "record_index": 34,
+        "frame_id": "frame_0001360007ms",
+        "reason": "ROI report status is not needs_review"
+      }
+    ],
+    "rejected_frame_count": 11,
+    "before_frames": 16,
+    "after_frames": 8,
+    "candidate_pairs": 128,
+    "rejected_pairs": 113,
+    "pair_rejection_counts": {
+      "eye_aperture_gap": 16,
+      "face_scale_ratio": 92,
+      "pitch_gap": 23,
+      "roll_gap": 8,
+      "yaw_gap": 58
+    },
+    "eligible_pairs": 15,
+    "diversity_skipped_pairs": 5,
+    "top_k_omitted_pairs": 0,
+    "selected_pairs": 10
+  }
+}

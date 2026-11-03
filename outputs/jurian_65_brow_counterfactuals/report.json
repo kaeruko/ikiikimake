@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "method": "registered-real-brow-darkening-residual-v1",
+  "interpretation": "Exploratory makeup-layer counterfactual. It moves the extracted brow-darkening residual, not the person's eyebrow anatomy.",
+  "sources": {
+    "before": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\frames\\frame_0000160007ms.png",
+      "sha256": "432298a1881e567b0dcd77d0d487a9ee399510bd7e5b42777cb8709ab3a2a739",
+      "roi_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\rois\\frame_0000160007ms\\roi_points.json",
+      "roi_sha256": "1061a1c4909c004c8860c9b2ef9688dd2589ea980a91ca3651f0dcbc89e9d647",
+      "roi_status": "needs_review"
+    },
+    "after": {
+      "path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\frames\\frame_0001200007ms.png",
+      "sha256": "ee27381a2693c799135fe8eae3a5208bd88614c78e2df7ec6fdcf02cd2f9c8c6",
+      "roi_path": "C:\\Users\\mail\\work\\ikiikimake\\outputs\\jurian_65_daily_makeup_scan1\\rois\\frame_0001200007ms\\roi_points.json",
+      "roi_sha256": "25c6c3139e86387335ed3e3bbb9f79d680b37143316656592dcc68ce89c248b3",
+      "roi_status": "needs_review"
+    }
+  },
+  "registration": {
+    "after_to_before_affine": [
+      [
+        0.8426249128813421,
+        0.006023223770676136,
+        183.69785690433883
+      ],
+      [
+        -0.006023223770676136,
+        0.8426249128813421,
+        85.27669860167684
+      ]
+    ],
+    "control_points": 25,
+    "ransac_inliers": 21,
+    "median_control_error_px": 1.588920122233184,
+    "p90_control_error_px": 4.185988498969206
+  },
+  "extraction": {
+    "face_width_px": 356.1917495727539,
+    "band_radius_px": 4,
+    "reference_pixels": 9878,
+    "darkening_noise_median_L": 0.50048828125,
+    "darkening_noise_mad_L": 1.25732421875,
+    "darkening_threshold_L": 6.09281494140625,
+    "detected_pixels": 4248,
+    "support_pixels": 6362,
+    "kept_components": 2,
+    "colour_match": {
+      "lab_channels": [
+        {
+          "gain": 0.8984848484848484,
+          "offset": 7.690437316894531
+        },
+        {
+          "gain": 0.8501026694045175,
+          "offset": 1.09375
+        },
+        {
+          "gain": 1.208230352205504,
+          "offset": -1.7348499298095703
+        }
+      ]
+    }
+  },
+  "conditions": [
+    {
+      "dy_px": -12,
+      "direction": "higher",
+      "file": "brow_height_-12px.png",
+      "support_pixels": 6362,
+      "changed_pixels": 6065,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": -6,
+      "direction": "higher",
+      "file": "brow_height_-6px.png",
+      "support_pixels": 6362,
+      "changed_pixels": 6065,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": 0,
+      "direction": "registered height",
+      "file": "brow_height_+0px.png",
+      "support_pixels": 6362,
+      "changed_pixels": 6065,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": 6,
+      "direction": "lower",
+      "file": "brow_height_+6px.png",
+      "support_pixels": 6362,
+      "changed_pixels": 6065,
+      "outside_support_max_abs_delta": 0
+    },
+    {
+      "dy_px": 12,
+      "direction": "lower",
+      "file": "brow_height_+12px.png",
+      "support_pixels": 6362,
+      "changed_pixels": 6065,
+      "outside_support_max_abs_delta": 0
+    }
+  ],
+  "artifacts": {
+    "aligned_after.png": "b09a5402ed6e63e465f4bb0a9f1c79b8db777f2d08755001efeb4df9ff8f388d",
+    "brow_height_+0px.png": "c8982488e6936e55da09dcb213f0227908bdbe097aaa4c6c3c53a44c28428feb",
+    "brow_height_+12px.png": "d5caf75d8cba37bc6520d21679abd669d92fa98bb0b3b2b8f8d12cffbc053fc8",
+    "brow_height_+6px.png": "986548f0b30c01686c0245e7fdc194743639e6e2cf3c1543a37e44a3cd0e8976",
+    "brow_height_-12px.png": "59bd1c48058c2f2072f0a6c3baecbfc6cdc6471c053e057e770a51ec908bd1bd",
+    "brow_height_-6px.png": "8e07b87da4b42eb31bb8f47dcd9590b22b33b679c457a7e08928e0b4ba408668",
+    "contact_sheet.png": "32d82e04793f941c6e2abf65e7515db97976ffe20f09c59f7e3978b423cc8f68",
+    "extracted_residual_overlay.png": "507ab5faa93699d47f3d1cd5bc642fbc78130ea5dce9d0377b9844fe1047b4dc"
+  }
+}
